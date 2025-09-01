@@ -1,1 +1,1 @@
-# Art-Ideas
+# Arts-Ideas
