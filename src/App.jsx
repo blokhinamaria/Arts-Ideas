@@ -1,33 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useLayoutEffect, useLayout } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation} from 'react-router-dom';
 import './App.css'
 
+//Components
+import Layout from './components/Layout.jsx';
+import HomePage from './components/HomePage.jsx';
+import Styles from './components/layout-components/Styles.jsx'
 function App() {
-  const [count, setCount] = useState(0)
+
+const Wrapper = ({children}) => {  
+    //Scroll to the top of the page when the route changes
+      const location = useLocation();
+
+      useLayoutEffect(() => {
+        window.scrollTo( {top: 0, left: 0, behavior: 'instant'})
+      }, [location.pathname]);
+    return children;
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Router>
+        <Wrapper>
+          <Routes>
+            <Route path='/' element={<Layout />}>
+              <Route index element={<HomePage />} />
+              <Route path='/styles' element={<Styles />}/>
+            </Route>
+          </Routes>
+        </Wrapper>
+      </Router>
     </>
   )
 }
