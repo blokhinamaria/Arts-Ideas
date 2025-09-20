@@ -6,6 +6,7 @@ import './App.css'
 import Layout from './components/Layout.jsx';
 import HomePage from './components/HomePage.jsx';
 import Styles from './components/layout-components/Styles.jsx'
+
 function App() {
 
 const Wrapper = ({children}) => {  
