@@ -36,8 +36,8 @@ export default function Header () {
 
             <nav id="main-menu" className={isOpen ? 'open' : ''}>
                 <ul>
-                    <li className='desktop'><a>Explore<br/>by month</a></li>
-                    <li className='desktop'><a>Explore<br/>by category</a></li>
+                    <li className='desktop'><a>Explore by<br/>month</a></li>
+                    <li className='desktop'><a>Explore by<br/>category</a></li>
                     <li className='desktop'><a>Events<br/>Map</a></li>
                     <li className='desktop'><a>About</a></li>
                     <li  className='mobile'><a onClick={() => setIsOpen(false)}>Explore by month</a></li>

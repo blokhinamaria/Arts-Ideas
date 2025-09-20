@@ -21,6 +21,8 @@ footer {
 .logo-footer {
     fill: var(--white);
     height: 50px;
+    width: auto;
+    object-fit: none;
 }
 
 #email-signup-form {
