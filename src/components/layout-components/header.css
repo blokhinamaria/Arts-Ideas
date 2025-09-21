@@ -1,13 +1,17 @@
 header {
     width: 100%;
-    overflow: hidden;
-    height: 110px;
+    /* overflow: hidden; */
+    height: var(--header-height);
     border-bottom: 1px solid var(--white);
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: var(--black-overlay);
+    /* backdrop-filter: blur(0.5px); */
     padding: 0 var(--padding-inline);
+    position: sticky;
+    top: 0;
+    z-index: 2;
 }
 
 .logo-header {
@@ -25,6 +29,7 @@ nav ul {
     gap: 2rem;
     margin: 0;
     padding: 0;
+    
 }
 
 nav a {
@@ -39,24 +44,10 @@ nav li {
     list-style: none;
 }
 
-nav li.mobile {
+nav li.mobile-only {
     display: none;
-    
+    font-size: 1.5rem;
 }
-
-/* Old button */
-/* button.hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-} */
- /* .hamburger span {
-  width: 25px;
-  height: 3px;
-  background: #333;
-  transition: all 0.3s ease;
-} */
 
 .hamburger-react {
     display: none;
@@ -105,6 +96,7 @@ nav li.mobile {
         padding: 0;
         overflow: hidden;
         transition: height 0.8s ease, padding 0.8s ease, visibility 0s linear 1s;
+        z-index: 2;
     }
     nav ul {
         flex-direction: column;
@@ -117,28 +109,12 @@ nav li.mobile {
         padding: 40px;
         transition: height 0.8s ease, padding 0.8s ease, visibility 0s linear;
     }
-    nav li.mobile {
+    nav li.mobile-only {
         display: block;
     }
-    nav li.mobile a {
-        font-size: 1.5rem;
-    }
 
-    nav li.desktop {
+    nav li.desktop-only {
         display: none;
     }
 }
-
-/* Hamburger animation */
-/* .hamburger.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
-}
-
-.hamburger.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(6px, -6px);
-} */
 
