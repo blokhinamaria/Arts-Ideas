@@ -1,6 +1,5 @@
 import './UpcomingEvents.css'
 
-
 export default function UpcomingEvents() {
     const imgSrc = 'public/assets/img/hero-image-1.png';
 

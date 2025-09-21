@@ -1,0 +1,31 @@
+section.month-list-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    max-width: calc(3 * 400px + 2 * var(--small-gap)); /*limit to 3 columns*/
+    row-gap: var(--small-gap);
+
+    color: var(--black);
+    margin-top: var(--large-gap);
+    padding-inline: var(--padding-inline);
+    padding-block-end: var(--large-gap);
+    margin-inline: auto;
+}
+
+section.month-list-view > .event {
+    background-color: var(--white);
+    padding: var(--small-gap);
+}
+
+.event > .event-header-group {
+    display: flex;
+    min-height: calc(1rem * 1.2 * 3);
+    align-items: center;
+}
+
+.event-header-group > button.add-to-calendar-icon {
+    color: var(--black);
+    border: none;
+    padding: 10px;
+    line-height: 0;
+    height: 45px; 
+}

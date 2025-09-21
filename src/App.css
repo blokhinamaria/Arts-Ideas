@@ -10,24 +10,24 @@ Bold = 700 */
   /* Univers (H1, H3, button, body-large)*/
   @font-face { 
     font-family: 'Univers';
-    src: url('/public/assets/fonts/universltstd-boldcn-webfont.woff2') format('woff2'),
-         url('/public/assets/fonts/universltstd-boldcn-webfont.woff') format('woff');
+    src: url('/assets/fonts/universltstd-boldcn-webfont.woff2') format('woff2'),
+         url('/assets/fonts/universltstd-boldcn-webfont.woff') format('woff');
     font-weight: 700;
     font-style: normal;
   }
 
   @font-face {
     font-family: 'Univers';
-    src: url('/public/assets/fonts/universltstd-cn-webfont.woff2') format('woff2'),
-         url('/public/assets/fonts/universltstd-cn-webfont.woff') format('woff');
+    src: url('/assets/fonts/universltstd-cn-webfont.woff2') format('woff2'),
+         url('/assets/fonts/universltstd-cn-webfont.woff') format('woff');
     font-weight: 400;
     font-style: normal;
   }
 
   @font-face {
     font-family: 'Univers';
-    src: url('/public/assets/fonts/universltstd-lightcn-webfont.woff2') format('woff2'),
-         url('/public/assets/fonts/universltstd-lightcn-webfont.woff') format('woff');
+    src: url('/assets/fonts/universltstd-lightcn-webfont.woff2') format('woff2'),
+         url('/assets/fonts/universltstd-lightcn-webfont.woff') format('woff');
     font-weight: 300;
     font-style: normal;
   }
@@ -35,32 +35,32 @@ Bold = 700 */
   /* Chronicle (H2, H4, H5, p) */
   @font-face {
     font-family: "Chronicle";
-    src: url('/public/assets/fonts/chronicledisp-semibold-webfont.woff2') format('woff2'),
-         url('/public/assets/fonts/chronicledisp-semibold-webfont.woff') format('woff');
+    src: url('/assets/fonts/chronicledisp-semibold-webfont.woff2') format('woff2'),
+         url('/assets/fonts/chronicledisp-semibold-webfont.woff') format('woff');
     font-weight: 600;
     font-style: normal;
   }
 
   @font-face {
     font-family: "Chronicle";
-    src: url('/public/assets/fonts/chronicletextg1-semiita-pro-webfont.woff2') format('woff2'),
-         url('/public/assets/fonts/chronicletextg1-semiita-pro-webfont.woff') format('woff');
+    src: url('/assets/fonts/chronicletextg1-semiita-pro-webfont.woff2') format('woff2'),
+         url('/assets/fonts/chronicletextg1-semiita-pro-webfont.woff') format('woff');
     font-weight: 600;
     font-style: italic;
   }
 
   @font-face {
     font-family: "Chronicle";
-    src: url('/public/assets/fonts/chronicletextg1-roman-pro-webfont.woff2') format('woff2'),
-         url('/public/assets/fonts/chronicletextg1-roman-pro-webfont.woff') format('woff');
+    src: url('/assets/fonts/chronicletextg1-roman-pro-webfont.woff2') format('woff2'),
+         url('/assets/fonts/chronicletextg1-roman-pro-webfont.woff') format('woff');
     font-weight: 400;
     font-style: normal;
   }
 
   @font-face {
     font-family: "Chronicle";
-    src: url('/public/assets/fonts/chronicletextg1-italic-pro-webfont.woff2') format('woff2'),
-         url('/public/assets/fonts/chronicletextg1-italic-pro-webfont.woff') format('woff');
+    src: url('/assets/fonts/chronicletextg1-italic-pro-webfont.woff2') format('woff2'),
+         url('/assets/fonts/chronicletextg1-italic-pro-webfont.woff') format('woff');
     font-weight: 400;
     font-style: italic;
   }
@@ -71,13 +71,19 @@ Bold = 700 */
   --black: rgb(0, 0, 0);
   --white: rgb(255, 255, 255);
   --black-overlay: rgba(0, 0, 0, 0.75);
+  --white-opaque: rgba(255, 255, 255, 0.15);
   --accent1: #ca9c76;
   --accent2: #b8ceca;
+  --accent-color-1: #84462c;
+  --accent-color-1-opaque: hsla(18, 50%, 35%, 0.75);
+  --accent-color-2: #3d554c;
 
   /* Measurements */
   --padding-inline: 40px;
+  --padding-override: -40px;
   --large-gap: 40px;
   --small-gap: 20px;
+  --header-height: 110px
 }
 
 /* Magazine colors 
@@ -107,11 +113,18 @@ body {
   flex-direction: column;
   justify-content: space-between;
   min-height: 100vh;
-  overflow: hidden;
+  /* overflow: hidden; (sticky position doesn't work with it */
 }
 
 main {
   flex: 1
+}
+
+article {
+  text-align: start;
+  margin-block: 100px;
+  padding-inline: var(--padding-inline);
+  overflow: hidden;
 }
 
 /* Paragraph Styles */
@@ -204,6 +217,8 @@ button {
   text-transform: uppercase;
   font-size: 1rem;
   color: var(--black);
+  
+  cursor: pointer;
 
   /* box */
   padding: 10px 40px 10px 40px;
