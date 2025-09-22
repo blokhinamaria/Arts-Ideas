@@ -11,7 +11,7 @@ export default function Header () {
     return (
         <header>
             
-            <img className='logo-header' src='public/assets/logo/artsideas-full-white.svg'  alt='Arts and Ideas logo'/>
+            <img className='logo-header' src='/assets/logo/artsideas-full-white.svg'  alt='Arts and Ideas logo'/>
 
             <Hamburger
                 toggled={isOpen} toggle={setIsOpen}

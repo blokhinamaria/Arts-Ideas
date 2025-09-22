@@ -24,7 +24,7 @@ export default function Month() {
             <div className='sticky-image'
                 style={
                     {
-                        backgroundImage: `url('/public/assets/img/hero-image-1.png')`
+                        backgroundImage: `url('/assets/img/hero-image-1.png')`
                     }
                 }>
             </div>
