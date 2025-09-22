@@ -18,7 +18,7 @@ header {
     fill: var(--white);
     height: 50px;
     width: auto;
-    object-fit: none;
+    object-fit: contain;
 }
 
 nav ul {
