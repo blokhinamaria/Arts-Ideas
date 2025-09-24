@@ -1,0 +1,401 @@
+[
+    {
+        "id": 9,
+        "title": "Behind the Bolt: The People Who Power the Lightning",
+        "date": "2025-10-01T18:00:00-04:00",
+        "locationKey": "gordon_theater",
+        "coverImageUrl": "/images/events/behind-the-bolt.jpg",
+        "category": "Talk",
+        "description": "Come hear about the interesting professional careers working for the Tampa Bay Lightning. This event is co-hosted by the Master of the Arts in Social and Emerging Media, Advertising and Public Relations, and Communication Speech Studies programs.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["talk", "sports", "career", "media"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 10,
+        "title": "“Royal Road” Launch Party",
+        "date": "2025-10-03T16:00:00-04:00",
+        "locationKey": "performance_gallery",
+        "coverImageUrl": "/images/events/royal-road-launch.jpg",
+        "category": "Celebration",
+        "description": "Celebration of the release of the most recent issue of “Royal Road,” UTampa’s journal of undergraduate research.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["celebration", "student-research", "journal"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 11,
+        "title": "Hein Jung, Soprano and Grigorios Zamparas, Piano",
+        "date": "2025-10-03T19:30:00-04:00",
+        "locationKey": "gordon_theater",
+        "coverImageUrl": "/images/events/hein-jung-zamparas.jpg",
+        "category": "Recital",
+        "description": "Soprano Hein Jung and pianist Grigorios Zamparas perform an evening of music by Franz Liszt.",
+        "contact": {
+        "contactName": "Arts+Ideas Office",
+        "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["recital", "soprano", "piano", "liszt"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 12,
+        "title": "Baby with the Bathwater",
+        "date": "2025-10-09T20:00:00-04:00",
+        "locationKey": "black_box_theater",
+        "coverImageUrl": "/images/events/baby-with-the-bathwater.jpg",
+        "category": "Theatre",
+        "description": "This Christopher Durang comedy follows clueless parents, a mysterious nanny, and absurd child-rearing antics, directed by Michael Staczar, Associate Professor of Theatre and Dance. Runs Oct. 9–11 at 8 p.m. and Oct. 12 at 2 p.m.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["theatre", "comedy", "play"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 13,
+        "title": "University of Tampa Choral Collage",
+        "date": "2025-10-10T19:30:00-04:00",
+        "locationKey": "sykes_chapel",
+        "coverImageUrl": "/images/events/choral-collage.jpg",
+        "category": "Concert",
+        "description": "Join UTampa Choral Ensembles for their Fall Choral Collage Concert, featuring University Chorus, Camerata, and Chamber Singers performing diverse choral works at Sykes Chapel. Additional concert on Oct. 11 at 2 p.m.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["choral", "concert", "ensembles"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 14,
+        "title": "Symphony Orchestra Concert: Discover the Orchestra",
+        "date": "2025-10-11T18:00:00-04:00",
+        "locationKey": "falk_theatre",
+        "coverImageUrl": "/images/events/discover-the-orchestra.jpg",
+        "category": "Concert",
+        "description": "Kick off the season with UTampa Symphony Orchestra’s “Discover the Orchestra,” featuring “Peter and the Wolf” in a fun, interactive concert perfect for children and families.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["orchestra", "concert", "family", "symphony"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 15,
+        "title": "Wind Ensemble Concert: Music of the Cosmos",
+        "date": "2025-10-12T15:00:00-04:00",
+        "locationKey": "falk_theatre",
+        "coverImageUrl": "/images/events/music-of-the-cosmos.jpg",
+        "category": "Concert",
+        "description": "Closing out World Space Week 2025, the University of Tampa Wind Ensemble presents a cosmic concert of imagination, discovery, and music inspired by the universe.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["wind-ensemble", "space", "concert"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 16,
+        "title": "Jazz Ensemble Concert",
+        "date": "2025-10-13T19:30:00-04:00",
+        "locationKey": "gordon_theater",
+        "coverImageUrl": "/images/events/jazz-ensemble.jpg",
+        "category": "Concert",
+        "description": "An exciting program of classic and contemporary works for jazz ensemble.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["jazz", "concert", "ensemble"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 17,
+        "title": "Collaborative Conflict Resolution: Reframing the Negative",
+        "date": "2025-10-15T13:00:00-04:00",
+        "locationKey": "gordon_theater",
+        "coverImageUrl": "/images/events/conflict-resolution.jpg",
+        "category": "Talk",
+        "description": "In this presentation, we explore the dynamics of conflict resolution within the context of modern communication tools, reviewing research and offering strategies for addressing conflicts constructively in both digital and real-world environments.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["talk", "conflict", "communication"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 18,
+        "title": "Re/Frame Film Series: “Pearl” directed by Ti West",
+        "date": "2025-10-15T18:00:00-04:00",
+        "locationKey": "reeves_theater",
+        "coverImageUrl": "/images/events/film-pearl.jpg",
+        "category": "Film",
+        "description": "Screening of Ti West’s 'Pearl' (2022). A young woman on the brink of madness pursues stardom in a desperate attempt to escape isolation and drudgery on her family farm.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["film", "screening", "horror"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 19,
+        "title": "Honors Student Showcase",
+        "date": "2025-10-17T13:00:00-04:00",
+        "locationKey": "trustees_boardroom",
+        "coverImageUrl": "/images/events/honors-showcase.jpg",
+        "category": "Student Showcase",
+        "description": "Honors students, including CAL researchers, present their work via poster sessions on theses, conferences, and study abroad classes.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["students", "research", "showcase"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 20,
+        "title": "Art + Design Faculty Exhibition",
+        "date": "2025-10-17T10:00:00-04:00",
+        "locationKey": "scarfone_gallery",
+        "coverImageUrl": "/images/events/faculty-exhibition.jpg",
+        "category": "Exhibition",
+        "description": "Newest works by faculty in the Department of Art + Design. On view Oct. 17–Dec. 11, Monday–Friday, 10 a.m.–5 p.m.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["art", "exhibition", "faculty"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 21,
+        "title": "Opening Reception: Art + Design Faculty Exhibition",
+        "date": "2025-10-17T18:00:00-04:00",
+        "locationKey": "scarfone_gallery",
+        "coverImageUrl": "/images/events/faculty-exhibition-reception.jpg",
+        "category": "Reception",
+        "description": "Reception celebrating the newest works by faculty in the Department of Art + Design.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["art", "exhibition", "reception"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 22,
+        "title": "Faculty Recital: Stephen Padgett, Woodwinds",
+        "date": "2025-10-18T19:30:00-04:00",
+        "locationKey": "gordon_theater",
+        "coverImageUrl": "/images/events/stephen-padgett.jpg",
+        "category": "Recital",
+        "description": "Woodwind specialist Stephen Padgett and pianist Tara Swartzbaugh perform music for flute, oboe, clarinet, bassoon, and saxophone, featuring works by Coleman, Talbot-Howard, Walker, Laitman, and Maurice.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["recital", "woodwinds", "faculty"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 23,
+        "title": "Sunscreen x FMX Presents: How to Make Your Film in Florida Without State Film Incentives",
+        "date": "2025-10-21T18:30:00-04:00",
+        "locationKey": "gordon_theater",
+        "coverImageUrl": "/images/events/film-incentives.jpg",
+        "category": "Panel",
+        "description": "Panelists discuss making films in Florida without relying on state film incentives, featuring filmmakers and industry professionals from the Tampa Film Commission and St. Pete Clearwater Film Commission.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["film", "panel", "industry"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 24,
+        "title": "Ars Sonora: Halloween Concert",
+        "date": "2025-10-21T20:00:00-04:00",
+        "locationKey": "sykes_plaza",
+        "coverImageUrl": "/images/events/halloween-concert.jpg",
+        "category": "Concert",
+        "description": "No tricks, only treats at the spookiest concert of the year on the Susan and John Sykes Ars Sonora.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["concert", "ars-sonora", "halloween"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 25,
+        "title": "“Neon” Ghosts in the Cellar",
+        "date": "2025-10-22T18:00:00-04:00",
+        "locationKey": "rathskeller",
+        "coverImageUrl": "/images/events/neon-ghosts.jpg",
+        "category": "Reading",
+        "description": "A Halloween celebration with food, a costume contest, and readings of monstrous, chilling, or horrifying works by students and faculty.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["halloween", "reading", "community"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 26,
+        "title": "Fall Dance Happening",
+        "date": "2025-10-22T20:00:00-04:00",
+        "locationKey": "falk_theatre",
+        "coverImageUrl": "/images/events/fall-dance.jpg",
+        "category": "Dance",
+        "description": "UTampa’s Fall Dance Happening, led by Susannah LeMarquand, features student-choreographed works in diverse dance styles. Runs Oct. 22–24 at 8 p.m.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["dance", "student", "performance"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 27,
+        "title": "Languages and Linguistics Department Meet and Greet",
+        "date": "2025-10-23T12:00:00-04:00",
+        "locationKey": "performance_gallery",
+        "coverImageUrl": "/images/events/languages-meet.jpg",
+        "category": "Meet & Greet",
+        "description": "Lunch and conversation with the Languages and Linguistics faculty. A chance to connect, learn more about the program, and socialize in a relaxed setting.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["languages", "meetup", "faculty", "students"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 28,
+        "title": "String Quartet with Joseph Beverly, Clarinet",
+        "date": "2025-10-24T19:30:00-04:00",
+        "locationKey": "gordon_theater",
+        "coverImageUrl": "/images/events/string-quartet.jpg",
+        "category": "Concert",
+        "description": "An evening of chamber music with Wang, Liu, Mosloff, Mulla, and Beverly, featuring romantic, contemporary, and classical works for strings and clarinet.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["chamber", "concert", "quartet"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    },
+    {
+        "id": 29,
+        "title": "Art + Design Faculty Lunchtime Gallery Talk",
+        "date": "2025-10-29T12:00:00-04:00",
+        "locationKey": "scarfone_gallery",
+        "coverImageUrl": "/images/events/faculty-gallery-talk.jpg",
+        "category": "Talk",
+        "description": "Art and Design faculty members discuss their recent works on view in the Art + Design Faculty Exhibition.",
+        "contact": {
+            "contactName": "Arts+Ideas Office",
+            "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["art", "faculty", "talk"],
+        "createdAt": "2025-09-01T12:00:00-04:00",
+        "updatedAt": "2025-09-01T12:00:00-04:00"
+    }
+]
