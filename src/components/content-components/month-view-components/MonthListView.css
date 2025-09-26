@@ -16,6 +16,10 @@ section.month-list-view > .event {
     padding: var(--small-gap);
 }
 
+section.month-list-view > .event.completed {
+    opacity: 0.75;
+}
+
 .event > .event-header-group {
     display: flex;
     min-height: calc(1rem * 1.2 * 3);

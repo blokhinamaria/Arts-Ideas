@@ -4,7 +4,7 @@
         "title": "Synergy Fall 2025: “Alive, and in the Mix”",
         "date": "2025-11-01T14:00:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/images/events/synergy-fall.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Concert",
         "description": "Immerse yourself in the sound and energy of improvisation, electronic wizardry, and contemporary performance! Synergy is a showcase of original music and sonic exploration.",
         "contact": {
@@ -23,7 +23,7 @@
         "title": "Sunscreen x FMX Presents: Using AI Video Creation Tools",
         "date": "2025-11-04T18:30:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/images/events/ai-video-tools.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Workshop",
         "description": "This workshop explores the best options for using artificial intelligence to meet your filmmaking goals.",
         "contact": {
@@ -42,7 +42,7 @@
         "title": "The 2025 UTampa Public Speaking Contest",
         "date": "2025-11-06T18:00:00-04:00",
         "locationKey": "falk_theatre",
-        "coverImageUrl": "/images/events/public-speaking.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Competition",
         "description": "Six students deliver 5–7 minute speeches on the topic 'internal conflict.'",
         "contact": {
@@ -61,7 +61,7 @@
         "title": "Tampa Animation Festival",
         "date": "2025-11-06T12:00:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/images/events/tampa-animation.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Festival",
         "description": "A film festival highlighting animation from national and international animators. Runs Nov. 6–9, times vary.",
         "contact": {
@@ -80,7 +80,7 @@
         "title": "Art Therapy Visiting Scholar Lecture",
         "date": "2025-11-07T13:00:00-04:00",
         "locationKey": "scarfone_gallery",
-        "coverImageUrl": "/images/events/art-therapy-lecture.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Lecture",
         "description": "Girija Kaimal presents 'Arts-Based Approaches to Promote Mental Health and Well-Being,' followed by a hands-on experiential session.",
         "contact": {
@@ -99,7 +99,7 @@
         "title": "Evening of Experimental Dance",
         "date": "2025-11-07T19:30:00-04:00",
         "locationKey": "sykes_plaza",
-        "coverImageUrl": "/images/events/experimental-dance.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Dance",
         "description": "Faculty and student choreography in alternative venues, showcasing diverse dance styles under the direction of Amanda Gabaldon.",
         "contact": {
@@ -118,7 +118,7 @@
         "title": "Opera Workshop Fall 2025 Concert Viva Italia!",
         "date": "2025-11-08T19:30:00-04:00",
         "locationKey": "sykes_chapel",
-        "coverImageUrl": "/images/events/opera-viva-italia.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Concert",
         "description": "UTampa Opera Workshop Ensemble presents 'Viva Italy,' a journey through Italian opera with beloved Bel Canto classics.",
         "contact": {
@@ -137,7 +137,7 @@
         "title": "Tampa Film Mix and Mingle",
         "date": "2025-11-09T12:30:00-04:00",
         "locationKey": "performance_gallery",
-        "coverImageUrl": "/images/events/film-mix-mingle.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Networking",
         "description": "Come network, eat, and celebrate the closing of the Tampa Animation festival with filmmakers, educators, alumni, and film professionals.",
         "contact": {
@@ -156,7 +156,7 @@
         "title": "Kemal Gekić, Piano",
         "date": "2025-11-09T14:00:00-04:00",
         "locationKey": "sykes_chapel",
-        "coverImageUrl": "/images/events/kemal-gekic.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Recital",
         "description": "Internationally acclaimed pianist Kemal Gekić, Artist-in-Residence at Florida International University, performs works by Liszt and Chopin.",
         "contact": {
@@ -175,7 +175,7 @@
         "title": "Art + Design Faculty Lunchtime Gallery Talk",
         "date": "2025-11-12T12:00:00-04:00",
         "locationKey": "scarfone_gallery",
-        "coverImageUrl": "/images/events/faculty-lunchtime-talk.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Lecture",
         "description": "Join art and design faculty members as they discuss their recent works on view of the Art + Design faculty exhibition.",
         "contact": {
@@ -194,7 +194,7 @@
         "title": "Re/Frame Film Series: “Lynch/Oz” directed by Alexandre O. Philippe",
         "date": "2025-11-12T18:00:00-04:00",
         "locationKey": "reeves_theater",
-        "coverImageUrl": "/images/events/lynch-oz.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Film Screening",
         "description": "The Wizard of Oz is one of David Lynch's most enduring obsessions. This documentary explores this Technicolor throughline in Lynch's work.",
         "contact": {
@@ -213,7 +213,7 @@
         "title": "Guest Artist Recital: Ghadeer Abaido, Piano",
         "date": "2025-11-14T19:30:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/images/events/ghadeer-abaido.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Recital",
         "description": "Pianist Ghadeer Abaido performs “3-Farewell,” featuring Beethoven, Prokofiev, and Medtner.",
         "contact": {
@@ -232,7 +232,7 @@
         "title": "Faculty Recital: Duncan MacMillan, Piano",
         "date": "2025-11-16T15:00:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/images/events/duncan-macmillan.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Recital",
         "description": "A recital of early 20th century American piano works by MacDowell, Beach, Farwell, Grifes, Ives, and Hanson.",
         "contact": {
@@ -251,7 +251,7 @@
         "title": "Samantha Modder: “Taking up Space: An Artist Talk on Socks, Hair, and the Power of the Imaginary”",
         "date": "2025-11-18T16:00:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/images/events/samantha-modder.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Lecture",
         "description": "Assistant Professor Samantha Modder explores oppression, resistance, and the Black imaginary through speculative storytelling.",
         "contact": {
@@ -270,7 +270,7 @@
         "title": "Psychological Modernism and AI Imaging: Or, The Work of Photography in the Age of Its Artificial Intelligibility",
         "date": "2025-11-19T13:00:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/images/events/psychological-modernism.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Lecture",
         "description": "Examines contemporary AI imaging in relation to psychological modernism in photography, exploring media, authorship, and experience.",
         "contact": {
@@ -289,7 +289,7 @@
         "title": "The Prom",
         "date": "2025-11-20T20:00:00-04:00",
         "locationKey": "falk_theatre",
-        "coverImageUrl": "/images/events/the-prom.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Theatre",
         "description": "A vibrant, heartwarming Broadway musical about two girls fighting for the right to attend prom together in a conservative Midwestern town.",
         "contact": {

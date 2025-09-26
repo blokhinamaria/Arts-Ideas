@@ -4,7 +4,7 @@
         "title": "Guest Artist Recital: Kevin Ayesh, Piano",
         "date": "2025-09-06T19:30:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/images/events/kevin-ayesh.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Recital",
         "description": "Pianist Kevin Ayesh performs works by Bach, Beethoven, Brahms, and Chopin.",
         "contact": {
@@ -23,7 +23,7 @@
         "title": "Faculty Recital: Duncan MacMillan, Harpsichord",
         "date": "2025-09-14T15:00:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/images/events/duncan-macmillan.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Recital",
         "description": "Faculty Harpsichord recital featuring early Baroque masterworks by J.S. Bach and François Couperin.",
         "contact": {
@@ -42,7 +42,7 @@
         "title": "Empathy Farming: The Evolution of Unhinged Mobile Game Ads",
         "date": "2025-09-17T13:00:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/images/events/empathy-farming.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Lecture",
         "description": "A critical look at the bizarre world of mobile game ads and why they are so effective despite their irrelevance to actual gameplay.",
         "contact": {
@@ -61,7 +61,7 @@
         "title": "Scholars Symposium with Nathan Hensley: \"Thought and Art in a Burning World: So What?\"",
         "date": "2025-09-19T16:00:00-04:00",
         "locationKey": "trustees_boardroom",
-        "coverImageUrl": "/images/events/nathan-hensley.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Symposium",
         "description": "Nathan Hensley of Georgetown University discusses his book 'Action Without Hope: Victorian Literature After Climate Collapse.'",
         "contact": {
@@ -80,7 +80,7 @@
         "title": "Sunscreen x FMX Presents: Creating a Sustainable Career in Film",
         "date": "2025-09-23T18:30:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/images/events/sustainable-film-career.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Panel",
         "description": "A discussion on longevity, burnout, and reinvention in film careers featuring Christian Blauvelt from IndieWire.",
         "contact": {
@@ -99,7 +99,7 @@
         "title": "Ars Sonora: The Music of Video Games",
         "date": "2025-09-23T20:00:00-04:00",
         "locationKey": "sykes_plaza",
-        "coverImageUrl": "/images/events/ars-sonora-videogames.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Concert",
         "description": "Live performance of video game soundtracks, from 'Animal Crossing' to 'Baldur's Gate 3.'",
         "contact": {
@@ -118,7 +118,7 @@
         "title": "Writers at the University featuring Carmen Maria Machado",
         "date": "2025-09-25T19:00:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/images/events/carmen-machado.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Reading",
         "description": "Carmen Maria Machado, author of 'In the Dream House' and 'Her Body and Other Parties,' presents her work blending memoir, horror, and speculative fiction.",
         "contact": {
@@ -137,7 +137,7 @@
         "title": "UTampa Alumni Painting Reception",
         "date": "2025-09-26T18:00:00-04:00",
         "locationKey": "performance_gallery",
-        "coverImageUrl": "/images/events/alumni-painting-reception.jpg",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Exhibition",
         "description": "Reception for UTampa alumni painting exhibition at the Ferman Center for the Arts.",
         "contact": {

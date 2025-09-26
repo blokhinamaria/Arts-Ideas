@@ -71,6 +71,7 @@ Bold = 700 */
   --black: rgb(0, 0, 0);
   --white: rgb(255, 255, 255);
   --black-overlay: rgba(0, 0, 0, 0.75);
+  --white-semi-opaque: rgba(255, 255, 255, 0.75);
   --white-opaque: rgba(255, 255, 255, 0.15);
   --accent1: #ca9c76;
   --accent2: #b8ceca;

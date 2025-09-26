@@ -1,61 +1,68 @@
 [
     {
         "key": "gordon_theater",
-        "name": "Charlene A. Gordon Theater, Ferman Center for the Arts",
+        "venue": "Charlene A. Gordon Theater",
+        "building": "Ferman Center for the Arts",
+        "address": "214 N Blvd, Tampa, FL 33606",
+        "mapUrl": "https://maps.app.goo.gl/x4yWS3G39L9eoo4T7"
+    },
+    {
+        "key": "black_box_theater",
+        "venue": "Black Box Theater",
+        "building": "Ferman Center for the Arts",
         "address": "214 N Blvd, Tampa, FL 33606",
         "mapUrl": "https://maps.app.goo.gl/x4yWS3G39L9eoo4T7"
     },
     {
         "key": "performance_gallery",
-        "name": "Charlene and Mardy Gordon Performance Gallery, Ferman Center for the Arts",
+        "venue": "Charlene and Mardy Gordon Performance Gallery",
+        "building": "Ferman Center for the Arts",
         "address": "214 N Blvd, Tampa, FL 33606",
         "mapUrl": "https://maps.app.goo.gl/x4yWS3G39L9eoo4T7"
     },
     {
+        "key": "scarfone_gallery",
+        "venue": "Scarfone/Hartley Gallery",
+        "building": "R.K. Bailey Art Studios",
+        "address": "310 N Blvd, Tampa, FL 33606",
+        "mapUrl": "https://maps.app.goo.gl/Uy3jCZW1mtaSqpaN6"
+    },
+    {
         "key": "trustees_boardroom",
-        "name": "Trustees Boardroom, Vaughn Center",
+        "venue": "Trustees Boardroom",
+        "building": "Vaughn Center",
+        "address": "200 UT Poe Pkwy, Tampa, FL 33606",
+        "mapUrl": "https://maps.app.goo.gl/t2AwSDa2dhU94G9W9"
+    },
+    {
+        "key": "reeves_theater",
+        "venue": "Reeves Theater",
+        "building": "Vaughn Center",
         "address": "200 UT Poe Pkwy, Tampa, FL 33606",
         "mapUrl": "https://maps.app.goo.gl/t2AwSDa2dhU94G9W9"
     },
     {
         "key": "sykes_plaza",
-        "name": "Sykes Plaza",
+        "venue": "Sykes Plaza",
         "address": "401 UT Archway Ln, Tampa, FL 33606",
         "mapUrl": "https://maps.app.goo.gl/eMyBALZRkoKUkKkL9"
     },
     {
         "key": "sykes_chapel",
-        "name": "Sykes Chapel and Center for Faith and Values",
+        "venue": "Sykes Chapel and Center for Faith and Values",
         "address": "601 Frederic H. Spaulding Dr, Tampa, FL 33606",
         "mapUrl": "https://maps.app.goo.gl/3Kai5UcGTnjmsQFeA"
     },
     {
         "key": "falk_theatre",
-        "name": "Falk Theatre",
+        "venue": "Falk Theatre",
         "address": "428 W Kennedy Blvd, Tampa, FL 33606",
         "mapUrl": "https://maps.app.goo.gl/RisdkQ2m2gR5FcK18"
     },
     {
-        "key": "black_box_theater",
-        "name": "Black Box Theater, Ferman Center for the Arts",
-        "address": "214 N Blvd, Tampa, FL 33606",
-        "mapUrl": "https://maps.app.goo.gl/x4yWS3G39L9eoo4T7"
-    },
-    {
-        "key": "reeves_theater",
-        "name": "Reeves Theater, Vaughn Center",
-        "address": "200 UT Poe Pkwy, Tampa, FL 33606",
-        "mapUrl": "https://maps.app.goo.gl/t2AwSDa2dhU94G9W9"
-    },
-    {
-        "key": "scarfone_gallery",
-        "name": "Scarfone/Hartley Gallery, R.K. Bailey Art Studios",
-        "address": "310 N Blvd, Tampa, FL 33606",
-        "mapUrl": "https://maps.app.goo.gl/Uy3jCZW1mtaSqpaN6"
-    },
-    {
         "key": "rathskeller",
-        "name": "The Rathskeller, Plant Hall",
+        "venue": "The Rathskeller",
+        "building": "Plant Hall",
         "address": "401 W Kennedy Blvd, Tampa, FL 33606",
         "mapUrl": "https://maps.app.goo.gl/wmVC3djGCbsof8cJ6"
     }

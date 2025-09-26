@@ -23,6 +23,10 @@ section.calendar {
     background-color: var(--white-opaque);
 }
 
+.calendar-day.completed {
+    background-color: var(--white-semi-opaque);
+}
+
 .calendar-day > h4 {
     color: var(--accent-color-1);
     margin: 0;
