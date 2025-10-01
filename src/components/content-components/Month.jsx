@@ -110,7 +110,7 @@ export default function Month() {
             <section className='events'>
                 <section className='month-buttons'>
                     <button onClick={switchViews}>Switch to {isListView ? "Calendar" : "List"} view</button>
-                    <button>Add to calendar</button>
+                    <button disabled>Add to calendar</button>
                 </section>
                 { events.length > 0 ? <>{isListView ? <MonthListView events={events}/> : <MonthCalendarView events={events} selectedDate={selectedDate}/>}</> : null}
             </section>
