@@ -4,17 +4,8 @@ import MonthCalendarView from './month-view-components/MonthCalendarView'
 import { useEffect, useState } from 'react'
 
 export default function Month() {
-    
-    //select month
+
     const [selectedDate, setSelectedDate] = useState(new Date());
-
-    function handleNextMonth() {
-        setSelectedDate(prev => new Date(prev.getFullYear(), prev.getMonth() + 1));
-    }
-
-    function handlePreviousMonth() {
-        setSelectedDate((prev) => new Date(prev.getFullYear(), prev.getMonth() - 1));
-    }
 
     const month = new Intl.DateTimeFormat("en-US", {
         month: "2-digit",
@@ -25,6 +16,41 @@ export default function Month() {
     }).format(selectedDate); 
 
     const year = selectedDate.getFullYear();
+
+    //filter unavailable months
+    const [availableMonths, setAvailableMonths] = useState([]);
+
+    useEffect(() => {
+        async function fetchAvailableMonths() {
+            const monthsData = await fetch(`/data/available-months.json`).then(res => res.json());
+            setAvailableMonths(monthsData);
+        }
+        fetchAvailableMonths();
+        
+    }, []);
+
+    // disable the buttons
+    const disableNext = availableMonths.indexOf(`${year}-${month}`) === availableMonths.length - 1;
+    const disablePrev = availableMonths.indexOf(`${year}-${month}`) === 0;
+    
+    //select another month
+    function handleNextMonth() {
+        const index = availableMonths.indexOf(`${year}-${month}`);
+
+        if (index !== -1 && index < availableMonths.length - 1) {
+            const [ year, month ] = availableMonths[index + 1].split('-')
+            setSelectedDate(new Date(Number(year), Number(month) - 1))
+        } 
+    }
+
+    function handlePreviousMonth() {
+        const index = availableMonths.indexOf(`${year}-${month}`);
+
+        if (index > 0) {
+            const [ year, month ] = availableMonths[index - 1].split('-')
+            setSelectedDate(new Date(Number(year), Number(month) - 1));
+        }
+    }
 
     //switch views
     const [isListView, setIsListView] = useState(true);
@@ -38,7 +64,9 @@ export default function Month() {
     
     useEffect(() => {
         async function fetchData() {
+            try {
             const eventsData = await fetch(`/data/${year}-${month}.json`).then(res => res.json());
+
             const locationsData = await fetch('/data/locations.json').then(res => res.json());
 
             setEvents(eventsData.map(event => {
@@ -48,7 +76,9 @@ export default function Month() {
                     location: location,
                 }
             }   
-            ))
+            )) } catch {
+                setEvents([]);
+            }
         }
         fetchData();
     }, [year, month]);
@@ -57,26 +87,33 @@ export default function Month() {
 
         <article id='month'>
             <section className="month-title-banner">
-                <button onClick={handlePreviousMonth} className='month-swipe disabled'><span className="material-symbols-outlined">keyboard_double_arrow_left</span></button>
                 <div>
-                    <h1>{monthName}</h1>
-                    <h2>Events</h2>
+                    <button onClick={handlePreviousMonth} disabled={disablePrev} className='month-swipe'><span className="material-symbols-outlined">keyboard_double_arrow_left</span></button>
+                    <div className='month-name-container'>
+                        <h1>{monthName}</h1>
+                        <div>
+                            <h2>Events</h2>
+                            <h4>{year}</h4>
+                        </div>
+                        
+                    </div>
+                    <button onClick={handleNextMonth} disabled={disableNext} className='month-swipe'><span className="material-symbols-outlined">keyboard_double_arrow_right</span></button> 
                 </div>
-                <button onClick={handleNextMonth} className='month-swipe'><span className="material-symbols-outlined">keyboard_double_arrow_right</span></button> 
             </section>
             <div className='sticky-image'
                 style={
                     {
-                        backgroundImage: `url('/assets/img/hero-image-1.png')`
+                        backgroundImage: `url('/assets/img/${year}-${month}.jpg')`
                     }
                 }>
             </div>
-            <section className='month-buttons'>
-                <button onClick={switchViews}>Switch to {isListView ? "Calendar" : "List"} view</button>
-                <button>Add to calendar</button>
+            <section className='events'>
+                <section className='month-buttons'>
+                    <button onClick={switchViews}>Switch to {isListView ? "Calendar" : "List"} view</button>
+                    <button>Add to calendar</button>
+                </section>
+                { events.length > 0 ? <>{isListView ? <MonthListView events={events}/> : <MonthCalendarView events={events} selectedDate={selectedDate}/>}</> : null}
             </section>
-            { events.length > 0 ? <>{isListView ? <MonthListView events={events}/> : <MonthCalendarView events={events}/>}</> : null}
-            
         </article>
         
     )

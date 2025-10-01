@@ -18,9 +18,24 @@ section.calendar {
     min-width: 200px;
 }
 
+.calendar-day.day-of-week {
+    border: none;
+    background-color: transparent;
+    min-width: 85px;
+    color: var(--white);
+}
+
 .calendar-day.empty {
     min-width: 85px;
     background-color: var(--white-opaque);
+}
+
+.offset-days {
+    border: none;
+}
+
+.calendar-day.empty > h4 {
+    color: var(--accent1);
 }
 
 .calendar-day.completed {
@@ -32,6 +47,7 @@ section.calendar {
     margin: 0;
     align-self: flex-start;
 }
+
 .calendar-day > span {
     margin-top: 16px; 
 }
@@ -40,4 +56,8 @@ section.calendar {
     section.calendar {
         grid-template-columns: 1fr;
     }
+    .calendar-day.day-of-week {
+        display: none;
+    }
+    
 }

@@ -2,19 +2,35 @@ import './MonthCalendarView.css';
 
 import { formatEventDate } from '../utilities/FormatEventDate';
 
-export default function MonthCalendarView({events}) {
+export default function MonthCalendarView({events, selectedDate}) {
 
     const today = new Date();
 
-    const daysInMonth = 30;
-    const firstDayOffsset = 1;
+    const year = selectedDate.getFullYear();
+    const month = selectedDate.getMonth();
+
+    const daysInMonth= getDaysInMonth();
+
+    function getDaysInMonth() {
+        return new Date(year, month + 1, 0).getDate();
+    };
+
+
+    const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    
+    const weekdayLabels = weekdays.map(day => (
+        <div key={day} className="calendar-day day-of-week"><h5>{day}</h5></div>
+    ))
 
     const calendarDays = [];
 
     //empty lots before the first day
+    const firstDay = new Date(year, month, 1);
+    const firstDayOffsset = firstDay.getDay();
+
     for (let i = 0; i < firstDayOffsset; i++) {
         calendarDays.push(
-            <div key={`previous-${i}`} className="calendar-day empty" />
+            <div key={`previous-${i}`} className="calendar-day empty offset-days" />
         );
     } 
 
@@ -30,7 +46,7 @@ export default function MonthCalendarView({events}) {
 
         if (dayEvents.length > 1) {
                 calendarDays.push(
-                <div key={d} className="calendar-day">
+                <div key={d} className={new Date(dayEvents[dayEvents.length - 1].date) < today ? 'calendar-day completed' : 'calendar-day'}>
                     <h4>{d}</h4>                
                     <div className="event">
                         <p className="body-large">{formatEventDate(dayEvents[0].date, 'time')}</p>
@@ -41,7 +57,7 @@ export default function MonthCalendarView({events}) {
             )
         } else if (dayEvents.length === 1) {
                 calendarDays.push(
-                <div key={d} className="calendar-day">
+                <div key={d} className={new Date(dayEvents[0].date) < today ? 'calendar-day completed' : 'calendar-day'}>
                     <h4>{d}</h4>                
                     <div className="event">
                         <p className="body-large">{formatEventDate(dayEvents[0].date, 'time')}</p>
@@ -61,16 +77,7 @@ export default function MonthCalendarView({events}) {
 
     return (
         <section className="calendar">
-            {/* <div className='days-of-week'>
-                <h4>Sun</h4>
-                <h4>Mon</h4>
-                <h4>Tue</h4>
-                <h4>Wed</h4>
-                <h4>Thu</h4>
-                <h4>Fri</h4>
-                <h4>Sat</h4>
-            </div> */}
-            
+            {weekdayLabels}
             {calendarDays}
         </section>
     )

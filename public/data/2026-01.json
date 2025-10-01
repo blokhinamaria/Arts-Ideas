@@ -1,0 +1,99 @@
+[
+    {
+        "id": 60,
+        "title": "Ben Rosenblum Trio",
+        "date": "2026-01-22T19:30:00-05:00",
+        "locationKey": "gordon_theater",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "category": "Music",
+        "description": "Renowned pianist, accordionist and composer Ben Rosenblum blends the best of jazz and world cultures. Also featuring a new work by UTampa faculty, Bradford Blackburn.",
+        "contact": {
+        "contactName": "Arts+Ideas Office",
+        "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["music", "jazz", "performance"],
+        "createdAt": "2025-09-25T12:00:00-04:00",
+        "updatedAt": "2025-09-25T12:00:00-04:00"
+    },
+    {
+        "id": 61,
+        "title": "Film, Animation and New Media (FMX) All Faculty Exhibition",
+        "date": "2026-01-30T10:00:00-05:00",
+        "endDate": "2026-02-27T17:00:00-05:00",
+        "locationKey": "scarfone_gallery",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "category": "Exhibition",
+        "description": "See the newest work by faculty in the Department of Film, Animation and New Media.",
+        "contact": {
+        "contactName": "Arts+Ideas Office",
+        "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["exhibition", "faculty", "film", "animation", "media"],
+        "createdAt": "2025-09-25T12:00:00-04:00",
+        "updatedAt": "2025-09-25T12:00:00-04:00"
+    },
+    {
+        "id": 62,
+        "title": "Opening Reception: FMX All Faculty Exhibition",
+        "date": "2026-01-30T18:00:00-05:00",
+        "locationKey": "scarfone_gallery",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "category": "Reception",
+        "description": "Join us for a reception featuring the newest work by faculty in the Department of Film, Animation and New Media.",
+        "contact": {
+        "contactName": "Arts+Ideas Office",
+        "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["reception", "faculty", "film", "animation", "media"],
+        "createdAt": "2025-09-25T12:00:00-04:00",
+        "updatedAt": "2025-09-25T12:00:00-04:00"
+    },
+    {
+        "id": 63,
+        "title": "FMX Student Showcase",
+        "date": "2026-01-30T09:00:00-05:00",
+        "endDate": "2026-05-01T17:00:00-04:00",
+        "locationKey": "performance_gallery",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "category": "Exhibition",
+        "description": "Visit the Ferman Student Study Gallery to see the Film, Animation and New Media (FMX) students’ work featured. Hosted by the Department of Film, Animation and New Media.",
+        "contact": {
+        "contactName": "Arts+Ideas Office",
+        "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["student", "showcase", "film", "animation", "media"],
+        "createdAt": "2025-09-25T12:00:00-04:00",
+        "updatedAt": "2025-09-25T12:00:00-04:00"
+    },
+    {
+        "id": 64,
+        "title": "Black Box Film Festival",
+        "date": "2026-01-30T18:00:00-05:00",
+        "locationKey": "gordon_theater",
+        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "category": "Film",
+        "description": "UTampa’s best student short films, including experimental, narrative, documentary, animated films and new media. Hosted by the Department of Film, Animation and New Media.",
+        "contact": {
+        "contactName": "Arts+Ideas Office",
+        "contactEmail": "arts@ut.edu"
+        },
+        "isPublic": true,
+        "price": "free",
+        "status": "planned",
+        "tags": ["film", "student", "festival", "animation"],
+        "createdAt": "2025-09-25T12:00:00-04:00",
+        "updatedAt": "2025-09-25T12:00:00-04:00"
+    }
+]

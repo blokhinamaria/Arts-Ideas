@@ -42,6 +42,20 @@
         "mapUrl": "https://maps.app.goo.gl/t2AwSDa2dhU94G9W9"
     },
     {
+        "key": "crescent-club",
+        "venue": "Crescent Club",
+        "building": "Vaughn Center",
+        "address": "200 UT Poe Pkwy, Tampa, FL 33606",
+        "mapUrl": "https://maps.app.goo.gl/t2AwSDa2dhU94G9W9"
+    },
+    {
+        "key": "neon_office",
+        "venue": "Neon Office 204",
+        "building": "Vaughn Center",
+        "address": "200 UT Poe Pkwy, Tampa, FL 33606",
+        "mapUrl": "https://maps.app.goo.gl/t2AwSDa2dhU94G9W9"
+    },
+    {
         "key": "sykes_plaza",
         "venue": "Sykes Plaza",
         "address": "401 UT Archway Ln, Tampa, FL 33606",
@@ -60,8 +74,21 @@
         "mapUrl": "https://maps.app.goo.gl/RisdkQ2m2gR5FcK18"
     },
     {
+        "key": "falk_theater",
+        "venue": "Falk Theatre",
+        "address": "428 W Kennedy Blvd, Tampa, FL 33606",
+        "mapUrl": "https://maps.app.goo.gl/RisdkQ2m2gR5FcK18"
+    },
+    {
         "key": "rathskeller",
         "venue": "The Rathskeller",
+        "building": "Plant Hall",
+        "address": "401 W Kennedy Blvd, Tampa, FL 33606",
+        "mapUrl": "https://maps.app.goo.gl/wmVC3djGCbsof8cJ6"
+    },
+    {
+        "key": "fletcher-lounge",
+        "venue": "Fletcher Lounge",
         "building": "Plant Hall",
         "address": "401 W Kennedy Blvd, Tampa, FL 33606",
         "mapUrl": "https://maps.app.goo.gl/wmVC3djGCbsof8cJ6"

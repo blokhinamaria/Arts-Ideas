@@ -5,7 +5,7 @@ import './header.css'
 
 export default function Header () {
 
-    const [ isOpen, setIsOpen ] = useState(false);
+    // const [ isOpen, setIsOpen ] = useState(false);
     
 
     return (
@@ -13,15 +13,15 @@ export default function Header () {
             
             <img className='logo-header' src='/assets/logo/artsideas-full-white.svg'  alt='Arts and Ideas logo'/>
 
-            <Hamburger
+            {/* <Hamburger
                 toggled={isOpen} toggle={setIsOpen}
                 duration={2}
                 aria-controls="main-menu"
                 aria-expanded={isOpen}
                 aria-label="Toggle menu"
-            />
+            /> */}
 
-            <nav id="main-menu" className={isOpen ? 'open' : ''}>
+            {/* <nav id="main-menu" className={isOpen ? 'open' : ''}>
                 <ul>
                     <li className='desktop-only'><a>Explore by<br/>month</a></li>
                     <li className='desktop-only'><a>Explore by<br/>category</a></li>
@@ -32,7 +32,7 @@ export default function Header () {
                     <li className='mobile-only'><a onClick={() => setIsOpen(false)}>Events Map</a></li>
                     <li  className='mobile-only'><a onClick={() => setIsOpen(false)}>About</a></li>
                 </ul>
-            </nav>
+            </nav> */}
             
             <div className='presented-by'>
                 <small>Presented By</small>

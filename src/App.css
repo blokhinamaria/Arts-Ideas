@@ -138,6 +138,13 @@ h1 {
   margin: 0;
 }
 
+@media (max-width: 1024px) {
+  h1 {
+    font-size: 6rem;
+  }
+}
+
+
 @media (max-width: 768px) {
   h1 {
     font-size: 5rem;
@@ -225,6 +232,10 @@ button {
   padding: 10px 40px 10px 40px;
   background-color: var(--white);
   border: 0.75px solid var(--black) ;
+}
+
+button:disabled {
+  opacity: 0.25;
 }
 
 button.button-large {
