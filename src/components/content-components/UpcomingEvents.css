@@ -19,6 +19,13 @@ section.upcoming-events {
     overflow: hidden;
 }
 
+.next-event-image-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+}
+
 .next-event-details-container {
     flex: 1;
     display: flex;
@@ -49,6 +56,14 @@ section.upcoming-events {
     flex: 1 1 auto;
     display: flex;
 }
+
+.following-event-image-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+}
+
 
 .following-event-details-container {
     padding: var(--small-gap);
@@ -85,12 +100,6 @@ span.tag-shape {
     margin-bottom: 0;
 }
 
-@media (max-width: 1200px) {
-    .next-event-details-container {
-        justify-content: flex-start;
-    }
-}
-
 @media (max-width: 1024px) {
     section.upcoming-events {
         flex-direction: column;
@@ -105,6 +114,7 @@ span.tag-shape {
     .following-event-image-container {
         flex: 2;
         overflow: hidden;
+        height: 250px;
     }
 
     .following-event-details-container {
@@ -123,7 +133,8 @@ span.tag-shape {
     }
 
     .next-event-image-container {
-        flex: 1;
+        flex: 0 0 250px;
+        height: 250px;
     }
 
     .next-event-details-container {
@@ -139,7 +150,8 @@ span.tag-shape {
     }
 
     .following-event-image-container {
-        flex: 1;
+        flex: 0 0 250px;
+        height: 250px;
     }
 
     .following-event-details-container {

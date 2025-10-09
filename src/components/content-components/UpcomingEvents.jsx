@@ -92,7 +92,8 @@ export default function UpcomingEvents() {
                 <div className='following-events'>
                     <div className='following-event'>
                             <div className='following-event-image-container'>
-                                <img src={currentEvents[1]?.coverImageUrl}></img>
+                                {currentEvents[1]?.coverImageUrl ? (<img src={currentEvents[1]?.coverImageUrl}></img>) : (<img src='/assets/img/default.jpg'></img>)}
+                                
                             </div>
 
                             <div className='following-event-details-container'>
