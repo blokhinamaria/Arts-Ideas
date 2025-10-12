@@ -12,6 +12,7 @@ section.upcoming-events {
     background-color: var(--white);
     color: var(--black);
     flex: 2;
+    position: relative;
 }
 
 .next-event-image-container {
@@ -64,7 +65,6 @@ section.upcoming-events {
     display: block;
 }
 
-
 .following-event-details-container {
     padding: var(--small-gap);
     flex: 0 0 auto;
@@ -76,7 +76,7 @@ span.tag-shape {
     align-self: flex-start;
 }
 
-.following-event-details-container > span.tag-shape.absolute {
+span.tag-shape.absolute {
     position: absolute;
     top: 0;
     left: 0;
@@ -108,13 +108,12 @@ span.tag-shape {
 
     .following-event {
         flex-direction: row;
-        max-height: 100%;
+        min-height: 300px;
     }
 
     .following-event-image-container {
         flex: 2;
         overflow: hidden;
-        height: 250px;
     }
 
     .following-event-details-container {
@@ -127,6 +126,10 @@ span.tag-shape {
 }
 
 @media (max-width: 768px) {
+    article#upcoming-events {
+        margin-block-start: 50px;
+    }
+
     .next-event {
         flex-direction: column;
         max-height: 100%;

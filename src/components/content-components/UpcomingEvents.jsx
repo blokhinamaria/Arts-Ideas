@@ -62,6 +62,27 @@ export default function UpcomingEvents() {
 
     }, [availableMonths])
 
+    //media query
+    function useMediaQuery(query) {
+        const [ matches, setMatches ] = useState(false)
+
+        useEffect(() => {
+            const mediaQuery = window.matchMedia(query);
+            console.log(mediaQuery)
+            const listener = () => setMatches(mediaQuery.matches)
+
+            listener();
+
+            mediaQuery.addEventListener('change', listener)
+
+            return () => mediaQuery.removeEventListener('change', listener)
+        }, [query])
+
+        return matches;
+    }
+
+    const isMedium = useMediaQuery('(max-width: 1024px')
+
     return (
         <article id='upcoming-events'>
             <h1>Upcoming<br/>Events</h1>
@@ -74,7 +95,7 @@ export default function UpcomingEvents() {
                     </div>
 
                     <div className='next-event-details-container'>
-                            <span className='tag tag-shape'>{currentEvents[0]?.category}</span>
+                            <span className={isMedium ? 'tag tag-shape absolute' : 'tag tag-shape'}>{currentEvents[0]?.category}</span>
                             <div className='next-event-description'>
                                 <h5>{currentEvents[0]?.title}</h5>
                                 <hr />
@@ -105,7 +126,9 @@ export default function UpcomingEvents() {
                                         <p className='body-large'>{currentEvents[1]?.location?.venue}
                                             {currentEvents[1]?.location?.building ? <><br/>{currentEvents[1]?.location?.building}</> : ''}
                                         </p>
+                                        {isMedium ? <p>{currentEvents[1]?.description}</p> : null}
                                     </div>
+                                    
                                     {/* <button className='add-to-calendar-icon'><span className="material-symbols-outlined">
                                         calendar_add_on
                                     </span></button> */}
@@ -126,7 +149,9 @@ export default function UpcomingEvents() {
                                         <p className='body-large'>{currentEvents[2]?.location?.venue}
                                             {currentEvents[2]?.location?.building ? <><br/>{currentEvents[2]?.location?.building}</> : ''}
                                         </p>
+                                        {isMedium ? <p>{currentEvents[2]?.description}</p> : null} 
                                     </div>
+                                    
                                     {/* <button className='add-to-calendar-icon'><span className="material-symbols-outlined">
                                         calendar_add_on
                                     </span></button> */}
