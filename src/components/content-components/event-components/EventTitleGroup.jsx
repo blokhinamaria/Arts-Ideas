@@ -1,3 +1,4 @@
+
 export default function EventTitleGroup({event}) {
     return (
         <div className='default-event-header-group'>

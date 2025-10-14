@@ -7,10 +7,17 @@
     opacity: 0.75;
 }
 
-.default-event > .event-header-group {
+.default-event .default-event-header-group {
     display: flex;
     min-height: calc(1rem * 1.2 * 3);
     align-items: center;
+}
+
+@media (max-width: 679px) {
+    .default-event .default-event-header-group {
+        min-height: 0;
+    }
+    
 }
 
 .default-event-header-group > button.add-to-calendar-icon {
