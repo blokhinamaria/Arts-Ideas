@@ -29,6 +29,13 @@
             .replace("AM", "a.m.");
         }
 
+        if (format === "weekday") {
+            return new Intl.DateTimeFormat("en-US", {
+                weekday: "short",
+            })
+            .format(date)
+        }
+
         //for events details
         return new Intl.DateTimeFormat("en-US", {
             weekday: "long",

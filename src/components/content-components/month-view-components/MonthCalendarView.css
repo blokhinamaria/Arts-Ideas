@@ -16,6 +16,8 @@ section.calendar {
     flex-direction: column;
     align-items: start;
     min-width: 200px;
+    position: relative;
+    cursor: pointer;
 }
 
 .calendar-day.day-of-week {
@@ -34,22 +36,87 @@ section.calendar {
     border: none;
 }
 
-.calendar-day.empty > h4 {
+.calendar-day.empty h4 {
     color: var(--accent1);
+}
+
+.calendar-day > div:not(:first-child):not(:last-child) {
+    margin-bottom: var(--small-gap);
 }
 
 .calendar-day.completed {
     background-color: var(--white-semi-opaque);
 }
 
-.calendar-day > h4 {
+.calendar-day-number {
+    display: flex;
+    gap: 10px;
+    align-items: end;
+    width: 100%;
+}
+
+.calendar-day h4 {
     color: var(--accent-color-1);
     margin: 0;
     align-self: flex-start;
 }
 
+.calendar-day-number > span {
+    color: var(--accent-color-1-semi-opaque);
+}
+
 .calendar-day > span {
     margin-top: 16px; 
+}
+
+.popover-wrapper {
+    overflow: auto;
+    max-width: 80vw;
+}
+
+.calendar-day-popover {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+    width: 300px;
+    background-color: var(--white);
+    color: var(--black);
+    border: 0.5px solid var(--black);
+    padding: var(--small-gap);
+}
+
+.calendar-day-popover > .calendar-day-number {
+    color: var(--accent-color-1);
+}
+
+.calendar-day-popover > div:not(:first-child):not(:last-child) {
+    margin-bottom: var(--large-gap);
+}
+
+@supports (anchor-name: --test) {
+    .calendar-day-popover {
+        position: absolute;
+        top: anchor(top);
+        left: anchor(right);
+        transform: translate(0, 0);
+        position-try-fallbacks:
+            flip-block,        
+            flip-inline,       
+            flip-block flip-inline
+    }
+}
+
+.backdrop-popover {
+    position: fixed;  /* Must be fixed, not absolute */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--accent-color-1-opaque);
+    z-index: 3;
+    cursor: default; /* Optional: shows it's clickable */
 }
 
 @media (max-width: 768px) {

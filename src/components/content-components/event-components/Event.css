@@ -1,0 +1,26 @@
+.default-event {
+    background-color: var(--white);
+    padding: var(--small-gap);
+}
+
+.default-event.completed {
+    opacity: 0.75;
+}
+
+.default-event > .event-header-group {
+    display: flex;
+    min-height: calc(1rem * 1.2 * 3);
+    align-items: center;
+}
+
+.default-event-header-group > button.add-to-calendar-icon {
+    color: var(--black);
+    border: none;
+    padding: 10px;
+    line-height: 0;
+    height: 45px; 
+}
+
+.default-event p:last-child {
+    margin-bottom: 0;
+}

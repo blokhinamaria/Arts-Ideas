@@ -4,19 +4,19 @@ article#month {
 }
 
 section.month-title-banner {
-    background: var(--accent-color-1-opaque);
+    background: var(--accent-color-1-semi-opaque);
     height: 170px;
     display: flex;
     justify-content: center;
     position: sticky;
     top: var(--header-height);
-    z-index: 1;
+    z-index: 2;
 }
 
 section.month-title-banner > div {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
     width: 1024px;
 }
 
@@ -41,8 +41,6 @@ section.month-title-banner > div {
     justify-content: space-between;
     width: 100%;
 }
-
-
 
 .month-title-banner button.month-swipe:disabled {
     opacity: 0.25;
@@ -87,7 +85,15 @@ section.month-buttons {
   }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 520px) {
+  .month-title-banner .month-name {
+    font-size: 3.5rem;
+  }
+
+  .month-title-banner .month-name-details h2, h4 {
+    font-size: 2rem;
+  }
+
   .month-title-banner button.month-swipe > span {
     font-size: 3rem;
   }

@@ -76,7 +76,8 @@ Bold = 700 */
   --accent1: #ca9c76;
   --accent2: #b8ceca;
   --accent-color-1: #84462c;
-  --accent-color-1-opaque: hsla(18, 50%, 35%, 0.75);
+  --accent-color-1-semi-opaque: hsla(18, 50%, 35%, 0.75);
+  --accent-color-1-opaque: hsla(18, 50%, 35%, 0.25);
   --accent-color-2: #3d554c;
 
   /* Measurements */
@@ -232,6 +233,12 @@ button {
   padding: 10px 40px 10px 40px;
   background-color: var(--white);
   border: 0.75px solid var(--black) ;
+}
+
+@media (max-width: 425px) {
+  button {
+    width: 100%;
+  }
 }
 
 button:disabled {

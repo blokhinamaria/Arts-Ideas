@@ -90,8 +90,8 @@ export default function Month() {
                 <div>
                     <button onClick={handlePreviousMonth} disabled={disablePrev} className='month-swipe'><span className="material-symbols-outlined">keyboard_double_arrow_left</span></button>
                     <div className='month-name-container'>
-                        <h1>{monthName}</h1>
-                        <div>
+                        <h1 className='month-name'>{monthName}</h1>
+                        <div className='month-name-details'>
                             <h2>Events</h2>
                             <h4>{year}</h4>
                         </div>
@@ -110,7 +110,7 @@ export default function Month() {
             <section className='events'>
                 <section className='month-buttons'>
                     <button onClick={switchViews}>Switch to {isListView ? "Calendar" : "List"} view</button>
-                    <button disabled>Add to calendar</button>
+                    {/* <button disabled>Add to calendar</button> */}
                 </section>
                 { events.length > 0 ? <>{isListView ? <MonthListView events={events}/> : <MonthCalendarView events={events} selectedDate={selectedDate}/>}</> : null}
             </section>
