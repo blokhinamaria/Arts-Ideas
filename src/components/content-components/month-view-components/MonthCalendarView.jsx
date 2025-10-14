@@ -154,7 +154,7 @@ export default function MonthCalendarView({events, selectedDate}) {
                                 <p className="body-large">{formatEventDate(dayEvents[0].date, 'time')}</p>
                                 <h5>{dayEvents[0].title}</h5>
                             </div>
-                            { dayEvents.length === 1 ? (<span className='tag'> + {dayEvents.length - 1} more</span>) : null}
+                            { dayEvents.length > 1 ? (<span className='tag'> + {dayEvents.length - 1} more</span>) : null}
                         </div>
                 )}
         } 
