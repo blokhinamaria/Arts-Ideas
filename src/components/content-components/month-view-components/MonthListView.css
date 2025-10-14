@@ -11,25 +11,3 @@ section.month-list-view {
     margin-inline: auto;
 }
 
-section.month-list-view > .event {
-    background-color: var(--white);
-    padding: var(--small-gap);
-}
-
-section.month-list-view > .event.completed {
-    opacity: 0.75;
-}
-
-.event > .event-header-group {
-    display: flex;
-    min-height: calc(1rem * 1.2 * 3);
-    align-items: center;
-}
-
-.event-header-group > button.add-to-calendar-icon {
-    color: var(--black);
-    border: none;
-    padding: 10px;
-    line-height: 0;
-    height: 45px; 
-}

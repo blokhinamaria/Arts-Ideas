@@ -1,5 +1,9 @@
 section.upcoming-events {
-    display: flex;
+    display: grid;
+    grid-template-areas: 
+        'event1 event1 event2'
+        'event1 event1 event3'
+    ;
     width: 100%;
     max-height: 900px;
     overflow: hidden;
@@ -8,6 +12,7 @@ section.upcoming-events {
 }
 
 .next-event {
+    grid-area: event1;
     display: flex;
     background-color: var(--white);
     color: var(--black);
@@ -15,19 +20,19 @@ section.upcoming-events {
     position: relative;
 }
 
-.next-event-image-container {
+.next-event .event-image-container {
     flex: 2;
     overflow: hidden;
 }
 
-.next-event-image-container img {
+.next-event .event-image-container img {
     height: 100%;
     width: 100%;
     object-fit: cover;
     display: block;
 }
 
-.next-event-details-container {
+.next-event .event-details-container {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -35,12 +40,12 @@ section.upcoming-events {
     padding: var(--small-gap);
 }
 
-.following-events {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: var(--small-gap);
-    
+.following-event:first-of-type {
+    grid-area: event2;
+}
+
+.following-event:last-of-type {
+    grid-area: event3;
 }
 
 .following-event {
@@ -52,20 +57,20 @@ section.upcoming-events {
     position: relative;
 }
 
-.following-event-image-container {
+.following-event .event-image-container {
     overflow: hidden;
     flex: 1 1 auto;
     display: flex;
 }
 
-.following-event-image-container img {
+.following-event .event-image-container img {
     height: 100%;
     width: 100%;
     object-fit: cover;
     display: block;
 }
 
-.following-event-details-container {
+.following-event .event-details-container {
     padding: var(--small-gap);
     flex: 0 0 auto;
 }
@@ -83,7 +88,7 @@ span.tag-shape.absolute {
     height: 45px;
 }
 
-.following-event-details-container > button.add-to-calendar-icon {
+.following-event .event-details-container > button.add-to-calendar-icon {
     background-color: var(--accent1);
     color: var(--black);
     border: none;
@@ -96,27 +101,27 @@ span.tag-shape.absolute {
     right: 0;
 }
 
-.following-event-details-container:last-child p {
+.following-event .event-details-container:last-child p {
     margin-bottom: 0;
 }
 
 @media (max-width: 1024px) {
     section.upcoming-events {
+        display: flex;
         flex-direction: column;
         max-height: 100%;
     }
 
     .following-event {
         flex-direction: row;
-        min-height: 300px;
     }
 
-    .following-event-image-container {
+    .following-event .event-image-container {
         flex: 2;
-        overflow: hidden;
+        min-height: 400px;
     }
 
-    .following-event-details-container {
+    .following-event .event-details-container {
         flex: 1;
         display: flex;
         flex-direction: column;
@@ -130,34 +135,17 @@ span.tag-shape.absolute {
         margin-block-start: 50px;
     }
 
-    .next-event {
-        flex-direction: column;
-        max-height: 100%;
-    }
-
-    .next-event-image-container {
-        flex: 0 0 250px;
-        height: 250px;
-    }
-
-    .next-event-details-container {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
     .following-event {
         flex-direction: column;
         max-height: 100%;
     }
 
-    .following-event-image-container {
+    .following-event .event-image-container {
         flex: 0 0 250px;
         height: 250px;
     }
 
-    .following-event-details-container {
+    .following-event .event-details-container {
         flex: 1;
         display: flex;
         flex-direction: column;
