@@ -82,6 +82,8 @@ export default function UpcomingEvents() {
 
     const isNarrow = useMediaQuery('(max-width: 1024px')
 
+    const defaultImage = './assets/img/default.jpg'
+
     return (
         <article id='upcoming-events'>
             <h1>Upcoming<br/>Events</h1>
@@ -90,7 +92,7 @@ export default function UpcomingEvents() {
                 <div className={isNarrow ? 'following-event' : 'next-event'}>
 
                     <div className='event-image-container'>
-                        <img src={currentEvents[0]?.coverImageUrl}></img>
+                        <img src={currentEvents[0]?.coverImageUrl ? currentEvents[0]?.coverImageUrl : defaultImage}></img>
                     </div>
 
                     <div className='event-details-container'>
