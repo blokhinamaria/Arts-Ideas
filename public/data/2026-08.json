@@ -4,7 +4,7 @@
         "title": "Master of Arts in Social and Emerging Media Capstone Pitch Contest",
         "date": "2026-08-13T18:00:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Presentation",
         "description": "Graduate students compete for a panel of experts and the audience in short, timed presentations.",
         "contact": {
@@ -23,7 +23,7 @@
         "title": "Master of Arts in Social and Emerging Media Exhibition, Reception and Awards Ceremony",
         "date": "2026-08-13T19:30:00-04:00",
         "locationKey": "scarfone_gallery",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Exhibition",
         "description": "An interactive showcase of creative media, applied research, and innovative thesis projects with an awards ceremony and a reception.",
         "contact": {

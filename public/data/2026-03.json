@@ -4,7 +4,7 @@
         "title": "La passion de Dodin Bouffant",
         "date": "2026-03-03T18:00:00-05:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Film",
         "description": "Set in France in 1889, this film by director Trâ`n Anh Hùng follows the life of Dodin Bouffant, a chef living with his personal cook and lover Eugénie. They share a long history of gastronomy and love but Eugénie refuses to marry Dodin, so the food lover decides to do something he has never done before: cook for her.",
         "contact": {
@@ -23,7 +23,7 @@
         "title": "Honors Student Showcase",
         "date": "2026-03-06T13:00:00-05:00",
         "locationKey": "crescent-club",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Academics",
         "description": "This event features Honors Students, including several CAL researchers, presenting work they have done for their theses, conferences, and study abroad classes via a come-and-go poster session.",
         "contact": {
@@ -42,7 +42,7 @@
         "title": "Wind Ensemble Concert",
         "date": "2026-03-06T19:30:00-05:00",
         "locationKey": "falk_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
         "description": "An exciting program of classic and contemporary works for wind band.",
         "contact": {
@@ -62,7 +62,7 @@
         "date": "2026-03-06T10:00:00-05:00",
         "endDate": "2026-04-12T10:00:00-05:00",
         "locationKey": "scarfone_gallery",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Exhibition",
         "description": "The Annual Juried Student Art Exhibition showcases recent art and design projects from UTampa’s Art + Design courses, highlighting experimentation, critical inquiry, and ethical engagement. Coinciding with the NASAD accreditation review, the exhibition reflects the University’s commitment to academic excellence and the advancement of visual culture as a site of learning and dialogue.",
         "contact": {
@@ -81,7 +81,7 @@
         "title": "Symphony Orchestra Concert: Symphony Masterworks Concert",
         "date": "2026-03-07T19:30:00-05:00",
         "locationKey": "falk_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
         "description": "UTampa Symphony Orchestra’s Masterworks Concert features timeless classics and bold contemporary works, celebrating the brilliance and power of orchestral music in a captivating evening performance.",
         "contact": {
@@ -100,7 +100,7 @@
         "title": "Faculty and Guest Artist Chamber Music Recital",
         "date": "2026-03-08T15:00:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
         "description": "Chamber Music by Claude Debussy for alto saxophone, cello and piano featuring a new trio arrangement of his Rhapsodie Mauresque.",
         "contact": {
@@ -119,7 +119,7 @@
         "title": "Re/Frame Film Series: “Thoroughbreds” directed by Cory Finley",
         "date": "2026-03-11T18:00:00-04:00",
         "locationKey": "reeves_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Film",
         "description": "Two upper-class teenage girls in suburban Connecticut rekindle their unlikely friendship after years of growing apart.",
         "contact": {
@@ -138,7 +138,7 @@
         "title": "Amernet String Quartet",
         "date": "2026-03-22T14:00:00-04:00",
         "locationKey": "sykes_chapel",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
         "description": "The Amernet String Quartet, Ensemble-in-Residence at Florida International University, performs Haydn’s “The Seven Last Words of Christ,” showcasing their acclaimed technical ability and “old world flavor” sound.",
         "contact": {
@@ -157,7 +157,7 @@
         "title": "The Bond Mirror",
         "date": "2026-03-25T13:00:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Lecture",
         "description": "The James Bond Franchise has been with us for more than 60 years. This lecture will break down the reflections of societal norms and trends seen in the films, both good and bad, and discuss if we are better or worse for seeing society in this manner.",
         "contact": {
@@ -176,7 +176,7 @@
         "title": "The Spitfire Grill",
         "date": "2026-03-26T20:00:00-04:00",
         "locationKey": "falk_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Theatre",
         "description": "“The Spitfire Grill,” directed by Michael Staczar, tells of a woman rebuilding her life after prison, bringing hope and renewal to a rural Wisconsin town.",
         "contact": {
@@ -195,7 +195,7 @@
         "title": "Annual Juried Student Art Exhibition Awards Reception",
         "date": "2026-03-27T18:00:00-04:00",
         "locationKey": "scarfone_gallery",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Exhibition",
         "description": "Outstanding individual students from the Annual Juried Student Art Exhibition will receive awards. Awards generously sponsored by the Gasparilla Festival of the Arts.",
         "contact": {
@@ -214,7 +214,7 @@
         "title": "Salzedo Harp Duo",
         "date": "2026-03-27T19:30:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
         "description": "The Salzedo Harp Duo returns to UTampa with a program featuring works by Salzedo, Debussy, Tournier, Andrés, and other beloved composers for harp.",
         "contact": {
@@ -233,7 +233,7 @@
         "title": "Women, Gender and Sexuality Studies Roundtable",
         "date": "2026-03-30T16:00:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Lecture",
         "description": "This event brings together scholars and community members to discuss various challenges and opportunities within the purview of Women, Gender and Sexuality Studies.",
         "contact": {
@@ -252,7 +252,7 @@
         "title": "Ars Sonora: Music from Around the World",
         "date": "2026-03-31T20:00:00-04:00",
         "locationKey": "sykes_plaza",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
         "description": "Join us for a musical journey around the world, featuring works from France, Mexico, Japan, and more, celebrating music’s universal language across cultures.",
         "contact": {

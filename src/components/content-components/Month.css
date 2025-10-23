@@ -76,22 +76,23 @@ section.month-buttons {
   section.month-title-banner > div {
     width: 100%;
     justify-content: space-between;
+    overflow: hidden;
   }
 }
 
 @media (max-width: 768px) {
   .month-title-banner button.month-swipe > span {
-    font-size: 5rem;
+    font-size: 3.5rem;
   }
 }
 
 @media (max-width: 520px) {
   .month-title-banner .month-name {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
   }
 
   .month-title-banner .month-name-details h2, h4 {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   .month-title-banner button.month-swipe > span {

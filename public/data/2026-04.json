@@ -4,7 +4,7 @@
         "title": "Synergy Spring 2026: “Elemental Colors”",
         "date": "2026-04-10T19:30:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Performance",
         "description": "Be dazzled through a kaleidoscope of creativity! Synergy brings together the unique and extraordinary talent of students and faculty in music technology, composition, contemporary performance.",
         "contact": {
@@ -23,7 +23,7 @@
         "title": "Sandro Russo, Piano & Organ",
         "date": "2026-04-12T14:00:00-04:00",
         "locationKey": "sykes_chapel",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
         "description": "NYC pianist and organist Sandro Russo performs Liszt’s “Sonata in B minor” and “Fantasy and Fugue on ‘Ad Nos,’” showcasing two virtuosic, Weimar-period masterpieces in one event.",
         "contact": {
@@ -42,7 +42,7 @@
         "title": "Conspirituality: Charismatic Influencers and Cultural Paranoia",
         "date": "2026-04-15T13:00:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Lecture",
         "description": "Journey through contemporary media discussing conspiracy theories, influencers, products, and panaceas. Conspirituality links conspiratorial thinking and spirituality as social forces, exploring memory and media to navigate our culture.",
         "contact": {
@@ -61,7 +61,7 @@
         "title": "Spartan Story Slam",
         "date": "2026-04-16T18:00:00-04:00",
         "locationKey": "",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Performance",
         "description": "Storytelling competition where students from SPE 300 share true, personal stories about loneliness in eight minutes or less.",
         "contact": {
@@ -80,7 +80,7 @@
         "title": "The Blue Planet",
         "date": "2026-04-16T20:00:00-04:00",
         "locationKey": "black_box_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Theatre",
         "description": "“The Blue Planet,” directed by Nicole Crowther, adapts Andri Snær Magnason’s children’s book into a play exploring ecological themes on a planet inhabited solely by children.",
         "contact": {
@@ -99,7 +99,7 @@
         "title": "The Blue Planet",
         "date": "2026-04-17T20:00:00-04:00",
         "locationKey": "black_box_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Theatre",
         "description": "“The Blue Planet,” directed by Nicole Crowther, adapts Andri Snær Magnason’s children’s book into a play exploring ecological themes on a planet inhabited solely by children.",
         "contact": {
@@ -118,7 +118,7 @@
         "title": "The Blue Planet",
         "date": "2026-04-17T10:00:00-04:00",
         "locationKey": "black_box_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Theatre",
         "description": "“The Blue Planet,” directed by Nicole Crowther, adapts Andri Snær Magnason’s children’s book into a play exploring ecological themes on a planet inhabited solely by children.",
         "contact": {
@@ -137,7 +137,7 @@
         "title": "The Blue Planet",
         "date": "2026-04-18T14:00:00-04:00",
         "locationKey": "black_box_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Theatre",
         "description": "“The Blue Planet,” directed by Nicole Crowther, adapts Andri Snær Magnason’s children’s book into a play exploring ecological themes on a planet inhabited solely by children.",
         "contact": {
@@ -157,7 +157,7 @@
         "date": "2026-04-17T10:00:00-04:00",
         "endDate": "2026-05-08T17:00:00-04:00",
         "locationKey": "scarfone_gallery",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Exhibition",
         "description": "Celebrate the work of students in the Art + Design Bachelor of Fine Arts (BFA) program with this exhibition of their art and design projects.",
         "contact": {
@@ -176,7 +176,7 @@
         "title": "Choir Masterwork Concert",
         "date": "2026-04-18T19:30:00-04:00",
         "locationKey": "fletcher-lounge",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
         "description": "“The Light Within Us All”: Choral Masterworks by 21st Century Women Composers. Featuring works of Reena Esmail, Elaine Hagenberg, and Hyo-Won Woo, performed by all University of Tampa Choral Ensembles with symphony orchestra.",
         "contact": {
@@ -195,7 +195,7 @@
         "title": "Faculty Recital: Duncan MacMillan, Piano",
         "date": "2026-04-19T15:00:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
         "description": "A faculty piano recital featuring works by Mozart, Schubert, and Debussy.",
         "contact": {
@@ -214,7 +214,7 @@
         "title": "Jazz Ensemble Concert",
         "date": "2026-04-21T19:30:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
         "description": "An exciting program of classic and contemporary works for jazz ensemble.",
         "contact": {
@@ -233,7 +233,7 @@
         "title": "“Neon” 25/26 Issue Launch Party",
         "date": "2026-04-22T18:00:00-04:00",
         "locationKey": "performance_gallery",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Social/Arts",
         "description": "Join “Neon” for a sneak peek into the accepted pieces from the next volume and participate in the open mic event.",
         "contact": {
@@ -252,7 +252,7 @@
         "title": "Opera Workshop Ensemble SP26 Concert",
         "date": "2026-04-25T19:30:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music/Opera",
         "description": "The UTampa Opera Workshop ensemble will feature scenes from contemporary American operas, including Moby Dick and Regina.",
         "contact": {
@@ -272,7 +272,7 @@
         "date": "2026-04-29T20:00:00-04:00",
         "endDate": "2026-05-01T20:00:00-04:00",
         "locationKey": "falk_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Dance",
         "description": "UTampa’s Spring Dance Happening, directed by Amanda Gabaldon, features student-choreographed works in diverse dance styles, showcasing the talent and creativity of UTampa dancers in a popular annual event.",
         "contact": {

@@ -4,7 +4,7 @@
         "title": "Broadway Today",
         "date": "2026-05-01T12:00:00-04:00",
         "locationKey": "black_box_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Theatre",
         "description": "Directed by Paul Finocchiaro, this original musical revue showcases UTampa student performers in a cabaret-style tribute to the music and magic of today’s Broadway hits.",
         "contact": {
@@ -23,7 +23,7 @@
         "title": "Broadway Today",
         "date": "2026-05-01T19:30:00-04:00",
         "locationKey": "black_box_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Theatre",
         "description": "Directed by Paul Finocchiaro, this original musical revue showcases UTampa student performers in a cabaret-style tribute to the music and magic of today’s Broadway hits.",
         "contact": {
@@ -42,7 +42,7 @@
         "title": "Symphony Orchestra Concert – 2025 Concerto and Aria Competition Concert",
         "date": "2026-05-02T19:30:00-04:00",
         "locationKey": "falk_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
         "description": "UTampa Symphony Orchestra’s 2025 Concerto and Aria Competition Concert features outstanding student soloists performing with orchestra, celebrating emerging talent and the next generation of classical performers.",
         "contact": {
@@ -61,7 +61,7 @@
         "title": "Wind Ensemble Concert",
         "date": "2026-05-03T15:00:00-04:00",
         "locationKey": "falk_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
         "description": "An exciting program of classic and contemporary works for wind band.",
         "contact": {
@@ -80,7 +80,7 @@
         "title": "Senior Thesis Showcase for Film and Digital Production",
         "date": "2026-05-04T19:00:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Film",
         "description": "Senior Thesis Showcase displaying films of graduating seniors in the Bachelor of Arts and Bachelor of Fine Arts degree programs in the Film, Animation and New Media Department.",
         "contact": {
@@ -99,7 +99,7 @@
         "title": "Senior Thesis Showcase for Animation and New Media",
         "date": "2026-05-05T19:00:00-04:00",
         "locationKey": "gordon_theater",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Animation",
         "description": "Senior Thesis Showcase displaying films of graduating seniors in the Bachelor of Fine Arts degree programs in the Film, Animation and New Media Department.",
         "contact": {
@@ -118,7 +118,7 @@
         "title": "Ars Sonora: “Star Wars” Day Concert",
         "date": "2026-05-04T20:00:00-04:00",
         "locationKey": "sykes_plaza",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
         "description": "Celebrate “Star Wars” Day with music from the legendary film series, featuring iconic themes in a concert honoring one of cinema’s greatest musical legacies.",
         "contact": {
@@ -137,7 +137,7 @@
         "title": "Spring Art + Design Bachelor of Fine Arts Celebration Event",
         "date": "2026-05-08T18:00:00-04:00",
         "locationKey": "scarfone_gallery",
-        "coverImageUrl": "/assets/img/events/hero-image-1.png",
+        "coverImageUrl": "/assets/img/default.jpg",
         "category": "Exhibition",
         "description": "Join students in the Art + Design Bachelor of Fine Arts (BFA) degree program for a celebratory event of their art.",
         "contact": {

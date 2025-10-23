@@ -11,3 +11,9 @@ section.month-list-view {
     margin-inline: auto;
 }
 
+@media (max-width: 375px) {
+    section.month-list-view {
+        grid-template-columns: 100%;
+    }
+}
+
