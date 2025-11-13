@@ -2,7 +2,7 @@
     {
         "id": 113,
         "title": "Broadway Today",
-        "date": "2026-05-01T12:00:00-04:00",
+        "date": "2026-05-01T12:00:00",
         "locationKey": "black_box_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Theatre",
@@ -15,13 +15,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["theatre", "musical", "broadway", "student"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 114,
         "title": "Broadway Today",
-        "date": "2026-05-01T19:30:00-04:00",
+        "date": "2026-05-01T19:30:00",
         "locationKey": "black_box_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Theatre",
@@ -34,13 +34,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["theatre", "musical", "broadway", "student"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 115,
         "title": "Symphony Orchestra Concert – 2025 Concerto and Aria Competition Concert",
-        "date": "2026-05-02T19:30:00-04:00",
+        "date": "2026-05-02T19:30:00",
         "locationKey": "falk_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
@@ -53,13 +53,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["music", "orchestra", "concerto", "competition"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 116,
         "title": "Wind Ensemble Concert",
-        "date": "2026-05-03T15:00:00-04:00",
+        "date": "2026-05-03T15:00:00",
         "locationKey": "falk_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
@@ -72,13 +72,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["music", "wind", "ensemble", "concert"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 117,
         "title": "Senior Thesis Showcase for Film and Digital Production",
-        "date": "2026-05-04T19:00:00-04:00",
+        "date": "2026-05-04T19:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Film",
@@ -91,13 +91,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["film", "student", "showcase", "digital"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 118,
         "title": "Senior Thesis Showcase for Animation and New Media",
-        "date": "2026-05-05T19:00:00-04:00",
+        "date": "2026-05-05T19:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Animation",
@@ -110,13 +110,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["animation", "student", "showcase", "new-media"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 119,
         "title": "Ars Sonora: “Star Wars” Day Concert",
-        "date": "2026-05-04T20:00:00-04:00",
+        "date": "2026-05-04T20:00:00",
         "locationKey": "sykes_plaza",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
@@ -129,13 +129,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["music", "concert", "star-wars", "celebration"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 120,
         "title": "Spring Art + Design Bachelor of Fine Arts Celebration Event",
-        "date": "2026-05-08T18:00:00-04:00",
+        "date": "2026-05-08T18:00:00",
         "locationKey": "scarfone_gallery",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Exhibition",
@@ -148,7 +148,7 @@
         "price": "free",
         "status": "planned",
         "tags": ["art", "design", "bfa", "celebration"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     }
 ]

@@ -2,7 +2,7 @@
     {
         "id": 1,
         "title": "Guest Artist Recital: Kevin Ayesh, Piano",
-        "date": "2025-09-06T19:30:00-04:00",
+        "date": "2025-09-06T19:30:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Recital",
@@ -15,13 +15,13 @@
         "price": "free",
         "status": "completed",
         "tags": ["piano", "recital", "classical", "guest-artist"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-06T22:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-06T22:00:00"
     },
     {
         "id": 2,
         "title": "Faculty Recital: Duncan MacMillan, Harpsichord",
-        "date": "2025-09-14T15:00:00-04:00",
+        "date": "2025-09-14T15:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Recital",
@@ -34,13 +34,13 @@
         "price": "free",
         "status": "completed",
         "tags": ["harpsichord", "faculty", "recital", "baroque"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-14T17:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-14T17:00:00"
     },
     {
         "id": 3,
         "title": "Empathy Farming: The Evolution of Unhinged Mobile Game Ads",
-        "date": "2025-09-17T13:00:00-04:00",
+        "date": "2025-09-17T13:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Lecture",
@@ -53,13 +53,13 @@
         "price": "free",
         "status": "completed",
         "tags": ["games", "mobile", "media", "lecture"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-17T15:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-17T15:00:00"
     },
     {
         "id": 4,
         "title": "Scholars Symposium with Nathan Hensley: \"Thought and Art in a Burning World: So What?\"",
-        "date": "2025-09-19T16:00:00-04:00",
+        "date": "2025-09-19T16:00:00",
         "locationKey": "trustees_boardroom",
         "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Symposium",
@@ -72,13 +72,13 @@
         "price": "free",
         "status": "completed",
         "tags": ["literature", "climate", "symposium", "georgetown"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-19T17:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-19T17:00:00"
     },
     {
         "id": 5,
         "title": "Sunscreen x FMX Presents: Creating a Sustainable Career in Film",
-        "date": "2025-09-23T18:30:00-04:00",
+        "date": "2025-09-23T18:30:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Panel",
@@ -91,13 +91,13 @@
         "price": "free",
         "status": "completed",
         "tags": ["film", "career", "panel", "indiewire"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-23T20:30:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-23T20:30:00"
     },
     {
         "id": 6,
         "title": "Ars Sonora: The Music of Video Games",
-        "date": "2025-09-23T20:00:00-04:00",
+        "date": "2025-09-23T20:00:00",
         "locationKey": "sykes_plaza",
         "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Concert",
@@ -110,13 +110,13 @@
         "price": "free",
         "status": "completed",
         "tags": ["music", "videogames", "concert", "ars-sonora"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-23T22:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-23T22:00:00"
     },
     {
         "id": 7,
         "title": "Writers at the University featuring Carmen Maria Machado",
-        "date": "2025-09-25T19:00:00-04:00",
+        "date": "2025-09-25T19:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Reading",
@@ -129,13 +129,13 @@
         "price": "free",
         "status": "completed",
         "tags": ["literature", "reading", "queer", "memoir"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-25T21:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-25T21:00:00"
     },
     {
         "id": 8,
         "title": "UTampa Alumni Painting Reception",
-        "date": "2025-09-26T18:00:00-04:00",
+        "date": "2025-09-26T18:00:00",
         "locationKey": "performance_gallery",
         "coverImageUrl": "/assets/img/events/hero-image-1.png",
         "category": "Exhibition",
@@ -148,7 +148,7 @@
         "price": "free",
         "status": "completed",
         "tags": ["art", "exhibition", "alumni", "reception"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-26T20:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-26T20:00:00"
     }
 ]

@@ -2,7 +2,7 @@
     {
         "id": 97,
         "title": "Synergy Spring 2026: “Elemental Colors”",
-        "date": "2026-04-10T19:30:00-04:00",
+        "date": "2026-04-10T19:30:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Performance",
@@ -15,13 +15,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["performance", "music technology", "composition", "contemporary"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 98,
         "title": "Sandro Russo, Piano & Organ",
-        "date": "2026-04-12T14:00:00-04:00",
+        "date": "2026-04-12T14:00:00",
         "locationKey": "sykes_chapel",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
@@ -34,13 +34,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["music", "piano", "organ", "classical"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 99,
         "title": "Conspirituality: Charismatic Influencers and Cultural Paranoia",
-        "date": "2026-04-15T13:00:00-04:00",
+        "date": "2026-04-15T13:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Lecture",
@@ -53,13 +53,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["lecture", "media", "culture", "conspiracy"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 100,
         "title": "Spartan Story Slam",
-        "date": "2026-04-16T18:00:00-04:00",
+        "date": "2026-04-16T18:00:00",
         "locationKey": "",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Performance",
@@ -72,13 +72,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["storytelling", "competition", "student", "performance"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 101,
         "title": "The Blue Planet",
-        "date": "2026-04-16T20:00:00-04:00",
+        "date": "2026-04-16T20:00:00",
         "locationKey": "black_box_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Theatre",
@@ -91,13 +91,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["theatre", "play", "children", "ecology"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 102,
         "title": "The Blue Planet",
-        "date": "2026-04-17T20:00:00-04:00",
+        "date": "2026-04-17T20:00:00",
         "locationKey": "black_box_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Theatre",
@@ -110,13 +110,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["theatre", "play", "children", "ecology"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 103,
         "title": "The Blue Planet",
-        "date": "2026-04-17T10:00:00-04:00",
+        "date": "2026-04-17T10:00:00",
         "locationKey": "black_box_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Theatre",
@@ -129,13 +129,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["theatre", "play", "children", "ecology"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 104,
         "title": "The Blue Planet",
-        "date": "2026-04-18T14:00:00-04:00",
+        "date": "2026-04-18T14:00:00",
         "locationKey": "black_box_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Theatre",
@@ -148,14 +148,14 @@
         "price": "free",
         "status": "planned",
         "tags": ["theatre", "play", "children", "ecology"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 105,
         "title": "Spring Art + Design Bachelor of Fine Arts Exhibition",
-        "date": "2026-04-17T10:00:00-04:00",
-        "endDate": "2026-05-08T17:00:00-04:00",
+        "date": "2026-04-17T10:00:00",
+        "endDate": "2026-05-08T17:00:00",
         "locationKey": "scarfone_gallery",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Exhibition",
@@ -168,13 +168,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["art", "design", "BFA", "student"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 106,
         "title": "Choir Masterwork Concert",
-        "date": "2026-04-18T19:30:00-04:00",
+        "date": "2026-04-18T19:30:00",
         "locationKey": "fletcher-lounge",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
@@ -187,13 +187,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["music", "choral", "masterwork", "concert"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 107,
         "title": "Faculty Recital: Duncan MacMillan, Piano",
-        "date": "2026-04-19T15:00:00-04:00",
+        "date": "2026-04-19T15:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
@@ -206,13 +206,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["music", "piano", "recital", "faculty"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 108,
         "title": "Jazz Ensemble Concert",
-        "date": "2026-04-21T19:30:00-04:00",
+        "date": "2026-04-21T19:30:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
@@ -225,13 +225,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["music", "jazz", "ensemble", "concert"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 110,
         "title": "“Neon” 25/26 Issue Launch Party",
-        "date": "2026-04-22T18:00:00-04:00",
+        "date": "2026-04-22T18:00:00",
         "locationKey": "performance_gallery",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Social/Arts",
@@ -244,13 +244,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["arts", "social", "neon", "open-mic"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 111,
         "title": "Opera Workshop Ensemble SP26 Concert",
-        "date": "2026-04-25T19:30:00-04:00",
+        "date": "2026-04-25T19:30:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music/Opera",
@@ -263,14 +263,14 @@
         "price": "free",
         "status": "planned",
         "tags": ["opera", "ensemble", "performance", "music"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 112,
         "title": "The Spring Dance Happening",
-        "date": "2026-04-29T20:00:00-04:00",
-        "endDate": "2026-05-01T20:00:00-04:00",
+        "date": "2026-04-29T20:00:00",
+        "endDate": "2026-05-01T20:00:00",
         "locationKey": "falk_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Dance",
@@ -283,7 +283,7 @@
         "price": "free",
         "status": "planned",
         "tags": ["dance", "performance", "student", "annual"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     }
 ]

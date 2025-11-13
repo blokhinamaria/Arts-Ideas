@@ -2,7 +2,7 @@
     {
         "id": 121,
         "title": "Master of Arts in Social and Emerging Media Capstone Pitch Contest",
-        "date": "2026-08-13T18:00:00-04:00",
+        "date": "2026-08-13T18:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Presentation",
@@ -15,13 +15,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["graduate", "capstone", "pitch", "competition"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 122,
         "title": "Master of Arts in Social and Emerging Media Exhibition, Reception and Awards Ceremony",
-        "date": "2026-08-13T19:30:00-04:00",
+        "date": "2026-08-13T19:30:00",
         "locationKey": "scarfone_gallery",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Exhibition",
@@ -34,7 +34,7 @@
         "price": "free",
         "status": "planned",
         "tags": ["graduate", "exhibition", "reception", "awards"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     }
 ]

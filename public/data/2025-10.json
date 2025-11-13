@@ -2,7 +2,7 @@
     {
         "id": 9,
         "title": "Behind the Bolt: The People Who Power the Lightning",
-        "date": "2025-10-01T18:00:00-04:00",
+        "date": "2025-10-01T18:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/general/gordon_theater01.jpg",
         "category": "Talk",
@@ -15,13 +15,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["talk", "sports", "career", "media"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 10,
         "title": "“Royal Road” Launch Party",
-        "date": "2025-10-03T16:00:00-04:00",
+        "date": "2025-10-03T16:00:00",
         "locationKey": "performance_gallery",
         "coverImageUrl": "/assets/img/general/performance_gallery.jpg",
         "category": "Celebration",
@@ -34,13 +34,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["celebration", "student-research", "journal"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 11,
         "title": "Hein Jung, Soprano and Grigorios Zamparas, Piano",
-        "date": "2025-10-03T19:30:00-04:00",
+        "date": "2025-10-03T19:30:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/general/ferman01.jpg",
         "category": "Recital",
@@ -53,13 +53,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["recital", "soprano", "piano", "liszt"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 12,
         "title": "Baby with the Bathwater",
-        "date": "2025-10-09T20:00:00-04:00",
+        "date": "2025-10-09T20:00:00",
         "locationKey": "black_box_theater",
         "coverImageUrl": "/assets/img/general/theater01.jpg",
         "category": "Theater",
@@ -72,13 +72,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["theatre", "comedy", "play"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 13,
         "title": "University of Tampa Choral Collage",
-        "date": "2025-10-10T19:30:00-04:00",
+        "date": "2025-10-10T19:30:00",
         "locationKey": "sykes_chapel",
         "coverImageUrl": "/assets/img/general/sykes_chapel.jpg",
         "category": "Concert",
@@ -91,13 +91,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["choral", "concert", "ensembles"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 14,
         "title": "Symphony Orchestra Concert: Discover the Orchestra",
-        "date": "2025-10-11T18:00:00-04:00",
+        "date": "2025-10-11T18:00:00",
         "locationKey": "falk_theatre",
         "coverImageUrl": "/assets/img/general/music01.jpg",
         "category": "Concert",
@@ -110,13 +110,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["orchestra", "concert", "family", "symphony"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 15,
         "title": "Wind Ensemble Concert: Music of the Cosmos",
-        "date": "2025-10-12T15:00:00-04:00",
+        "date": "2025-10-12T15:00:00",
         "locationKey": "falk_theatre",
         "coverImageUrl": "/assets/img/specific/wind_ensemble01.jpg",
         "category": "Concert",
@@ -129,13 +129,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["wind-ensemble", "space", "concert"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 16,
         "title": "Jazz Ensemble Concert",
-        "date": "2025-10-13T19:30:00-04:00",
+        "date": "2025-10-13T19:30:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/general/jazz02.jpg",
         "category": "Concert",
@@ -148,13 +148,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["jazz", "concert", "ensemble"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 17,
         "title": "Collaborative Conflict Resolution: Reframing the Negative",
-        "date": "2025-10-15T13:00:00-04:00",
+        "date": "2025-10-15T13:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/specific/isablla_ming01.jpg",
         "category": "Talk",
@@ -167,13 +167,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["talk", "conflict", "communication"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 18,
         "title": "Re/Frame Film Series: “Pearl” directed by Ti West",
-        "date": "2025-10-15T18:00:00-04:00",
+        "date": "2025-10-15T18:00:00",
         "locationKey": "reeves_theater",
         "coverImageUrl": "/assets/img/specific/pearl01.webp",
         "category": "Film",
@@ -186,13 +186,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["film", "screening", "horror"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 19,
         "title": "Honors Student Showcase",
-        "date": "2025-10-17T13:00:00-04:00",
+        "date": "2025-10-17T13:00:00",
         "locationKey": "trustees_boardroom",
         "coverImageUrl": "/assets/img/general/vaughn_center01.jpeg",
         "category": "Student Showcase",
@@ -205,13 +205,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["students", "research", "showcase"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 20,
         "title": "Art + Design Faculty Exhibition",
-        "date": "2025-10-17T10:00:00-04:00",
+        "date": "2025-10-17T10:00:00",
         "locationKey": "scarfone_gallery",
         "coverImageUrl": "/assets/img/general/kendra_frorup01.jpg",
         "category": "Exhibition",
@@ -224,13 +224,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["art", "exhibition", "faculty"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 21,
         "title": "Opening Reception: Art + Design Faculty Exhibition",
-        "date": "2025-10-17T18:00:00-04:00",
+        "date": "2025-10-17T18:00:00",
         "locationKey": "scarfone_gallery",
         "coverImageUrl": "/assets/img/general/ry_mccullough01.jpg",
         "category": "Reception",
@@ -243,13 +243,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["art", "exhibition", "reception"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 22,
         "title": "Faculty Recital: Stephen Padgett, Woodwinds",
-        "date": "2025-10-18T19:30:00-04:00",
+        "date": "2025-10-18T19:30:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/general/gordon_theater01.jpg",
         "category": "Recital",
@@ -262,13 +262,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["recital", "woodwinds", "faculty"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 23,
         "title": "Sunscreen x FMX Presents: How to Make Your Film in Florida Without State Film Incentives",
-        "date": "2025-10-21T18:30:00-04:00",
+        "date": "2025-10-21T18:30:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/general/film01.jpeg",
         "category": "Panel",
@@ -281,13 +281,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["film", "panel", "industry"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 24,
         "title": "Ars Sonora: Halloween Concert",
-        "date": "2025-10-21T20:00:00-04:00",
+        "date": "2025-10-21T20:00:00",
         "locationKey": "sykes_plaza",
         "coverImageUrl": "/assets/img/general/ars_sonora02.jpg",
         "category": "Concert",
@@ -300,13 +300,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["concert", "ars-sonora", "halloween"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 25,
         "title": "“Neon” Ghosts in the Cellar",
-        "date": "2025-10-22T18:00:00-04:00",
+        "date": "2025-10-22T18:00:00",
         "locationKey": "rathskeller",
         "coverImageUrl": "/assets/img/general/ut_minarets01.jpg",
         "category": "Reading",
@@ -319,13 +319,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["halloween", "reading", "community"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 26,
         "title": "Fall Dance Happening",
-        "date": "2025-10-22T20:00:00-04:00",
+        "date": "2025-10-22T20:00:00",
         "locationKey": "falk_theatre",
         "coverImageUrl": "/assets/img/general/falk_theater01.jpeg",
         "category": "Dance",
@@ -338,13 +338,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["dance", "student", "performance"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 27,
         "title": "Languages and Linguistics Department Meet and Greet",
-        "date": "2025-10-23T12:00:00-04:00",
+        "date": "2025-10-23T12:00:00",
         "locationKey": "performance_gallery",
         "coverImageUrl": "/assets/img/general/performance_gallery01.jpg",
         "category": "Meet & Greet",
@@ -357,13 +357,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["languages", "meetup", "faculty", "students"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 28,
         "title": "String Quartet with Joseph Beverly, Clarinet",
-        "date": "2025-10-24T19:30:00-04:00",
+        "date": "2025-10-24T19:30:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/specific/wind_ensemble02.jpg",
         "category": "Concert",
@@ -376,13 +376,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["chamber", "concert", "quartet"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     },
     {
         "id": 29,
         "title": "Art + Design Faculty Lunchtime Gallery Talk",
-        "date": "2025-10-29T12:00:00-04:00",
+        "date": "2025-10-29T12:00:00",
         "locationKey": "scarfone_gallery",
         "coverImageUrl": "/assets/img/general/gallery_lecture01.jpg",
         "category": "Talk",
@@ -395,7 +395,7 @@
         "price": "free",
         "status": "planned",
         "tags": ["art", "faculty", "talk"],
-        "createdAt": "2025-09-01T12:00:00-04:00",
-        "updatedAt": "2025-09-01T12:00:00-04:00"
+        "createdAt": "2025-09-01T12:00:00",
+        "updatedAt": "2025-09-01T12:00:00"
     }
 ]

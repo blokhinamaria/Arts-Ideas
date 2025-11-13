@@ -15,8 +15,8 @@
         "price": "free",
         "status": "planned",
         "tags": ["holiday", "music", "concert"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 47,
@@ -34,8 +34,8 @@
         "price": "free",
         "status": "planned",
         "tags": ["theatre", "student", "performance"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 48,
@@ -53,8 +53,8 @@
         "price": "free",
         "status": "planned",
         "tags": ["theatre", "student", "performance"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 49,
@@ -72,8 +72,8 @@
         "price": "free",
         "status": "planned",
         "tags": ["theatre", "student", "performance"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 50,
@@ -91,8 +91,8 @@
         "price": "free",
         "status": "planned",
         "tags": ["holiday", "open-mic", "literary"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 51,
@@ -110,8 +110,8 @@
         "price": "free",
         "status": "planned",
         "tags": ["healthcare", "panel", "holistic"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 52,
@@ -129,8 +129,8 @@
         "price": "free",
         "status": "planned",
         "tags": ["music", "jazz", "ensemble"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 53,
@@ -148,8 +148,8 @@
         "price": "free",
         "status": "planned",
         "tags": ["theatre", "showcase", "student"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 54,
@@ -167,8 +167,8 @@
         "price": "free",
         "status": "planned",
         "tags": ["holiday", "music", "symphony"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 55,
@@ -186,8 +186,8 @@
         "price": "free",
         "status": "planned",
         "tags": ["holiday", "choral", "music"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 56,
@@ -205,8 +205,8 @@
         "price": "free",
         "status": "planned",
         "tags": ["holiday", "choral", "music"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 57,
@@ -224,8 +224,8 @@
         "price": "free",
         "status": "planned",
         "tags": ["film", "student", "showcase"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 58,
@@ -243,8 +243,8 @@
         "price": "free",
         "status": "planned",
         "tags": ["animation", "film", "student"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 59,
@@ -262,7 +262,7 @@
         "price": "free",
         "status": "planned",
         "tags": ["ceremony", "graduation"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     }
 ]

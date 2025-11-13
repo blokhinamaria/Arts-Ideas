@@ -15,8 +15,8 @@
         "price": "free",
         "status": "planned",
         "tags": ["film", "france", "romance", "culinary"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 84,
@@ -34,8 +34,8 @@
         "price": "free",
         "status": "planned",
         "tags": ["honors", "student research", "poster session"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 85,
@@ -53,8 +53,8 @@
         "price": "free",
         "status": "planned",
         "tags": ["music", "wind ensemble", "concert"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 86,
@@ -73,8 +73,8 @@
         "price": "free",
         "status": "planned",
         "tags": ["art", "student exhibition", "juried show"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 87,
@@ -92,13 +92,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["music", "symphony", "orchestra", "classical"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 88,
         "title": "Faculty and Guest Artist Chamber Music Recital",
-        "date": "2026-03-08T15:00:00-04:00",
+        "date": "2026-03-08T15:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
@@ -111,13 +111,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["music", "chamber", "recital", "debussy"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 89,
         "title": "Re/Frame Film Series: “Thoroughbreds” directed by Cory Finley",
-        "date": "2026-03-11T18:00:00-04:00",
+        "date": "2026-03-11T18:00:00",
         "locationKey": "reeves_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Film",
@@ -130,13 +130,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["film", "drama", "friendship"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 90,
         "title": "Amernet String Quartet",
-        "date": "2026-03-22T14:00:00-04:00",
+        "date": "2026-03-22T14:00:00",
         "locationKey": "sykes_chapel",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
@@ -149,13 +149,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["music", "string quartet", "haydn", "classical"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 91,
         "title": "The Bond Mirror",
-        "date": "2026-03-25T13:00:00-04:00",
+        "date": "2026-03-25T13:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Lecture",
@@ -168,13 +168,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["lecture", "film", "james bond", "society"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 92,
         "title": "The Spitfire Grill",
-        "date": "2026-03-26T20:00:00-04:00",
+        "date": "2026-03-26T20:00:00",
         "locationKey": "falk_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Theatre",
@@ -187,13 +187,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["theatre", "drama", "play"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 93,
         "title": "Annual Juried Student Art Exhibition Awards Reception",
-        "date": "2026-03-27T18:00:00-04:00",
+        "date": "2026-03-27T18:00:00",
         "locationKey": "scarfone_gallery",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Exhibition",
@@ -206,13 +206,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["art", "exhibition", "awards", "student"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 94,
         "title": "Salzedo Harp Duo",
-        "date": "2026-03-27T19:30:00-04:00",
+        "date": "2026-03-27T19:30:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
@@ -225,13 +225,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["music", "harp", "duo", "classical"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 95,
         "title": "Women, Gender and Sexuality Studies Roundtable",
-        "date": "2026-03-30T16:00:00-04:00",
+        "date": "2026-03-30T16:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Lecture",
@@ -244,13 +244,13 @@
         "price": "free",
         "status": "planned",
         "tags": ["lecture", "gender studies", "roundtable"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     },
     {
         "id": 96,
         "title": "Ars Sonora: Music from Around the World",
-        "date": "2026-03-31T20:00:00-04:00",
+        "date": "2026-03-31T20:00:00",
         "locationKey": "sykes_plaza",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
@@ -263,7 +263,7 @@
         "price": "free",
         "status": "planned",
         "tags": ["music", "world music", "ensemble", "performance"],
-        "createdAt": "2025-09-25T12:00:00-04:00",
-        "updatedAt": "2025-09-25T12:00:00-04:00"
+        "createdAt": "2025-09-25T12:00:00",
+        "updatedAt": "2025-09-25T12:00:00"
     } 
 ]
