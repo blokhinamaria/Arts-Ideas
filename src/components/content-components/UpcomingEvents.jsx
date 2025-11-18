@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import './UpcomingEvents.css';
 import { formatEventDate } from './utilities/FormatEventDate'
 
-
 export default function UpcomingEvents() {
     const [ currentEvents, setCurrentEvents ] = useState([]);
     const [ availableMonths, setAvailableMonths ] = useState([]);
@@ -16,9 +15,12 @@ export default function UpcomingEvents() {
         
     }, []);
 
+
+
     useEffect(() => {
         const today = new Date();
         const year = today.getFullYear();
+        const cutOffTime = today.setMinutes(today.getMinutes() - 45)
     
         const month = new Intl.DateTimeFormat("en-US", {
             month: "2-digit",
@@ -29,7 +31,7 @@ export default function UpcomingEvents() {
                 // fetch current month events
                 let upcomingEvents = await fetch(`/data/${year}-${month}.json`)
                     .then(res => res.json())
-                    .then(data => data.filter(event => new Date(event.date) >= today));
+                    .then(data => data.filter(event => new Date(event.date) >= cutOffTime));
                 // if fewer than 3, try the next month
                 if (upcomingEvents.length < 3) {
                         const index = availableMonths.indexOf(`${year}-${month}`);
@@ -82,7 +84,7 @@ export default function UpcomingEvents() {
 
     const isNarrow = useMediaQuery('(max-width: 1024px')
 
-    const defaultImage = './assets/img/default.jpg'
+    const defaultImageSrc = './assets/img/default.jpg'
 
     return (
         <article id='upcoming-events'>
@@ -92,7 +94,10 @@ export default function UpcomingEvents() {
                 <div className={isNarrow ? 'following-event' : 'next-event'}>
 
                     <div className='event-image-container'>
-                        <img src={currentEvents[0]?.coverImageUrl ? currentEvents[0]?.coverImageUrl : defaultImage}></img>
+                        <img
+                            src={currentEvents[0]?.coverImageUrl}
+                            onError={(e => e.target.src = defaultImageSrc)}
+                            ></img>
                     </div>
 
                     <div className='event-details-container'>
@@ -112,8 +117,10 @@ export default function UpcomingEvents() {
 
                     <div className='following-event'>
                             <div className='event-image-container'>
-                                {currentEvents[1]?.coverImageUrl ? (<img src={currentEvents[1]?.coverImageUrl}></img>) : (<img src='/assets/img/default.jpg'></img>)}
-                                
+                                <img
+                                    src={currentEvents[1]?.coverImageUrl}
+                                    onError={(e => e.target.src = defaultImageSrc)}
+                                    ></img>
                             </div>
 
                             <div className='event-details-container'>
@@ -136,7 +143,10 @@ export default function UpcomingEvents() {
 
                     <div className='following-event'>
                             <div className='event-image-container'>
-                                <img src={currentEvents[2]?.coverImageUrl}></img>
+                                <img
+                                    src={currentEvents[2]?.coverImageUrl}
+                                    onError={(e => e.target.src = defaultImageSrc)}
+                                    ></img>
                             </div>
 
                             <div className='event-details-container'>
