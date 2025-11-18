@@ -60,28 +60,50 @@ export default function Month() {
     }
 
     //import data
-    const [events, setEvents] = useState([]);
+    const [ events, setEvents ] = useState([]);
+    const [ upcomingEventsOnly, setUpcomingEventsOnly ] = useState([]);
+    const [ showPast, setShowPast ] = useState(false);
+    const [ isCurrentMonth, setIsCurrentMonth ] = useState(false);
+    const today = new Date();
+    const cutOffTime = today.setMinutes(today.getMinutes() - 45);
     
     useEffect(() => {
-        async function fetchData() {
+        async function loadData() {
+            const data = await fetchData();
+            setEvents(data);
+            
+            if (today.getMonth() === selectedDate.getMonth()) {
+                const filteredData = data.filter(event => new Date(event.date) >= cutOffTime);
+                setUpcomingEventsOnly(filteredData);
+                setIsCurrentMonth(true)
+            } else {
+                setUpcomingEventsOnly(data);
+                setIsCurrentMonth(false)
+            }
+        }
+        
+        loadData();
+    }, [year, month, selectedDate]);
+
+    async function fetchData() {
             try {
             const eventsData = await fetch(`/data/${year}-${month}.json`).then(res => res.json());
-
             const locationsData = await fetch('/data/locations.json').then(res => res.json());
 
-            setEvents(eventsData.map(event => {
+            const eventsWithLocations = eventsData.map(event => {
                 const location = locationsData.find(location => location.key === event.locationKey)
                 return {
                     ...event,
                     location: location,
-                }
-            }   
-            )) } catch {
-                setEvents([]);
+                }})
+
+            return eventsWithLocations;
+            
+            } catch {
+                return []
             }
-        }
-        fetchData();
-    }, [year, month]);
+
+    }
 
     return (
 
@@ -110,9 +132,10 @@ export default function Month() {
             <section className='events'>
                 <section className='month-buttons'>
                     <button onClick={switchViews}>Switch to {isListView ? "Calendar" : "List"} view</button>
+                    {isCurrentMonth && <button onClick={() => setShowPast(prev => !prev)}>{showPast ? 'Hide' : 'Show'} past events</button>}
                     {/* <button disabled>Add to calendar</button> */}
                 </section>
-                { events.length > 0 ? <>{isListView ? <MonthListView events={events}/> : <MonthCalendarView events={events} selectedDate={selectedDate}/>}</> : null}
+                { events.length > 0 ? <>{isListView ? <MonthListView events={showPast ? events : upcomingEventsOnly}/> : <MonthCalendarView events={showPast ? events : upcomingEventsOnly} selectedDate={selectedDate} showPast ={showPast}/>}</> : null}
             </section>
         </article>
         

@@ -15,8 +15,6 @@ export default function UpcomingEvents() {
         
     }, []);
 
-
-
     useEffect(() => {
         const today = new Date();
         const year = today.getFullYear();
