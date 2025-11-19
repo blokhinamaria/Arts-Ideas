@@ -48,6 +48,10 @@ section.calendar {
     background-color: var(--white-semi-opaque);
 }
 
+.calendar-day.empty.red {
+    color: red;
+}
+
 .calendar-day-number {
     display: flex;
     gap: 10px;
@@ -70,7 +74,8 @@ section.calendar {
 }
 
 .popover-wrapper {
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     max-width: 80vw;
 }
 
@@ -102,9 +107,11 @@ section.calendar {
         left: anchor(right);
         transform: translate(0, 0);
         position-try-fallbacks:
-            flip-block,        
-            flip-inline,       
-            flip-block flip-inline
+            flip-inline,
+            flip-block,              
+            flip-block flip-inline;
+        max-inline-size: calc(100vw - 20px);
+        left: min(anchor(right), calc(100vw - 320px));
     }
 }
 
@@ -116,7 +123,7 @@ section.calendar {
     bottom: 0;
     background-color: var(--accent-color-1-opaque);
     z-index: 3;
-    cursor: default; /* Optional: shows it's clickable */
+    cursor: default; 
 }
 
 @media (max-width: 768px) {

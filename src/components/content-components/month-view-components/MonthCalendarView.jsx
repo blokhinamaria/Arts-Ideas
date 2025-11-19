@@ -122,6 +122,9 @@ export default function MonthCalendarView({events, selectedDate, showPast}) {
         )
     }
 
+    const firstEventDate = new Date(events[0].date).getDate();
+    const lastEventDate = new Date(events[events.length - 1].date).getDate();
+
     //actual days 
     for (let d = firstDay.getDate(); d <= daysInMonth; d++) {
         const dayEvents = [];
@@ -178,11 +181,24 @@ export default function MonthCalendarView({events, selectedDate, showPast}) {
                 )}
         } 
         else {
-            calendarDays.push(
-                <div key={d} className="calendar-day empty">
-                    <h4>{d}</h4>
-                </div>
-            )
+            if (isMobile && (d < firstEventDate - 2 || d > lastEventDate + 2)) {
+                <></>
+            } else if (isMobile && (d === firstEventDate - 2 || d === lastEventDate + 2)) {
+                calendarDays.push(
+                        <div key={d} className="calendar-day empty">
+                            <h4>...</h4>
+                        </div>
+                    )
+            } else {
+                calendarDays.push(
+                        <div key={d} className="calendar-day empty">
+                            <h4>{d}</h4>
+                        </div>
+                    )
+            }
+                
+            
+            
         }
     }
 
