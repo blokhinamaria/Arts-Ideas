@@ -2,7 +2,7 @@
     {
         "id": 65,
         "title": "“Neon” Open Mic/Issue Sneak Preview",
-        "date": "2026-02-04T18:00:00-05:00",
+        "date": "2026-02-04T18:00:00",
         "locationKey": "performance_gallery",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Literary",
@@ -21,7 +21,7 @@
     {
         "id": 66,
         "title": "La nuit du 12",
-        "date": "2026-02-06T19:00:00-05:00",
+        "date": "2026-02-06T19:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Film",
@@ -40,7 +40,7 @@
     {
         "id": 67,
         "title": "Amernet String Quartet",
-        "date": "2026-02-07T19:30:00-05:00",
+        "date": "2026-02-07T19:30:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
@@ -59,7 +59,7 @@
     {
         "id": 68,
         "title": "Siglo de Oro",
-        "date": "2026-02-08T14:00:00-05:00",
+        "date": "2026-02-08T14:00:00",
         "locationKey": "sykes_chapel",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
@@ -78,7 +78,7 @@
     {
         "id": 69,
         "title": "Ars Sonora: Valentines",
-        "date": "2026-02-10T20:00:00-05:00",
+        "date": "2026-02-10T20:00:00",
         "locationKey": "sykes_plaza",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
@@ -97,7 +97,7 @@
     {
         "id": 70,
         "title": "Living la Vida Azul",
-        "date": "2026-02-11T12:00:00-05:00",
+        "date": "2026-02-11T12:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Lecture",
@@ -116,7 +116,7 @@
     {
         "id": 71,
         "title": "“Le Comte de Monte Cristo”",
-        "date": "2026-02-12T12:00:00-05:00",
+        "date": "2026-02-12T12:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Film",
@@ -135,7 +135,7 @@
     {
         "id": 72,
         "title": "Sex & Communication Lecture",
-        "date": "2026-02-12T18:00:00-05:00",
+        "date": "2026-02-12T18:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Lecture",
@@ -154,8 +154,8 @@
     {
         "id": 73,
         "title": "Annual Spring Dance Concert",
-        "date": "2026-02-12T20:00:00-05:00",
-        "endDate": "2026-02-14T22:00:00-05:00",
+        "date": "2026-02-12T20:00:00",
+        "endDate": "2026-02-14T22:00:00",
         "locationKey": "falk_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Dance",
@@ -174,7 +174,7 @@
     {
         "id": 74,
         "title": "Languages & Linguistics Dept. Meet & Greet",
-        "date": "2026-02-17T12:00:00-05:00",
+        "date": "2026-02-17T12:00:00",
         "locationKey": "performance_gallery",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Social",
@@ -193,7 +193,7 @@
     {
         "id": 75,
         "title": "“Dahomey”",
-        "date": "2026-02-17T16:00:00-05:00",
+        "date": "2026-02-17T16:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Film",
@@ -212,7 +212,7 @@
     {
         "id": 76,
         "title": "Plus ça change?: The Cuties Controversy in Context",
-        "date": "2026-02-18T13:00:00-05:00",
+        "date": "2026-02-18T13:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Lecture",
@@ -231,7 +231,7 @@
     {
         "id": 77,
         "title": "Re/Frame Film Series: “The Love Witch”",
-        "date": "2026-02-18T18:00:00-05:00",
+        "date": "2026-02-18T18:00:00",
         "locationKey": "reeves_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Film",
@@ -250,8 +250,8 @@
     {
         "id": 78,
         "title": "Scholar’s Symposium: Lessons in Drag",
-        "date": "2026-02-19T16:00:00-05:00",
-        "endDate": "2026-02-19T18:00:00-05:00",
+        "date": "2026-02-19T16:00:00",
+        "endDate": "2026-02-19T18:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Lecture",
@@ -270,7 +270,7 @@
     {
         "id": 79,
         "title": "“Toni en famille”",
-        "date": "2026-02-25T11:30:00-05:00",
+        "date": "2026-02-25T11:30:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Film",
@@ -289,7 +289,7 @@
     {
         "id": 80,
         "title": "Spring Choral Concert",
-        "date": "2026-02-27T19:30:00-05:00",
+        "date": "2026-02-27T19:30:00",
         "locationKey": "sykes_chapel",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
@@ -308,7 +308,7 @@
     {
         "id": 81,
         "title": "“Les parapluies de Cherbourg”",
-        "date": "2026-02-28T14:00:00-05:00",
+        "date": "2026-02-28T14:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Film",
@@ -327,7 +327,7 @@
     {
         "id": 82,
         "title": "Genova & Dimitrov Duo",
-        "date": "2026-02-28T19:30:00-05:00",
+        "date": "2026-02-28T19:30:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",

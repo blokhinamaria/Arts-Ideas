@@ -2,7 +2,7 @@
     {
         "id": 46,
         "title": "Ars Sonora: Holiday",
-        "date": "2025-12-02T20:00:00-05:00",
+        "date": "2025-12-02T20:00:00",
         "locationKey": "sykes_plaza",
         "coverImageUrl": "/assets/img/general/ars_sonora01.jpg",
         "category": "Music",
@@ -21,7 +21,7 @@
     {
         "id": 47,
         "title": "Emotional Baggage",
-        "date": "2025-12-04T20:00:00-05:00",
+        "date": "2025-12-04T20:00:00",
         "locationKey": "black_box_theater",
         "coverImageUrl": "/assets/img/specific/emotional_baggage01.jpeg",
         "category": "Theatre",
@@ -40,7 +40,7 @@
     {
         "id": 48,
         "title": "Emotional Baggage",
-        "date": "2025-12-05T15:00:00-05:00",
+        "date": "2025-12-05T15:00:00",
         "locationKey": "black_box_theater",
         "coverImageUrl": "/assets/img/specific/emotional_baggage01.jpeg",
         "category": "Theatre",
@@ -59,7 +59,7 @@
     {
         "id": 49,
         "title": "Emotional Baggage",
-        "date": "2025-12-05T20:00:00-05:00",
+        "date": "2025-12-05T20:00:00",
         "locationKey": "black_box_theater",
         "coverImageUrl": "/assets/img/specific/emotional_baggage01.jpeg",
         "category": "Theatre",
@@ -78,7 +78,7 @@
     {
         "id": 50,
         "title": "“Neon” Holiday Party / Open Mic",
-        "date": "2025-12-03T18:00:00-05:00",
+        "date": "2025-12-03T18:00:00",
         "locationKey": "neon_office",
         "coverImageUrl": "/assets/img/specific/neon01.png",
         "category": "Community",
@@ -97,7 +97,7 @@
     {
         "id": 51,
         "title": "Integrative Healing: A Conversation on Holistic Health in American Healthcare",
-        "date": "2025-12-04T18:00:00-05:00",
+        "date": "2025-12-04T18:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/general/gordon_theater01.jpg",
         "category": "Panel",
@@ -116,7 +116,7 @@
     {
         "id": 52,
         "title": "Wind Ensemble and Jazz Ensemble Concert",
-        "date": "2025-12-05T19:30:00-05:00",
+        "date": "2025-12-05T19:30:00",
         "locationKey": "falk_theatre",
         "coverImageUrl": "/assets/img/specific/wind_ensemble01.jpg",
         "category": "Music",
@@ -135,7 +135,7 @@
     {
         "id": 53,
         "title": "The Senior Musical Theatre Showcase & Theatre Capstone Project",
-        "date": "2025-12-06T19:30:00-05:00",
+        "date": "2025-12-06T19:30:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/general/senior_showcase01.jpeg",
         "category": "Theatre",
@@ -154,7 +154,7 @@
     {
         "id": 54,
         "title": "Symphony Orchestra Concert — Holiday Pops Spectacular",
-        "date": "2025-12-06T19:30:00-05:00",
+        "date": "2025-12-06T19:30:00",
         "locationKey": "falk_theatre",
         "coverImageUrl": "/assets/img/general/music01.jpg",
         "category": "Music",
@@ -173,7 +173,7 @@
     {
         "id": 55,
         "title": "Holiday Choral Concert",
-        "date": "2025-12-07T14:00:00-05:00",
+        "date": "2025-12-07T14:00:00",
         "locationKey": "sykes_chapel",
         "coverImageUrl": "/assets/img/default.jpg",
         "category": "Music",
@@ -192,7 +192,7 @@
     {
         "id": 56,
         "title": "Holiday Choral Concert",
-        "date": "2025-12-07T16:30:00-05:00",
+        "date": "2025-12-07T16:30:00",
         "locationKey": "sykes_chapel",
         "coverImageUrl": "/assets/img/general/choir01.jpg",
         "category": "Music",
@@ -211,7 +211,7 @@
     {
         "id": 57,
         "title": "Senior Thesis Showcase for Film and Digital Production",
-        "date": "2025-12-08T19:00:00-05:00",
+        "date": "2025-12-08T19:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/general/film03.jpg",
         "category": "Film",
@@ -230,7 +230,7 @@
     {
         "id": 58,
         "title": "Senior Thesis Showcase for Animation and New Media",
-        "date": "2025-12-09T19:00:00-05:00",
+        "date": "2025-12-09T19:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/specific/animation02.jpg",
         "category": "Film",
@@ -249,7 +249,7 @@
     {
         "id": 59,
         "title": "College of Arts and Letters Graduate Hooding Ceremony",
-        "date": "2025-12-10T18:00:00-05:00",
+        "date": "2025-12-10T18:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/general/commencement01.jpg",
         "category": "Ceremony",

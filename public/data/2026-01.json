@@ -2,7 +2,7 @@
     {
         "id": 60,
         "title": "Ben Rosenblum Trio",
-        "date": "2026-01-22T19:30:00-05:00",
+        "date": "2026-01-22T19:30:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/general/piano03.jpg",
         "category": "Music",
@@ -21,8 +21,8 @@
     {
         "id": 61,
         "title": "Film, Animation and New Media (FMX) All Faculty Exhibition",
-        "date": "2026-01-30T10:00:00-05:00",
-        "endDate": "2026-02-27T17:00:00-05:00",
+        "date": "2026-01-30T10:00:00",
+        "endDate": "2026-02-27T17:00:00",
         "locationKey": "scarfone_gallery",
         "coverImageUrl": "/assets/img/general/fmx_faculty01.jpg",
         "category": "Exhibition",
@@ -41,7 +41,7 @@
     {
         "id": 62,
         "title": "Opening Reception: FMX All Faculty Exhibition",
-        "date": "2026-01-30T18:00:00-05:00",
+        "date": "2026-01-30T18:00:00",
         "locationKey": "scarfone_gallery",
         "coverImageUrl": "/assets/img/general/scarfone_gallery01.jpg",
         "category": "Reception",
@@ -60,7 +60,7 @@
     {
         "id": 63,
         "title": "FMX Student Showcase",
-        "date": "2026-01-30T09:00:00-05:00",
+        "date": "2026-01-30T09:00:00",
         "endDate": "2026-05-01T17:00:00-04:00",
         "locationKey": "performance_gallery",
         "coverImageUrl": "/assets/img/general/fmx_student01.jpg",
@@ -80,7 +80,7 @@
     {
         "id": 64,
         "title": "Black Box Film Festival",
-        "date": "2026-01-30T18:00:00-05:00",
+        "date": "2026-01-30T18:00:00",
         "locationKey": "gordon_theater",
         "coverImageUrl": "/assets/img/general/gordon_theater01.jpg",
         "category": "Film",
