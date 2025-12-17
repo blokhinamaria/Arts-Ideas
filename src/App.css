@@ -77,8 +77,10 @@ Bold = 700 */
   --accent2: #b8ceca;
   --accent-color-1: #84462c;
   --accent-color-1-semi-opaque: hsla(18, 50%, 35%, 0.75);
-  --accent-color-1-opaque: hsla(18, 50%, 35%, 0.25);
-  --accent-color-2: #3d554c;
+  --accent-color-1-opaque: hsla(18, 50%, 35%, 0.45);
+  --accent-color-2: hsla(158, 16%, 29%, 1);
+  --accent-color-2-opaque: hsla(158, 16%, 29%, 0.45);
+
 
   /* Measurements */
   --padding-inline: 40px;
@@ -119,14 +121,21 @@ body {
 }
 
 main {
-  flex: 1
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 100px;
 }
 
 article {
   text-align: start;
-  margin-block: 100px;
   padding-inline: var(--padding-inline);
   overflow: hidden;
+}
+
+article#upcoming-events {
+  padding-block: 100px;
 }
 
 /* Paragraph Styles */
@@ -217,6 +226,21 @@ a {
   text-transform: uppercase;
   font-size: 1rem;
 }
+
+a.address {
+  font-family: 'Univers', sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  text-transform: none;
+  text-decoration: none;
+  color: var(--black);
+}
+
+a.address:hover {
+  text-decoration: underline;
+  color: var(--accent-color-1);
+}
+
 
 /* Buttons */ 
 button {

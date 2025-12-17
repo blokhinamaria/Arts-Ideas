@@ -84,12 +84,14 @@ section.calendar {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 4;
-    width: 300px;
+    z-index: 5;
+    max-height: 80vh;
+    width: min(60vw, 600px);
     background-color: var(--white);
     color: var(--black);
     border: 0.5px solid var(--black);
     padding: var(--small-gap);
+    overflow-y: scroll;
 }
 
 .calendar-day-popover > .calendar-day-number {
@@ -100,8 +102,8 @@ section.calendar {
     margin-bottom: var(--large-gap);
 }
 
-@supports (anchor-name: --test) {
-    .calendar-day-popover {
+/* @supports (anchor-name: --test) {
+    .calendar-day-popover.anchored {
         position: absolute;
         top: anchor(top);
         left: anchor(right);
@@ -113,7 +115,7 @@ section.calendar {
         max-inline-size: calc(100vw - 20px);
         left: min(anchor(right), calc(100vw - 320px));
     }
-}
+} */
 
 .backdrop-popover {
     position: fixed;  /* Must be fixed, not absolute */
@@ -122,7 +124,7 @@ section.calendar {
     right: 0;
     bottom: 0;
     background-color: var(--accent-color-1-opaque);
-    z-index: 3;
+    z-index: 4;
     cursor: default; 
 }
 

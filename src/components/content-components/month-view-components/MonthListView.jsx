@@ -8,7 +8,6 @@ export default function MonthListView({events}) {
 
     const today = new Date();
 
-
     function useMediaQuery(query) {
         const [ matches, setMatches ] = useState(false)
 
@@ -49,11 +48,10 @@ export default function MonthListView({events}) {
                 if (new Date(event.date) < today && isExpanded.includes(event.id)) {
                     return (
                         <div onClick={() => handleEventClick(event.id)} key={event.id}>
-                        <Event
-                            event={event}
-                            today={today}
-                        />
-                    </div>
+                            <Event
+                                event={event}
+                            />
+                        </div>
                     )
                     
                 } else if (new Date(event.date) < today) {
@@ -68,7 +66,7 @@ export default function MonthListView({events}) {
                     )
                     
                 } else {
-                    return <Event key={event.id} event={event} today={today}/>   
+                    return <Event key={event.id} event={event}/>   
                 }
             })}
         </section>

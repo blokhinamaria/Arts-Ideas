@@ -1,58 +1,29 @@
 import { useState, useEffect } from 'react';
 import './UpcomingEvents.css';
 import { formatEventDate } from './utilities/FormatEventDate'
+import Event from './event-components/Event.jsx';
+import Location from './event-components/Location.jsx';
+
 
 export default function UpcomingEvents() {
     const [ currentEvents, setCurrentEvents ] = useState([]);
-    const [ availableMonths, setAvailableMonths ] = useState([]);
+    const [ error, setError ] = useState('')
 
     useEffect(() => {
-        async function fetchAvailableMonths() {
-            const monthsData = await fetch(`/data/available-months.json`).then(res => res.json());
-            setAvailableMonths(monthsData);
-        }
-        fetchAvailableMonths();
-        
-    }, []);
-
-    useEffect(() => {
-        const today = new Date();
-        const year = today.getFullYear();
-        const cutOffTime = today.setMinutes(today.getMinutes() - 45)
-    
-        const month = new Intl.DateTimeFormat("en-US", {
-            month: "2-digit",
-        }).format(today);
         
         async function fetchCurrentEvents() {
             try {
-                // fetch current month events
-                let upcomingEvents = await fetch(`/data/${year}-${month}.json`)
-                    .then(res => res.json())
-                    .then(data => data.filter(event => new Date(event.date) >= cutOffTime));
-                // if fewer than 3, try the next month
-                if (upcomingEvents.length < 3) {
-                        const index = availableMonths.indexOf(`${year}-${month}`);
-                            if (index !== -1 && index < availableMonths.length) {
-                                const [ nextYear, nextMonth ] = availableMonths[index + 1].split('-');
-                                const nextEvents = await fetch(`/data/${nextYear}-${nextMonth}.json`)
-                                    .then(res => res.json())
-                                upcomingEvents = [...upcomingEvents, ...nextEvents];
-                                }                        
-                }
-                
-                upcomingEvents = upcomingEvents.sort((a, b) => new Date(a.date) - new Date(b.date)).slice(0, 3);
+                const API_URL = import.meta.env.VITE_API_URL;
+                const response = await fetch(`${API_URL}/api/events/upcoming`)
 
-                 // attach locations
-                const locationsData = await fetch('/data/locations.json').then(res => res.json());
+                if (!response.ok) {
+                    setError('Something went wrong')
+                    return
+                }
+
+                const data = await response.json()
+                setCurrentEvents(data)
                 
-                setCurrentEvents(upcomingEvents.map(event => {
-                    const location = locationsData.find(location => location.key === event.locationKey)
-                    return {
-                        ...event, 
-                        location: location,
-                    }   
-                }))
             } catch {
                 console.error("Failed to fetch current events");
                 setCurrentEvents([]);
@@ -60,7 +31,7 @@ export default function UpcomingEvents() {
         }
         fetchCurrentEvents();
 
-    }, [availableMonths])
+    }, [])
 
     //media query
     function useMediaQuery(query) {
@@ -84,6 +55,15 @@ export default function UpcomingEvents() {
 
     const defaultImageSrc = './assets/img/default.jpg'
 
+    const [ openPopover, setOpenPopover ] = useState(null);
+
+    if (error) {
+        console.log(error)
+        return (
+            <></>
+        )
+    }
+
     return (
         <article id='upcoming-events'>
             <h1>Upcoming<br/>Events</h1>
@@ -93,7 +73,7 @@ export default function UpcomingEvents() {
 
                     <div className='event-image-container'>
                         <img
-                            src={currentEvents[0]?.coverImageUrl}
+                            src={currentEvents[0]?.img_url}
                             onError={(e => e.target.src = defaultImageSrc)}
                             ></img>
                     </div>
@@ -103,8 +83,12 @@ export default function UpcomingEvents() {
                             <div className='event-description'>
                                 <h5>{currentEvents[0]?.title}</h5>
                                 <hr />
-                                <p className='body-large'>{formatEventDate(currentEvents[0]?.date)}</p>
-                                <p className='body-large'>{currentEvents[0]?.location?.venue}{currentEvents[0]?.location?.building ? <><br/>{currentEvents[0]?.location?.building}</> : ''}</p>
+                                {
+                                    currentEvents[0]?.dates.map(date => (
+                                        <p key={`${currentEvents[0]?.id}${date.start_date}`} className='body-large'>{formatEventDate(date.start_date)}</p>
+                                    ))
+                                }
+                                <Location location={currentEvents[0]?.location}/>
                                 <p>{currentEvents[0]?.description}</p>
                             </div>
                             <div></div>
@@ -113,10 +97,10 @@ export default function UpcomingEvents() {
 
                 </div>
 
-                    <div className='following-event'>
+                    <div className='following-event' onClick={() => setOpenPopover(currentEvents[1])}>
                             <div className='event-image-container'>
                                 <img
-                                    src={currentEvents[1]?.coverImageUrl}
+                                    src={currentEvents[1]?.img_url}
                                     onError={(e => e.target.src = defaultImageSrc)}
                                     ></img>
                             </div>
@@ -126,10 +110,12 @@ export default function UpcomingEvents() {
                                     <div className='event-description'>
                                         <h5>{currentEvents[1]?.title}</h5>
                                         <hr />
-                                        <p className='body-large'>{formatEventDate(currentEvents[1]?.date)}</p>
-                                        <p className='body-large'>{currentEvents[1]?.location?.venue}
-                                            {currentEvents[1]?.location?.building ? <><br/>{currentEvents[1]?.location?.building}</> : ''}
-                                        </p>
+                                        {
+                                            currentEvents[1]?.dates.map(date => (
+                                                <p key={`${currentEvents[1]?.id}${date.start_date}`} className='body-large'>{formatEventDate(date.start_date)}</p>
+                                            ))
+                                        }
+                                        <Location location={currentEvents[1]?.location}/>
                                         {isNarrow ? <p>{currentEvents[1]?.description}</p> : null}
                                     </div>
                                     
@@ -139,10 +125,10 @@ export default function UpcomingEvents() {
                             </div>
                     </div>
 
-                    <div className='following-event'>
+                    <div className='following-event' onClick={() => setOpenPopover(currentEvents[2])}>
                             <div className='event-image-container'>
                                 <img
-                                    src={currentEvents[2]?.coverImageUrl}
+                                    src={currentEvents[2]?.img_url}
                                     onError={(e => e.target.src = defaultImageSrc)}
                                     ></img>
                             </div>
@@ -152,10 +138,12 @@ export default function UpcomingEvents() {
                                     <div className='event-description'>
                                         <h5>{currentEvents[2]?.title}</h5>
                                         <hr />
-                                        <p className='body-large'>{formatEventDate(currentEvents[2]?.date)}</p>
-                                        <p className='body-large'>{currentEvents[2]?.location?.venue}
-                                            {currentEvents[2]?.location?.building ? <><br/>{currentEvents[2]?.location?.building}</> : ''}
-                                        </p>
+                                        {
+                                            currentEvents[2]?.dates.map(date => (
+                                                <p key={`${currentEvents[2]?.id}${date.start_date}`} className='body-large'>{formatEventDate(date.start_date)}</p>
+                                            ))
+                                        }
+                                        <Location location={currentEvents[2]?.location}/>
                                         {isNarrow ? <p>{currentEvents[2]?.description}</p> : null} 
                                     </div>
                                     
@@ -164,7 +152,21 @@ export default function UpcomingEvents() {
                                     </span></button> */}
                             </div>
                     </div>
-
+            </section>
+            <section className='popover-wrapper'>
+                { openPopover && !isNarrow ? (
+                <>
+                    <div className='backdrop-popover' onClick={() => setOpenPopover(null)}/>
+                    <div
+                        className='calendar-day-popover'
+                        onMouseLeave={() =>setOpenPopover(null) }
+                        >
+                            <Event key={openPopover.id} event={openPopover}/>   
+                    </div>
+                </>
+                ) : (
+                    null
+                )}
             </section>
         </article>
     )
