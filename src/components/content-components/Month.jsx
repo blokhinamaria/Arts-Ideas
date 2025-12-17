@@ -4,7 +4,8 @@ import MonthCalendarView from './month-view-components/MonthCalendarView'
 import { useEffect, useState } from 'react'
 
 export default function Month() {
-
+    
+    const [loading, setLoading] = useState(true)
     const [selectedDate, setSelectedDate] = useState(new Date());
 
     const month = new Intl.DateTimeFormat("en-US", {
@@ -71,29 +72,37 @@ export default function Month() {
     
     useEffect(() => {
         async function fetchEvents() {
-            const data = await fetchData();
-            setEvents(data);
-            
-            if (today.getMonth() === selectedDate.getMonth()) {
-                const filteredData = data.filter(event => (
-                    event.dates.some(date => 
-                        new Date(date.start_date) >= cutOffTime)
+            try {
+                setLoading(true)
+                const data = await fetchData();
+                setEvents(data);
+                
+                if (today.getMonth() === selectedDate.getMonth()) {
+                    const filteredData = data.filter(event => (
+                        event.dates.some(date => 
+                            new Date(date.start_date) >= cutOffTime)
+                            )
                         )
-                    )
-                if (filteredData.length === 0) {
-                    setUpcomingEventsOnly(data);
+                    if (filteredData.length === 0) {
+                        setUpcomingEventsOnly(null)
+                        setIsCurrentMonth(false)
+                        setShowPast(true)
+                        return
+                    }
+                    setUpcomingEventsOnly(filteredData)
+                    setIsCurrentMonth(true)
+                    setShowPast(false)
+
+                } else {
+                    setUpcomingEventsOnly(null)
                     setIsCurrentMonth(false)
                     setShowPast(true)
-                    return
                 }
-                setUpcomingEventsOnly(filteredData);
-                setIsCurrentMonth(true)
-                setShowPast(false)
-
-            } else {
-                setUpcomingEventsOnly(data);
-                setIsCurrentMonth(false)
-                setShowPast(true)
+            } catch (err) {
+                console.log(`Failed to fetch events: ${err}`)
+                setError('Something went wrong. Please try again later')
+            } finally {
+                setLoading(false)
             }
         }
         
@@ -116,6 +125,18 @@ export default function Month() {
             console.log(`Failed to fetch events: ${err}`)
             return []
         }
+    }
+
+    if (loading) {
+        return (
+            <p>Loading events...</p>
+        )
+    }
+
+    if (error) {
+        return (
+            <p>{error}</p>
+        )
     }
 
     return (
