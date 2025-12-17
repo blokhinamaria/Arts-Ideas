@@ -28,9 +28,21 @@ function buildEventsQuery(whereClause: string = ''): string {
             'start_date', ed.start_date,
             'end_date', ed.end_date
             ) ORDER BY ed.start_date
-        ) AS dates
+        ) AS dates,
+        (
+            SELECT json_build_object(
+                'location_key', l.key,
+                'venue', l.venue,
+                'building', l.building,
+                'address', l.address,
+                'map_url', l.map_url
+                )
+                FROM locations l
+                WHERE l.key = e.location_key
+        ) AS location
         FROM events e
         JOIN event_dates ed ON e.id = ed.event_id
+        JOIN locations l ON e.location_key = l.key
         ${whereClause}
         GROUP BY e.id
         ORDER BY MIN(ed.start_date)
@@ -74,7 +86,6 @@ export async function getMonthEvents (req:Request, res:Response<Event[] | {messa
             const query = buildEventsQuery(`
                 WHERE EXTRACT(MONTH FROM ed.start_date) = $1 
                     AND EXTRACT(YEAR FROM ed.start_date) = $2
-                    AND e.is_public = true
                 `);
 
             const result = await pool.query(query, [monthNum, yearNum])

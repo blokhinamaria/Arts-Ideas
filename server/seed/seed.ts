@@ -20,6 +20,14 @@ type Event = {
     tags?: string[];
 }
 
+type Location = {
+    key: string,
+    venue: string,
+    building?: string,
+    address: string,
+    mapUrl: string
+}
+
 function readJsonFile<T>(filePath: string): T {
     const content = readFileSync(filePath, 'utf-8');
     return JSON.parse(content);
@@ -31,52 +39,36 @@ async function seedEvents() {
     //Read current files
     
     const dataDir = "/Users/blokhinamaria/Desktop/Arts-Ideas/public/data";
-    const files = readdirSync(dataDir).filter(f => f.match(/\d{4}-\d{2}\.json$/));
+    const file = 'locations.json';
 
-    let totalEvents = 0;
-    for (const fileName of files) {
-        console.log(`Processing ${fileName}...`)
-        const events: Event[] = readJsonFile(join(dataDir, fileName));
+    let totalLocations = 0;
+    console.log(`Processing ${file}...`)
+    const locations: Location[] = readJsonFile(join(dataDir, file));    
 
-        for (const event of events) {
+        for (const location of locations) {
             try {
-                const result = await pool.query(
-                    `INSERT INTO events (
-                        title, location_key, img_url, category, description, contact, is_public, price, status, tags
-                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) 
+                await pool.query(
+                    `INSERT INTO locations (
+                        key, venue, building, address, map_url
+                    ) VALUES ($1, $2, $3, $4, $5) 
                         RETURNING id`,
                         [
-                            event.title,
-                            event.locationKey,
-                            event.coverImageUrl,
-                            event.category || null,
-                            event.description || null,
-                            event.contact ? JSON.stringify(event.contact) : null,
-                            event.isPublic,
-                            event.price || null,
-                            event.status,
-                            event.tags || []
+                            location.key,
+                            location.venue,
+                            location.building || null,
+                            location.address,
+                            location.mapUrl
                         ]
                 )
-                const eventId = await result.rows[0].id
 
-                await pool.query(
-                    `INSERT INTO event_dates (
-                        event_id, start_date
-                    ) VALUES (
-                        $1, $2
-                    )`, 
-                    [eventId, new Date(event.date)]
-                )
-
-                totalEvents++;
+                totalLocations++;
 
             } catch (err) {
-                console.error(`Error inserting ${event.id} ${event.title}: ${err}`)
+                console.error(`Error inserting ${location.key}: ${err}`)
             }
         }
-    }
-    console.log(`Inserted ${totalEvents} events`)
+    
+    console.log(`Inserted ${totalLocations} locations`)
 }
 
 async function main() {

@@ -66,6 +66,8 @@ export default function Month() {
     const [ isCurrentMonth, setIsCurrentMonth ] = useState(false);
     const today = new Date();
     const cutOffTime = today.setMinutes(today.getMinutes() - 45);
+
+    const [error, setError] = useState('')
     
     useEffect(() => {
         async function loadData() {
@@ -87,19 +89,18 @@ export default function Month() {
 
     async function fetchData() {
             try {
-            const eventsData = await fetch(`/data/${year}-${month}.json`).then(res => res.json());
-            const locationsData = await fetch('/data/locations.json').then(res => res.json());
 
-            const eventsWithLocations = eventsData.map(event => {
-                const location = locationsData.find(location => location.key === event.locationKey)
-                return {
-                    ...event,
-                    location: location,
-                }})
+                const response = await fetch(`http://localhost:3000/events?month=${month}&year=${year}`)
+                if (!response.ok) {
+                    setError('Something went wrong. Please try again later')
+                    return
+                }
 
-            return eventsWithLocations;
-            
-            } catch {
+                const data = await response.json()
+                return data
+
+            } catch (err) {
+                console.log(`Failed to fetch events: ${err}`)
                 return []
             }
 
