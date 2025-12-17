@@ -61,7 +61,6 @@ export default function UpcomingEvents() {
 
     const [ openPopover, setOpenPopover ] = useState(null);
 
-
     if (loading) {
         return (
             <p>Loading events...</p>
