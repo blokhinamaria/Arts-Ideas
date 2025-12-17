@@ -7,12 +7,14 @@ import Location from './event-components/Location.jsx';
 
 export default function UpcomingEvents() {
     const [ currentEvents, setCurrentEvents ] = useState([]);
+    const [loading, setLoading] = useState(false)
     const [ error, setError ] = useState('')
 
     useEffect(() => {
         
         async function fetchCurrentEvents() {
             try {
+                setLoading(true)
                 const API_URL = import.meta.env.VITE_API_URL;
                 const response = await fetch(`${API_URL}/api/events/upcoming`)
 
@@ -27,6 +29,8 @@ export default function UpcomingEvents() {
             } catch {
                 console.error("Failed to fetch current events");
                 setCurrentEvents([]);
+            } finally {
+                setLoading(false)
             }
         }
         fetchCurrentEvents();
@@ -56,6 +60,12 @@ export default function UpcomingEvents() {
     const defaultImageSrc = './assets/img/default.jpg'
 
     const [ openPopover, setOpenPopover ] = useState(null);
+
+    if (loading) {
+        return (
+            <p>Loading events...</p>
+        )
+    }
 
     if (error) {
         console.log(error)
