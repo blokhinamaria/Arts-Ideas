@@ -29,7 +29,6 @@ section.month-title-banner > div {
 .month-title-banner button.month-swipe > span {
     font-size: 6rem;
     color: var(--white);
-    
 }
 
 .month-title-banner .month-name-container {
@@ -47,7 +46,8 @@ section.month-title-banner > div {
 }
 
 section.events {
-  padding-top: 20px;
+  padding-block-start: 20px;
+  padding-block-end: 100px;
   background: var(--black-overlay);
   background: linear-gradient(0deg,rgba(0, 0, 0, 0.5) 90%, rgba(255, 255, 255, 0) 100%);
 }

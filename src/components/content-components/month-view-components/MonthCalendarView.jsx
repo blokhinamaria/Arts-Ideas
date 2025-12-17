@@ -117,30 +117,35 @@ export default function MonthCalendarView({events, selectedDate, showPast}) {
         return (
             <div className='calendar-day-number'>
                 <h4>{date}</h4>
-                <span className='tag'>{formatEventDate(event.date, 'weekday')}</span> 
+                {event.dates.map(date => (
+                    <span key={`${event._id}${date.start_date}`} className='tag'>{formatEventDate(date.start_date, 'weekday')}</span> 
+                ))}
             </div>
         )
     }
 
-    const firstEventDate = new Date(events[0].date).getDate();
-    const lastEventDate = new Date(events[events.length - 1].date).getDate();
+    const firstEventDate = new Date(events[0].dates[0].start_date).getDate();
+    const lastEventDate = new Date(events[events.length - 1].dates[events[events.length - 1].dates.length - 1]).getDate();
 
     //actual days 
     for (let d = firstDay.getDate(); d <= daysInMonth; d++) {
         const dayEvents = [];
-        for (let i = 0; i < events.length; i++) {
-            const eventDay = new Date(events[i].date).getDate();
-            if (eventDay === d) {
-                dayEvents.push(events[i]);
-            } 
-        }
+
+        events.forEach(event => (
+            event.dates.forEach(date => {
+                const eventDay = new Date(date.start_date).getDate();
+                if (eventDay === d) {
+                    dayEvents.push(event);
+                } 
+            })
+        ))
 
         if (dayEvents.length >= 1) {
 
                 if (isMobile) {
                     calendarDays.push(
                         <div key={d}
-                            className={new Date(dayEvents[dayEvents.length - 1].date) < today ? 'calendar-day completed' : 'calendar-day'}
+                            className={new Date(dayEvents[dayEvents.length - 1].dates[dayEvents[dayEvents.length - 1].dates.length - 1].start_date) < today ? 'calendar-day completed' : 'calendar-day'}
                             style= {{ anchorName: `--anchor${d}`}}
                             onClick={() => handleDayClick(d, dayEvents)}>
                             
@@ -157,7 +162,9 @@ export default function MonthCalendarView({events, selectedDate, showPast}) {
                                     
                                 ) : (
                                     <div key={event.id} className="event" onClick={() => handleEventClick(event.id)}>
-                                        <p className="body-large">{formatEventDate(event.date, 'time')}</p>
+                                        {event.dates.map(date => (
+                                            <p key={`${event.id}${date.start_date}`} className="body-large">{formatEventDate(date.start_date, 'time')}</p>
+                                        ))}
                                         <h5>{event.title}</h5>
                                     </div>
                                 )))}
@@ -166,7 +173,7 @@ export default function MonthCalendarView({events, selectedDate, showPast}) {
                 } else {
                     calendarDays.push(
                         <div key={d}
-                            className={new Date(dayEvents[dayEvents.length - 1].date) < today ? 'calendar-day completed' : 'calendar-day'}
+                            className={new Date(dayEvents[dayEvents.length - 1].dates[dayEvents[dayEvents.length - 1].dates.length - 1].start_date) < today ? 'calendar-day completed' : 'calendar-day'}
                             style= {{ anchorName: `--anchor${d}`}}
                             onClick={() => handleDayClick(d, dayEvents)}>
 
@@ -196,8 +203,6 @@ export default function MonthCalendarView({events, selectedDate, showPast}) {
                         </div>
                     )
             }
-                
-            
             
         }
     }
@@ -213,7 +218,7 @@ export default function MonthCalendarView({events, selectedDate, showPast}) {
                 <>
                     <div className='backdrop-popover' onClick={() => setOpenPopover(null)}/>
                     <div
-                        className='calendar-day-popover'
+                        className='calendar-day-popover anchored'
                         style={{ positionAnchor: `--anchor${openPopover}` }}
                         onMouseLeave={() =>setOpenPopover(null) }
                         >

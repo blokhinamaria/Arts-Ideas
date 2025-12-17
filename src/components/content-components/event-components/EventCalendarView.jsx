@@ -10,10 +10,14 @@ export default function EventCalendarView({event}) {
     return (
         <div
             style={{ padding: '0'}}>
-            <p className='body-large'>{formatEventDate(event.date, 'time')}</p>
+            {
+                event.dates.map(date => (
+                    <p key={`${event.id}${date.start_date}`} className='body-large'>{formatEventDate(date.start_date, 'time')}</p>
+                ))
+            }
             <EventTitleGroup event={event} />
             <hr />
-            <Location event={event} />
+            <Location location={event.location} />
             <p>{event.description}</p>
         </div>
     )

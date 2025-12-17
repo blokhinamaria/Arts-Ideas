@@ -6,14 +6,18 @@ import Location from "./Location"
 
 import './Event.css'
 
-export default function Event({event, today}) {
+export default function Event({event}) {
+
+    const today = new Date()
 
     return (
-        <div className={new Date(event.date) < today ? 'default-event completed' : 'default-event'}>
+        <div className={new Date(event.dates[event.dates.length - 1].start_date) < today ? 'default-event completed' : 'default-event'}>
             <EventTitleGroup event={event} />
             <hr />
-            <p className='body-large'>{formatEventDate(event.date)}</p>
-            <Location event={event} />
+            {event.dates.map(date => (
+                <p key={`${event._id}${date.start_date}`} className='body-large'>{formatEventDate(date.start_date)}</p>
+            ))} 
+            <Location location={event.location} />
             <p>{event.description}</p>
         </div>
     )

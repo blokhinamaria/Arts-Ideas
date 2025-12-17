@@ -66,43 +66,56 @@ export default function Month() {
     const [ isCurrentMonth, setIsCurrentMonth ] = useState(false);
     const today = new Date();
     const cutOffTime = today.setMinutes(today.getMinutes() - 45);
+
+    const [error, setError] = useState('')
     
     useEffect(() => {
-        async function loadData() {
+        async function fetchEvents() {
             const data = await fetchData();
             setEvents(data);
             
             if (today.getMonth() === selectedDate.getMonth()) {
-                const filteredData = data.filter(event => new Date(event.date) >= cutOffTime);
+                const filteredData = data.filter(event => (
+                    event.dates.some(date => 
+                        new Date(date.start_date) >= cutOffTime)
+                        )
+                    )
+                if (filteredData.length === 0) {
+                    setUpcomingEventsOnly(data);
+                    setIsCurrentMonth(false)
+                    setShowPast(true)
+                    return
+                }
                 setUpcomingEventsOnly(filteredData);
                 setIsCurrentMonth(true)
+                setShowPast(false)
+
             } else {
                 setUpcomingEventsOnly(data);
                 setIsCurrentMonth(false)
+                setShowPast(true)
             }
         }
         
-        loadData();
+        fetchEvents();
     }, [year, month, selectedDate]);
 
     async function fetchData() {
-            try {
-            const eventsData = await fetch(`/data/${year}-${month}.json`).then(res => res.json());
-            const locationsData = await fetch('/data/locations.json').then(res => res.json());
-
-            const eventsWithLocations = eventsData.map(event => {
-                const location = locationsData.find(location => location.key === event.locationKey)
-                return {
-                    ...event,
-                    location: location,
-                }})
-
-            return eventsWithLocations;
-            
-            } catch {
-                return []
+        try {
+            const API_URL = import.meta.env.VITE_API_URL;
+            const response = await fetch(`${API_URL}/api/events?month=${month}&year=${year}`)
+            if (!response.ok) {
+                setError('No events found')
+                return
             }
 
+            const data = await response.json()
+            return data
+
+        } catch (err) {
+            console.log(`Failed to fetch events: ${err}`)
+            return []
+        }
     }
 
     return (
@@ -129,14 +142,23 @@ export default function Month() {
                     }
                 }>
             </div>
-            <section className='events'>
-                <section className='month-buttons'>
-                    <button onClick={switchViews}>Switch to {isListView ? "Calendar" : "List"} view</button>
-                    {isCurrentMonth && <button onClick={() => setShowPast(prev => !prev)}>{showPast ? 'Hide' : 'Show'} past events</button>}
-                    {/* <button disabled>Add to calendar</button> */}
+            {error ? 
+                <section className='events'>
+                    <section className='month-buttons'>
+                        <p>{error}</p>
+                    </section>
                 </section>
-                { events.length > 0 ? <>{isListView ? <MonthListView events={showPast ? events : upcomingEventsOnly}/> : <MonthCalendarView events={showPast ? events : upcomingEventsOnly} selectedDate={selectedDate} showPast ={showPast}/>}</> : null}
-            </section>
+                
+                : 
+                <section className='events'>
+                    <section className='month-buttons'>
+                        <button onClick={switchViews}>Switch to {isListView ? "Calendar" : "List"} view</button>
+                        {isCurrentMonth && <button onClick={() => setShowPast(prev => !prev)}>{showPast ? 'Hide' : 'Show'} past events</button>}
+                        {/* <button disabled>Add to calendar</button> */}
+                    </section>
+                    { events.length > 0 ? <>{isListView ? <MonthListView events={showPast ? events : upcomingEventsOnly}/> : <MonthCalendarView events={showPast ? events : upcomingEventsOnly} selectedDate={selectedDate} showPast={showPast}/>}</> : null}
+                </section>
+            }
         </article>
         
     )
