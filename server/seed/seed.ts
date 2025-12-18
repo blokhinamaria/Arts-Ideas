@@ -28,6 +28,11 @@ type Location = {
     mapUrl: string
 }
 
+type Image = {
+    display_name: string,
+    url: string,
+}
+
 function readJsonFile<T>(filePath: string): T {
     const content = readFileSync(filePath, 'utf-8');
     return JSON.parse(content);
@@ -39,36 +44,35 @@ async function seedEvents() {
     //Read current files
     
     const dataDir = "/Users/blokhinamaria/Desktop/Arts-Ideas/public/data";
-    const file = 'locations.json';
+    const file = 'image_data.json';
 
-    let totalLocations = 0;
+    let totalImages = 0;
     console.log(`Processing ${file}...`)
-    const locations: Location[] = readJsonFile(join(dataDir, file));    
+    const images: Image[] = readJsonFile(join(dataDir, file));    
 
-        for (const location of locations) {
+        for (const image of images) {
             try {
                 await pool.query(
-                    `INSERT INTO locations (
-                        key, venue, building, address, map_url
-                    ) VALUES ($1, $2, $3, $4, $5) 
+                    `UPDATE images (
+                        name, url
+                    ) VALUES ($1, $2) 
                         RETURNING id`,
                         [
-                            location.key,
-                            location.venue,
-                            location.building || null,
-                            location.address,
-                            location.mapUrl
+                            image.display_name.split('_')[0],
+                            image.url,
                         ]
                 )
 
-                totalLocations++;
+                console.log(image.display_name.split('_')[0])
+
+                totalImages++;
 
             } catch (err) {
-                console.error(`Error inserting ${location.key}: ${err}`)
+                console.error(`Error inserting ${image.display_name}: ${err}`)
             }
         }
     
-    console.log(`Inserted ${totalLocations} locations`)
+    console.log(`Inserted ${totalImages} images`)
 }
 
 async function main() {
