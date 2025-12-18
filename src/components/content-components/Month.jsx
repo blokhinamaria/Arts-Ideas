@@ -127,18 +127,6 @@ export default function Month() {
         }
     }
 
-    if (loading) {
-        return (
-            <p>Loading events...</p>
-        )
-    }
-
-    if (error) {
-        return (
-            <p>{error}</p>
-        )
-    }
-
     return (
 
         <article id='month'>
@@ -163,13 +151,12 @@ export default function Month() {
                     }
                 }>
             </div>
-            {error ? 
+            {error || loading ? 
                 <section className='events'>
                     <section className='month-buttons'>
-                        <p>{error}</p>
+                        <p>{error || loading}</p>
                     </section>
                 </section>
-                
                 : 
                 <section className='events'>
                     <section className='month-buttons'>
