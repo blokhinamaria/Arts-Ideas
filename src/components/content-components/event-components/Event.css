@@ -1,6 +1,7 @@
 .default-event {
     background-color: var(--white);
     padding: var(--small-gap);
+    width: min(600px, 100%);
 }
 
 .default-event.completed {

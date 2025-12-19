@@ -42,7 +42,7 @@ export default function MonthListView({events}) {
             {events.map(event => {
 
                 if (!isMobile) {
-                    return <Event key={event.id} event={event} today={today}/>   
+                    return <Event key={event.id} event={event}/>   
                 }
 
                 if (new Date(event.date) < today && isExpanded.includes(event.id)) {

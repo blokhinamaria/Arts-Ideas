@@ -107,7 +107,7 @@ export default function UpcomingEvents() {
 
                 </div>
 
-                    <div className='following-event' onClick={() => setOpenPopover(currentEvents[1])}>
+                    <div className='following-event' onClick={!isNarrow ? () => setOpenPopover(currentEvents[1]) : null}>
                             <div className='event-image-container'>
                                 <img
                                     src={currentEvents[1]?.img_url}
@@ -135,7 +135,7 @@ export default function UpcomingEvents() {
                             </div>
                     </div>
 
-                    <div className='following-event' onClick={() => setOpenPopover(currentEvents[2])}>
+                    <div className='following-event' onClick={!isNarrow ? () => setOpenPopover(currentEvents[2]) : null}>
                             <div className='event-image-container'>
                                 <img
                                     src={currentEvents[2]?.img_url}

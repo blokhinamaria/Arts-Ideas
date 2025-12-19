@@ -125,7 +125,9 @@ export default function MonthCalendarView({events, selectedDate, showPast}) {
     }
 
     const firstEventDate = new Date(events[0].dates[0].start_date).getDate();
-    const lastEventDate = new Date(events[events.length - 1].dates[events[events.length - 1].dates.length - 1]).getDate();
+    const lastEventIndex = events.length - 1;
+    const lastEventLastDateIndex = events[lastEventIndex].dates.length - 1
+    const lastEventDate = new Date(events[lastEventIndex].dates[lastEventLastDateIndex].start_date).getDate();
 
     //actual days 
     for (let d = firstDay.getDate(); d <= daysInMonth; d++) {

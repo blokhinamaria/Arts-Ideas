@@ -56,9 +56,11 @@ section.upcoming-events {
     position: relative;
 }
 
-.following-event:hover {
-    outline: 1px solid var(--white);
-    outline-offset: 5px;
+@media (min-width: 1024px){
+    .following-event:hover {
+        outline: 1px solid var(--white);
+        outline-offset: 5px;
+    }
 }
 
 .following-event .event-image-container {

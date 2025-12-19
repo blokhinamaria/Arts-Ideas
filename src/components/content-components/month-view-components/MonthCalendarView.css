@@ -18,6 +18,7 @@ section.calendar {
     min-width: 200px;
     position: relative;
     cursor: pointer;
+    word-wrap: break-word
 }
 
 .calendar-day.day-of-week {
