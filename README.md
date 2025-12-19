@@ -8,12 +8,12 @@ Arts & Ideas, the University of Tampa College of Arts & Letters' annual print pu
 
 ### Key Features
 
-- **Auto-updating upcoming events showcase
-- **Custom calendar grid with dual view modes: list and calendar
-- **Mobile-optimized responsive layouts
-- **Real-time past event filtering
-- **Smart month navigation skipping empty periods
-- **Interactive day details with event popovers (for desktop) or expanded cards (for mobile)
+- Auto-updating upcoming events showcase
+- Custom calendar grid with dual view modes: list and calendar
+- Mobile-optimized responsive layouts
+- Real-time past event filtering
+- Smart month navigation skipping empty periods
+- Interactive day details with event popovers (for desktop) or expanded cards (for mobile)
 
 ## Live Demo
 
@@ -71,7 +71,7 @@ Arts & Ideas, the University of Tampa College of Arts & Letters' annual print pu
 - **Calendar View:** Month grid with event indicators and expandable day cells
 - Users can toggle between views while maintaining the current month position
 
-## Smart Month Navigation with Event Filtering
+### Smart Month Navigation with Event Filtering
 
 - Navigation displays only months containing events
 - Automatically skips empty periods (e.g., summer break)
@@ -79,7 +79,7 @@ Arts & Ideas, the University of Tampa College of Arts & Letters' annual print pu
 - "Hide Past Events" toggle for current month, particularly useful on mobile devices to reduce scroll length
 - Filters out past events based on real-time date comparison
 
-## Responsive Design
+### Responsive Design
 
 - Significantly transformed layouts for mobile devices
 - Calendar shifts from seven-column grid to single-column layout
@@ -88,7 +88,7 @@ Arts & Ideas, the University of Tampa College of Arts & Letters' annual print pu
 - Days with multiple events display all events simultaneously
 - Empty date ranges collapse with visual indicators ("...") to minimize scrolling
 
-### Planned Improvements
+## Planned Improvements
 
 - [ ] Interactive Campus Map: Visual building locator following the publication's aesthetic to help visitors navigate to event locations
 - [ ] Search Functionality: Full-text search across event titles and descriptions
