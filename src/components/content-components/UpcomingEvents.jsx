@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import {AdvancedImage} from '@cloudinary/react';
+import {Cloudinary} from "@cloudinary/url-gen";
+import { scale } from '@cloudinary/url-gen/actions/resize';
 import './UpcomingEvents.css';
 import { formatEventDate } from './utilities/FormatEventDate'
 import Event from './event-components/Event.jsx';
@@ -10,6 +13,12 @@ export default function UpcomingEvents() {
     const [loading, setLoading] = useState(false)
     const [ error, setError ] = useState('')
 
+    const cloudinary = new Cloudinary({
+        cloud: {
+            cloudName: 'ded4glttn'
+        }
+    });
+
     useEffect(() => {
         
         async function fetchCurrentEvents() {
@@ -19,7 +28,7 @@ export default function UpcomingEvents() {
                 const response = await fetch(`${API_URL}/api/events/upcoming`)
 
                 if (!response.ok) {
-                    setError('Something went wrong')
+                    setError('Something went wrong') 
                     return
                 }
 
@@ -57,8 +66,6 @@ export default function UpcomingEvents() {
 
     const isNarrow = useMediaQuery('(max-width: 1024px')
 
-    const defaultImageSrc = './assets/img/default.jpg'
-
     const [ openPopover, setOpenPopover ] = useState(null);
 
     if (loading) {
@@ -74,6 +81,21 @@ export default function UpcomingEvents() {
         )
     }
 
+    const firstEventImage = cloudinary.image(currentEvents[0]?.img_id ? currentEvents[0]?.img_id : 'default_fzyquk')
+                                .format('auto')
+                                .quality('auto')
+                                .resize(scale().width(1200));
+
+    const secondEventImage = cloudinary.image(currentEvents[1]?.img_id ? currentEvents[1]?.img_id : 'default_fzyquk')
+                                .format('auto')
+                                .quality('auto')
+                                .resize(scale().width(1200));
+
+    const thirdEventImage = cloudinary.image(currentEvents[2]?.img_id ? currentEvents[2]?.img_id : 'default_fzyquk')
+                                .format('auto')
+                                .quality('auto')
+                                .resize(scale().width(1200));
+
     return (
         <article id='upcoming-events'>
             <h1>Upcoming<br/>Events</h1>
@@ -82,10 +104,11 @@ export default function UpcomingEvents() {
                 <div className={isNarrow ? 'following-event' : 'next-event'}>
 
                     <div className='event-image-container'>
-                        <img
+                        {/* <img
                             src={currentEvents[0]?.img_url}
                             onError={(e => e.target.src = defaultImageSrc)}
-                            ></img>
+                            ></img> */}
+                        <AdvancedImage cldImg={firstEventImage}/>
                     </div>
 
                     <div className='event-details-container'>
@@ -109,10 +132,11 @@ export default function UpcomingEvents() {
 
                     <div className='following-event' onClick={!isNarrow ? () => setOpenPopover(currentEvents[1]) : null}>
                             <div className='event-image-container'>
-                                <img
+                                {/* <img
                                     src={currentEvents[1]?.img_url}
                                     onError={(e => e.target.src = defaultImageSrc)}
-                                    ></img>
+                                    ></img> */}
+                                    <AdvancedImage cldImg={secondEventImage}/>
                             </div>
 
                             <div className='event-details-container'>
@@ -137,10 +161,11 @@ export default function UpcomingEvents() {
 
                     <div className='following-event' onClick={!isNarrow ? () => setOpenPopover(currentEvents[2]) : null}>
                             <div className='event-image-container'>
-                                <img
+                                <AdvancedImage cldImg={thirdEventImage}/>
+                                {/* <img
                                     src={currentEvents[2]?.img_url}
                                     onError={(e => e.target.src = defaultImageSrc)}
-                                    ></img>
+                                    ></img> */}
                             </div>
 
                             <div className='event-details-container'>
