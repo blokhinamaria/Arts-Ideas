@@ -43,6 +43,7 @@ section.month-title-banner > div {
 
 .month-title-banner button.month-swipe:disabled {
     opacity: 0.25;
+    cursor: default;
 }
 
 section.events {

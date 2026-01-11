@@ -1,6 +1,7 @@
 import { Tooltip } from "@mui/material"
+import type {EventLocationType} from './EventCard'
 
-export default function Location({location}) {
+export default function EventLocation({location}:{location:EventLocationType}) {
 
     return (
         <Tooltip title="Open in Google Maps"  placement='bottom-start'>

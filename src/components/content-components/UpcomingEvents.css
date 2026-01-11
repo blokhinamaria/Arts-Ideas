@@ -56,7 +56,7 @@ section.upcoming-events {
     position: relative;
 }
 
-@media (min-width: 1024px){
+@media (min-width: 1025px){
     .following-event:hover {
         outline: 1px solid var(--white);
         outline-offset: 5px;

@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, ReactNode } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation} from 'react-router-dom';
 import './App.css'
 
@@ -9,15 +9,15 @@ import Styles from './components/layout-components/Styles.jsx'
 
 function App() {
 
-const Wrapper = ({children}) => {  
-    //Scroll to the top of the page when the route changes
-      const location = useLocation();
+  const Wrapper = ({children}: {children: ReactNode}) => {  
+      //Scroll to the top of the page when the route changes
+        const location = useLocation();
 
-      useLayoutEffect(() => {
-        window.scrollTo( {top: 0, left: 0, behavior: 'instant'})
-      }, [location.pathname]);
-    return children;
-  }
+        useLayoutEffect(() => {
+          window.scrollTo( {top: 0, left: 0, behavior: 'instant'})
+        }, [location.pathname]);
+      return children;
+    }
 
   return (
     <>

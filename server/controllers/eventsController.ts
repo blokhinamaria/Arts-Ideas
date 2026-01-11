@@ -20,7 +20,7 @@ type Event = {
     tags?: string[];
 }
 
-function buildEventsQuery(whereClause: string = ''): string {
+function buildEventsQuery(whereClause: string = ''):string {
     return `
         SELECT e.*, 
         json_agg(
@@ -63,15 +63,15 @@ export async function getMonthEvents (req:Request, res:Response<Event[] | {messa
             return
         }
 
-        const monthNum = parseInt(month)
-        const yearNum = parseInt(year)
+        const monthNum:number = parseInt(month)
+        const yearNum:number = parseInt(year)
 
         if (isNaN(monthNum) || isNaN(yearNum) || monthNum < 1 || monthNum > 12) {
             res.status(400).json({ message: 'Invalid month or year' });
             return 
             }
 
-        const query = buildEventsQuery(`
+        const query:string = buildEventsQuery(`
             WHERE EXTRACT(MONTH FROM ed.start_date) = $1 
                 AND EXTRACT(YEAR FROM ed.start_date) = $2
             `);
@@ -95,10 +95,10 @@ export async function getMonthEvents (req:Request, res:Response<Event[] | {messa
 export async function getUpcomingEvents (req:Request, res:Response<Event[] | {message:string}>) {
     try {
         
-        const today = new Date();
-        const cutOffTime = today.setMinutes(today.getMinutes() - 45)
+        const today:Date = new Date();
+        const cutOffTime:Date = new Date(today.setMinutes(today.getMinutes() - 45))
 
-        const query = `
+        const query:string = `
                 SELECT e.*, 
                     json_agg(
                         json_build_object(
@@ -120,7 +120,7 @@ export async function getUpcomingEvents (req:Request, res:Response<Event[] | {me
                     FROM events e
                     JOIN event_dates ed ON e.id = ed.event_id
                     JOIN locations l ON e.location_key = l.key
-                    WHERE ed.start_date > NOW()
+                    WHERE ed.start_date > ${cutOffTime}
                     GROUP BY e.id
                     ORDER BY MIN(ed.start_date)
                     LIMIT 3
