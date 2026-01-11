@@ -120,13 +120,13 @@ export async function getUpcomingEvents (req:Request, res:Response<Event[] | {me
                     FROM events e
                     JOIN event_dates ed ON e.id = ed.event_id
                     JOIN locations l ON e.location_key = l.key
-                    WHERE ed.start_date > ${cutOffTime}
+                    WHERE ed.start_date > $1
                     GROUP BY e.id
                     ORDER BY MIN(ed.start_date)
                     LIMIT 3
         `
 
-        const result = await pool.query(query)
+        const result = await pool.query(query, [cutOffTime])
 
         if (!result.rows || result.rows.length === 0) {
             res.status(400).json({ message: `No upcoming events found` });
