@@ -31,6 +31,7 @@ section.calendar {
 .calendar-day.empty {
     min-width: 85px;
     background-color: var(--white-opaque);
+    cursor: default;
 }
 
 .offset-days {
