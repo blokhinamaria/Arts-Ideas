@@ -1,4 +1,4 @@
-import { getPool } from "../config/database"
+import { getPool } from "../config/database.js"
 
 import type { Request, Response } from "express"
 

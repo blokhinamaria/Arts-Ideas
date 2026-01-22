@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import type { Express, Request, Response } from 'express'
-import { eventsRouter } from './routers/eventsRouter';
+import { eventsRouter } from './routers/eventsRouter.js';
 
 const app:Express = express();
 
