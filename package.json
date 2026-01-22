@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "seed": "tsx server/seed/seed.ts",
-    "server": "tsx server/index.ts",
+    "server": "tsx --tsconfig tsconfig.server.json server/index.ts",
     "dev:all": "npm run server & npm run dev"
   },
   "dependencies": {
