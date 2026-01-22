@@ -1,4 +1,4 @@
-import { pool } from "../config/database"
+import { getPool } from "../config/database"
 
 import type { Request, Response } from "express"
 
@@ -75,7 +75,7 @@ export async function getMonthEvents (req:Request, res:Response<Event[] | {messa
             WHERE EXTRACT(MONTH FROM ed.start_date) = $1 
                 AND EXTRACT(YEAR FROM ed.start_date) = $2
             `);
-
+        const pool = getPool();
         const result = await pool.query(query, [monthNum, yearNum])
 
         if (!result.rows || result.rows.length === 0) {
@@ -125,7 +125,7 @@ export async function getUpcomingEvents (req:Request, res:Response<Event[] | {me
                     ORDER BY MIN(ed.start_date)
                     LIMIT 3
         `
-
+        const pool = getPool()
         const result = await pool.query(query, [cutOffTime])
 
         if (!result.rows || result.rows.length === 0) {

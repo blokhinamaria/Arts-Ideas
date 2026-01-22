@@ -134,8 +134,7 @@ export default function Month() {
 
     async function fetchData():Promise<EventType[]> {
         try {
-            const API_URL = import.meta.env.VITE_API_URL;
-            const response = await fetch(`${API_URL}/api/events?month=${monthNumber}&year=${year}`)
+            const response = await fetch(`/api/events?month=${monthNumber}&year=${year}`)
             if (!response.ok) {
                 setError('No events found')
                 return []

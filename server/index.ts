@@ -15,4 +15,9 @@ app.use((req:Request, res:Response<{message: string}>):void => {
     res.status(404).json({message: 'No endpoint found'})
 })
 
-app.listen(PORT, ():void => console.log(`Listening on port ${PORT}`))
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, ():void => console.log(`Listening on port ${PORT}`))
+}
+
+
+

@@ -27,8 +27,8 @@ export default function UpcomingEvents() {
         async function fetchCurrentEvents() {
             try {
                 setIsLoading(true)
-                const API_URL:string = import.meta.env.VITE_API_URL;
-                const response:Response = await fetch(`${API_URL}/api/events/upcoming`)
+                const API_BASE_URL = import.meta.env.DEV ? 'http://localhost:3000' : ''
+                const response:Response = await fetch(`${API_BASE_URL}/api/events/upcoming`)
 
                 if (!response.ok) {
                     setError('Something went wrong') 
