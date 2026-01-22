@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { getUpcomingEvents } from "../../server/controllers/eventsController";
+import { getUpcomingEvents } from "../../server/controllers/eventsController.js";
 
 export default async (req: VercelRequest, res: VercelResponse) => {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -16,7 +16,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
     }
 
     try {
-        await getUpcomingEvents(req, res);
+        await getUpcomingEvents(req as any, res as any);
     } catch (error) {
         console.error(error)
         if (!res.headersSent) {

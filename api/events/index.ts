@@ -16,7 +16,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
     }
 
     try {
-        await getMonthEvents(req, res);
+        await getMonthEvents(req as any, res as any);
     } catch (error) {
         console.log(error) 
         if (!res.headersSent) {
