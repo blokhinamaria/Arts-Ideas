@@ -120,7 +120,7 @@ export async function getUpcomingEvents (req:Request, res:Response<Event[] | {me
                     FROM events e
                     JOIN event_dates ed ON e.id = ed.event_id
                     JOIN locations l ON e.location_key = l.key
-                    WHERE ed.start_date > $1
+                    WHERE ed.start_date > $1 AT TIME ZONE 'America/New_York'
                     GROUP BY e.id
                     ORDER BY MIN(ed.start_date)
                     LIMIT 3
