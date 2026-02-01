@@ -10,6 +10,7 @@ export default function Header () {
 
     return (
         <header>
+            <h1 className="visually-hidden">Arts and Ideas</h1>
             
             <img className='logo-header' src='/assets/logo/artsideas-full-white.svg'  alt='Arts and Ideas logo'/>
 

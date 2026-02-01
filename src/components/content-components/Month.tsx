@@ -134,7 +134,8 @@ export default function Month() {
 
     async function fetchData():Promise<EventType[]> {
         try {
-            const response = await fetch(`/api/events?month=${monthNumber}&year=${year}`)
+            const API_BASE_URL = import.meta.env.DEV ? 'http://localhost:3000' : ''
+            const response = await fetch(`${API_BASE_URL}/api/events?month=${monthNumber}&year=${year}`)
             if (!response.ok) {
                 setError('No events found')
                 return []
@@ -175,15 +176,29 @@ export default function Month() {
         <article id='month' ref={imageRef}>
             <section className="month-title-banner">
                 <div>
-                    <button onClick={handlePreviousMonth} disabled={disablePrev} className='month-swipe'><span className="material-symbols-outlined">keyboard_double_arrow_left</span></button>
+                    <button
+                        onClick={handlePreviousMonth}
+                        disabled={disablePrev}
+                        className='month-swipe'
+                        aria-label='Previous month'
+                        >
+                            <span className="material-symbols-outlined">keyboard_double_arrow_left</span>
+                    </button>
                     <div className='month-name-container'>
-                        <h1 className='month-name'>{monthName}</h1>
+                        <h2 className='month-name article-title'>{monthName}</h2>
                         <div className='month-name-details'>
-                            <h2>Events</h2>
-                            <h4>{year}</h4>
+                            <h3 className="subtitle">Events</h3>
+                            <h4 className="date">{year}</h4>
                         </div>
                     </div>
-                    <button onClick={() => handleNextMonth(true)} disabled={disableNext} className='month-swipe'><span className="material-symbols-outlined">keyboard_double_arrow_right</span></button> 
+                    <button
+                        onClick={() => handleNextMonth(true)}
+                        disabled={disableNext}
+                        className='month-swipe'
+                        aria-label='Next month'
+                        >
+                            <span className="material-symbols-outlined">keyboard_double_arrow_right</span>
+                    </button> 
                 </div>
             </section>
             <div className='sticky-image'

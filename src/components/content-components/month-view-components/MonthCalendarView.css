@@ -3,7 +3,7 @@ section.calendar {
     grid-template-columns: repeat(7, auto);
     color: var(--black);
     padding-inline: var(--padding-inline);
-    overflow: scroll;
+    overflow: auto;
     margin-block-start: var(--large-gap);
     padding-block-end: var(--large-gap);
 }
@@ -38,7 +38,7 @@ section.calendar {
     border: none;
 }
 
-.calendar-day.empty h4 {
+.calendar-day.empty .date {
     color: var(--accent1);
 }
 
@@ -50,9 +50,6 @@ section.calendar {
     background-color: var(--white-semi-opaque);
 }
 
-.calendar-day.empty.red {
-    color: red;
-}
 
 .calendar-day-number {
     display: flex;
@@ -61,14 +58,14 @@ section.calendar {
     width: 100%;
 }
 
-.calendar-day h4 {
+.calendar-day .date {
     color: var(--accent-color-1);
     margin: 0;
     align-self: flex-start;
 }
 
 .calendar-day-number > span {
-    color: var(--accent-color-1-semi-opaque);
+    color: var(--accent-color-1);
 }
 
 .calendar-day > span {
@@ -93,7 +90,7 @@ section.calendar {
     color: var(--black);
     border: 0.5px solid var(--black);
     padding: var(--small-gap);
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .calendar-day-popover > .calendar-day-number {

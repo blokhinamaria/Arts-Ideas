@@ -34,6 +34,13 @@ export default function MonthListView({events}:{events: EventType[]}) {
             setExpandedEventIds((prev:number[]):number[] => [...prev, id])
         }
     }
+    
+    function handleEventKeyDown(e: React.KeyboardEvent<HTMLDivElement>, id:number) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            handleEventClick(id)
+        }
+    }
 
     return (
         <section className='month-list-view'>
@@ -47,7 +54,11 @@ export default function MonthListView({events}:{events: EventType[]}) {
                     return (
                         <div
                             key={event.id}
-                            onClick={()=>handleEventClick(event.id)}
+                            role="button"
+                            tabIndex={0}
+                            aria-expanded={expandedEventIds.includes(event.id)}
+                            onClick={() => handleEventClick(event.id)}
+                            onKeyDown={(e) => handleEventKeyDown(e, event.id)}
                             >
                                 <EventCard
                                     event={event}
@@ -59,7 +70,11 @@ export default function MonthListView({events}:{events: EventType[]}) {
                     return (
                         <div
                             key={event.id}
-                            onClick={()=>handleEventClick(event.id)}
+                            role="button"
+                            tabIndex={0}
+                            aria-expanded={expandedEventIds.includes(event.id)}
+                            onClick={() => handleEventClick(event.id)}
+                            onKeyDown={(e) => handleEventKeyDown(e, event.id)}
                         >
                         <EventCard
                             event={event}

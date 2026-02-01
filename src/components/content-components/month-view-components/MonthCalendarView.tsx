@@ -1,7 +1,7 @@
 import './MonthCalendarView.css';
 
 import { formatEventDate } from '../utilities/FormatEventDate';
-import { ReactNode, useEffect, useState, type JSX } from 'react';
+import { ReactNode, useEffect, useRef, useState, type JSX } from 'react';
 
 import EventCard, { type EventType, EventDateType} from '../event-components/EventCard';
 import EventCardCalendarView from '../event-components/EventCardCalendarView';
@@ -40,7 +40,7 @@ export default function MonthCalendarView({events, selectedDate, showPast}:Month
     const [ expandedDays, setExpandedDays ] = useState<number[]>([]);
     const [ expandedEventIds, setExpandedEventIds ] = useState<number[]>([]);
     
-    function handleEventClick(e: MouseEvent, id:number) {
+    function handleEventClick(e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>, id:number) {
         e.stopPropagation()
         if (expandedEventIds.includes(id)) {
             setExpandedEventIds((prev:number[]):number[] => prev.filter((item:number):boolean => item !== id))
@@ -48,8 +48,22 @@ export default function MonthCalendarView({events, selectedDate, showPast}:Month
             setExpandedEventIds((prev:number[]):number[] => [...prev, id])
         }
     }
+    
+    function handleEventKeyDown(e: React.KeyboardEvent<HTMLDivElement>, id:number) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            handleEventClick(e, id)
+        }
+    }
 
-    function handleDayClick(d:number, events:EventType[]) {
+    function handleDayKeyDown(e: React.KeyboardEvent<HTMLDivElement>, day:number, events:EventType[]) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            handleDayClick(e, day, events)
+        }
+    }
+
+    function handleDayClick(e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>, d:number, events:EventType[]) {
         if (isMobile) {
             if (expandedDays.includes(d)) {
                 setExpandedDays((prev:number[]):number[] => prev.filter((day:number):boolean => day !== d))
@@ -67,6 +81,7 @@ export default function MonthCalendarView({events, selectedDate, showPast}:Month
                 })
             }
         } else {
+            triggerRef.current = e.currentTarget as HTMLDivElement
             handlePopover(d, events)
         }
     }
@@ -74,6 +89,49 @@ export default function MonthCalendarView({events, selectedDate, showPast}:Month
     //expanding events on desktop
     const [ openPopover, setOpenPopover ] = useState<number|null>(null);
     const [ popoverEvents, setPopoverEvents ] = useState<EventType[]>([]);
+    const popoverRef = useRef<HTMLDivElement | null>(null)
+    const triggerRef = useRef<HTMLDivElement | null>(null)
+
+    useEffect(() => {
+        if (openPopover && popoverRef.current) {
+            popoverRef.current.focus()
+        }
+        if (!openPopover && triggerRef.current) {
+            triggerRef.current.focus()
+        }
+    }, [openPopover])
+
+    function handlePopoverKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+        if (e.key === 'Tab') {
+            const container = popoverRef.current
+            if (!container) {
+                return
+            }
+            const focusables = container.querySelectorAll<HTMLElement>(
+                'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            )
+            if (focusables.length === 0) {
+                e.preventDefault()
+                container.focus()
+                return
+            }
+            const first = focusables[0]
+            const last = focusables[focusables.length - 1]
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault()
+                last.focus()
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault()
+                first.focus()
+            }
+            return
+        }
+        if (e.key === 'Escape') {
+            e.stopPropagation()
+            setOpenPopover(null)
+            setPopoverEvents([])
+        }
+    }
 
     function handlePopover(d:number, events:EventType[]) {        
         if (openPopover === d) {
@@ -94,7 +152,7 @@ export default function MonthCalendarView({events, selectedDate, showPast}:Month
     const weekdays:string[] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     
     const weekdayLabels:JSX.Element[] = weekdays.map((day:string):JSX.Element => (
-        <div key={day} className="calendar-day day-of-week"><h5>{day}</h5></div>
+        <div key={day} className="calendar-day day-of-week"><span className="secondary-title">{day}</span></div>
     ))
 
     const calendarDays:ReactNode[] = [];
@@ -136,7 +194,7 @@ export default function MonthCalendarView({events, selectedDate, showPast}:Month
     const calendarDayHeader = (day:number, date:string):ReactNode => {
         return (
             <div className='calendar-day-number'>
-                <h4>{day}</h4>
+                <span className="date">{day}</span>
                 <span key={date} className='tag'>{formatEventDate(date, 'weekday')}</span> 
             </div>
         )
@@ -171,12 +229,23 @@ export default function MonthCalendarView({events, selectedDate, showPast}:Month
                     <div key={d}
                         className={new Date(dayEvents[dayEvents.length - 1].dates[dayEvents[dayEvents.length - 1].dates.length - 1].start_date) < today ? 'calendar-day completed' : 'calendar-day'}
                         style= {{ anchorName: `--anchor${d}`}}
-                        onClick={() => handleDayClick(d, dayEvents)}>
+                        role="button"
+                        tabIndex={0}
+                        aria-expanded={expandedDays.includes(d)}
+                        onClick={(e) => handleDayClick(e, d, dayEvents)}
+                        onKeyDown={(e) => handleDayKeyDown(e, d, dayEvents)}>
                         
                         { calendarDayHeader(d, dayEvents[0].dates[0].start_date) }
 
                         { dayEvents.map((event:EventType, index:number):JSX.Element => 
-                            <div key={event.id} onClick={(e) => handleEventClick(e, event.id)}>
+                            <div
+                                key={event.id}
+                                role="button"
+                                tabIndex={0}
+                                aria-expanded={expandedEventIds.includes(event.id)}
+                                onClick={(e) => handleEventClick(e, event.id)}
+                                onKeyDown={(e) => handleEventKeyDown(e, event.id)}
+                            >
                                 { index > 0 && <hr/>}
                                 { expandedEventIds.includes(event.id) ? (
 
@@ -203,7 +272,11 @@ export default function MonthCalendarView({events, selectedDate, showPast}:Month
                     <div key={d}
                         className={new Date(dayEvents[dayEvents.length - 1].dates[dayEvents[dayEvents.length - 1].dates.length - 1].start_date) < today ? 'calendar-day completed' : 'calendar-day'}
                         style= {{ anchorName: `--anchor${d}`}}
-                        onClick={() => handleDayClick(d, dayEvents)}>
+                        role="button"
+                        tabIndex={0}
+                        aria-expanded={openPopover === d}
+                        onClick={(e) => handleDayClick(e, d, dayEvents)}
+                        onKeyDown={(e) => handleDayKeyDown(e, d, dayEvents)}>
 
                         { calendarDayHeader(d, dayEvents[0].dates[0].start_date) }
                         
@@ -221,13 +294,13 @@ export default function MonthCalendarView({events, selectedDate, showPast}:Month
             } else if (isMobile && (d === firstEventDate - 2 || d === lastEventDate + 2)) {
                 calendarDays.push(
                         <div key={d} className="calendar-day empty">
-                            <h4>...</h4>
+                            <span className="date">...</span>
                         </div>
                     )
             } else {
                 calendarDays.push(
                         <div key={d} className="calendar-day empty">
-                            <h4>{d}</h4>
+                            <span className="date">{d}</span>
                         </div>
                     )
             }
@@ -246,7 +319,12 @@ export default function MonthCalendarView({events, selectedDate, showPast}:Month
                         <div className='backdrop-popover' onClick={() => setOpenPopover(null)}/>
                         <div
                             className='calendar-day-popover anchored'
+                            role="dialog"
+                            aria-label="Event details"
+                            tabIndex={-1}
+                            ref={popoverRef}
                             style={{ positionAnchor: `--anchor${openPopover}` }}
+                            onKeyDown={handlePopoverKeyDown}
                             onMouseLeave={() => setOpenPopover(null) }
                             >
                                 { calendarDayHeader(openPopover, popoverEvents[0].dates[0].start_date) }
