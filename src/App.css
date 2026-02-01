@@ -84,10 +84,19 @@ Bold = 700 */
 
   /* Measurements */
   --padding-inline: 40px;
-  --padding-override: -40px;
   --large-gap: 40px;
   --small-gap: 20px;
-  --header-height: 110px
+  --header-height: 110px;
+
+  /* Type scale */
+  --type-display: clamp(3.5rem, 7vw + 1rem, 8rem);
+  --type-subtitle: clamp(1.75rem, 2.5vw + 1rem, 2.5rem);
+  --type-date: clamp(1.75rem, 2.5vw + 1rem, 2.5rem);
+  --type-title: clamp(0.95rem, 0.3vw + 0.9rem, 1rem);
+  --type-label: clamp(0.95rem, 0.3vw + 0.9rem, 1rem);
+  --type-body: clamp(0.85rem, 0.2vw + 0.8rem, 0.875rem);
+  --type-body-large: clamp(0.95rem, 0.2vw + 0.9rem, 1rem);
+  --type-small: clamp(0.7rem, 0.2vw + 0.65rem, 0.75rem);
 }
 
 /* Magazine colors 
@@ -135,7 +144,6 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 100px;
 }
 
 article {
@@ -153,26 +161,26 @@ h1 {
   font-family: 'Univers', sans-serif;
   font-weight: 700;
   text-transform: uppercase;
-  font-size: clamp(3.5rem, 7vw + 1rem, 8rem);
+  font-size: var(--type-display);
   line-height: 0.9;
   margin: 0;
 }
 
-h2 {
-  font-family: 'Chronicle', serif;
-  font-weight: 600;
-  font-style: italic;
-  font-size: 2.5rem;
-  line-height: 1;
-  margin: 0;
-}
-
-h3 {
+.article-title {
   font-family: 'Univers', sans-serif;
   font-weight: 700;
   text-transform: uppercase;
-  font-size: 4.375rem;
-  line-height: 1.1;
+  font-size: var(--type-display);
+  line-height: 0.9;
+  margin: 0;
+}
+
+.subtitle {
+  font-family: 'Chronicle', serif;
+  font-weight: 600;
+  font-style: italic;
+  font-size: var(--type-subtitle);
+  line-height: 1;
   margin: 0;
 }
 
@@ -180,7 +188,16 @@ h4 {
   font-family: 'Chronicle', serif;
   font-weight: 400;
   font-style: italic;
-  font-size: 2.5rem;
+  font-size: var(--type-date);
+  line-height: 1;
+  margin: 0;
+}
+
+.date {
+  font-family: 'Chronicle', serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: var(--type-date);
   line-height: 1;
   margin: 0;
 }
@@ -188,7 +205,17 @@ h4 {
 h5 {
   font-family: 'Chronicle', serif;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: var(--type-title);
+  line-height: 1.2;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+}
+
+.secondary-title {
+  font-family: 'Chronicle', serif;
+  font-weight: 600;
+  font-size: var(--type-title);
   line-height: 1.2;
   margin: 0;
   text-transform: uppercase;
@@ -199,7 +226,15 @@ h6 {
   font-family: 'Univers', sans-serif;
   font-weight: 300;
   text-transform: uppercase;
-  font-size: 1rem;
+  font-size: var(--type-label);
+  margin: 0;
+}
+
+.label {
+  font-family: 'Univers', sans-serif;
+  font-weight: 300;
+  text-transform: uppercase;
+  font-size: var(--type-label);
   margin: 0;
 }
 
@@ -208,20 +243,20 @@ span.tag {
   font-family: 'Chronicle', serif;
   font-weight: 400;
   font-style: italic;
-  font-size: 1rem;
+  font-size: var(--type-title);
 }
 
 a {
   font-family: 'Univers', sans-serif;
   font-weight: 300;
   text-transform: uppercase;
-  font-size: 1rem;
+  font-size: var(--type-label);
 }
 
 a.address {
   font-family: 'Univers', sans-serif;
   font-weight: 400;
-  font-size: 1rem;
+  font-size: var(--type-body-large);
   text-transform: none;
   text-decoration: none;
   color: var(--black);
@@ -239,7 +274,7 @@ button {
   font-family: 'Univers', sans-serif;
   font-weight: 300;
   text-transform: uppercase;
-  font-size: 1rem;
+  font-size: var(--type-label);
   color: var(--black);
   
   cursor: pointer;
@@ -269,19 +304,31 @@ button.button-large {
 p {
   font-family: 'Chronicle', serif;
   font-weight: 400;
-  font-size: 0.875rem;
+  font-size: var(--type-body);
 }
 
 p.body-large {
   font-family: 'Univers', sans-serif;
   font-weight: 400;
-  font-size: 1rem;
+  font-size: var(--type-body-large);
 }
 
 small {
   font-family: 'Univers', sans-serif;
   font-weight: 300;
-  font-size: 0.75rem;
+  font-size: var(--type-small);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 strong {

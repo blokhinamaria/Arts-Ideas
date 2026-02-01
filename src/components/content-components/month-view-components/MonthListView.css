@@ -2,6 +2,7 @@ section.month-list-view {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     max-width: calc(3 * 400px + 2 * var(--small-gap)); /*limit to 3 columns*/
+    width: min(100%, calc(3 * 400px + 2 * var(--small-gap)));
     row-gap: var(--small-gap);
 
     color: var(--black);
@@ -16,4 +17,3 @@ section.month-list-view {
         grid-template-columns: 100%;
     }
 }
-
