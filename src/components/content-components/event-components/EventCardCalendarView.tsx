@@ -10,6 +10,7 @@ export default function EventCardCalendarView({event}:{event:EventType}) {
     return (
         <div style={{ padding: '0'}}>
             <EventDate 
+                event={event}
                 dates={event.dates}
                 format='time'
             />
