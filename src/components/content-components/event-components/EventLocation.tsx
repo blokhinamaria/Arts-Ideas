@@ -1,22 +1,23 @@
 import { Tooltip } from "@mui/material"
+import { Link } from 'react-router-dom'
 import type {EventLocationType} from './EventCard'
 
 export default function EventLocation({location}:{location:EventLocationType}) {
 
     return (
-        <Tooltip title="Open in Google Maps (opens in a new tab)"  placement='bottom-start'>
-            <a
+        <Tooltip title="View on Google Maps" placement='bottom-start'>
+            <Link
                 className="address"
-                href={location?.map_url}
+                // to={`/campus-map?location=${location?.location_key}`}
+                to={location?.map_url}
                 target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Open in Google Maps (opens in a new tab)"
+                aria-label="View on campus map"
             >
                 <p className='body-large'>
                     {location?.venue}
                     {location?.building ? <><br/>{location?.building}</> : ''}
                 </p>
-            </a>
+            </Link>
         </Tooltip>
     )
 }

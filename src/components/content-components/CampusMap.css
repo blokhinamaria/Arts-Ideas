@@ -1,0 +1,175 @@
+.campus-map-page {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    background-color: var(--black);
+}
+
+/* ── Map viewport (fixed height, holds transform wrapper + controls) ── */
+
+.campus-map-viewport {
+    position: relative;
+    height: calc(100vh - var(--header-height));
+    overflow: hidden;
+    background-color: var(--white);
+}
+
+/* The SVG itself — let it define its own aspect ratio */
+.campus-map-svg-container {
+    width: 100%;
+    line-height: 0; /* prevents extra whitespace under the inline SVG */
+}
+
+.campus-map-svg-container svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* Interactive buildings get a pointer cursor */
+.campus-map-svg-container .map-interactive {
+    cursor: pointer;
+}
+
+.campus-map-svg-container .map-interactive:hover *:not(text):not(tspan) {
+    opacity: 0.65;
+}
+
+/* Highlighted building — !important overrides Illustrator's inline fills */
+.campus-map-svg-container .map-highlight,
+.campus-map-svg-container .map-highlight * {
+    fill: var(--accent-color-1) !important;
+    opacity: 0.85;
+}
+
+/* ── Zoom controls (bottom-right of the map viewport) ── */
+
+.campus-map-controls {
+    position: absolute;
+    bottom: var(--small-gap);
+    right: var(--small-gap);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.campus-map-control-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background-color: var(--white);
+    color: var(--black);
+    border: 0.5px solid var(--black);
+    cursor: pointer;
+    line-height: 0;
+}
+
+.campus-map-control-btn:hover {
+    background-color: var(--accent1);
+}
+
+.campus-map-control-btn .material-symbols-outlined {
+    font-size: 20px;
+}
+
+/* ── Legend sidebar ── */
+
+.campus-map-legend {
+    background-color: var(--white);
+    color: var(--black);
+    border-left: 0.5px solid var(--black);
+    padding: var(--small-gap);
+    overflow-y: auto;
+    height: calc(100vh - var(--header-height));
+    position: sticky;
+    top: var(--header-height);
+}
+
+.campus-map-legend-title {
+    margin-bottom: var(--small-gap);
+}
+
+.campus-map-legend-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.campus-map-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 7px 0;
+    cursor: pointer;
+    text-align: left;
+    color: var(--black);
+    transition: color 0.15s;
+}
+
+.campus-map-legend-item:hover {
+    color: var(--accent-color-1);
+}
+
+.campus-map-legend-item.active {
+    color: var(--accent-color-1);
+}
+
+.campus-map-legend-dot {
+    width: 8px;
+    height: 8px;
+    background-color: currentColor;
+    flex-shrink: 0;
+}
+
+.campus-map-legend-children {
+    list-style: none;
+    margin: 0 0 4px 16px;
+    padding: 0;
+}
+
+.campus-map-legend-child {
+    font-size: var(--type-body);
+    padding: 4px 0;
+}
+
+.campus-map-info {
+    margin-top: var(--small-gap);
+    padding-top: var(--small-gap);
+    border-top: 0.5px solid var(--black);
+}
+
+.campus-map-info p {
+    margin: 0;
+}
+
+.campus-map-info p + p {
+    margin-top: 4px;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 768px) {
+    .campus-map-page {
+        grid-template-columns: 1fr;
+    }
+
+    .campus-map-viewport {
+        height: 60vw;
+        min-height: 300px;
+    }
+
+    .campus-map-legend {
+        border-left: none;
+        border-top: 0.5px solid var(--black);
+        height: auto;
+        position: static;
+    }
+}

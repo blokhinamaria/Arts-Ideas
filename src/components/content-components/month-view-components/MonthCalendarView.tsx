@@ -33,7 +33,7 @@ export default function MonthCalendarView({events, selectedDate, showPast}:Month
 
         return matches;
     }
-
+    
     const isMobile:boolean = useMediaQuery('(max-width: 768px')
 
     //expanded events on mobile
@@ -212,14 +212,21 @@ export default function MonthCalendarView({events, selectedDate, showPast}:Month
         const dayEvents:EventType[] = [];
         
         //find events of the day
-        events.forEach((event:EventType):void => (
-            event.dates.forEach((date:EventDateType):void => {
-                const eventDay = new Date(date.start_date).getDate();
-                if (eventDay === d) {
-                    dayEvents.push(event);
-                } 
-            })
-        ))
+        events.forEach((event:EventType):void => {
+            const eventDay = new Date(event.dates[0].start_date).getDate();
+            if (eventDay === d) {
+                dayEvents.push(event)
+            }
+        }
+            // event.dates.forEach((date:EventDateType):void => {
+            //     const eventDay = new Date(date.start_date).getDate();
+            //     if (eventDay === d) {
+            //         dayEvents.push(event);
+            //     } 
+            // })
+        )
+
+        console.log(dayEvents)
 
         //display events
         if (dayEvents.length >= 1) {
@@ -239,7 +246,7 @@ export default function MonthCalendarView({events, selectedDate, showPast}:Month
 
                         { dayEvents.map((event:EventType, index:number):JSX.Element => 
                             <div
-                                key={event.id}
+                                key={`${event.id}+${event.dates[0].start_date}`}
                                 role="button"
                                 tabIndex={0}
                                 aria-expanded={expandedEventIds.includes(event.id)}
@@ -254,9 +261,7 @@ export default function MonthCalendarView({events, selectedDate, showPast}:Month
                                             />
                                 ) : (
                                     <>
-                                        {event.dates.map((date:EventDateType):JSX.Element => 
-                                            <EventDate date={date} format='time'/>  
-                                        )}
+                                        <EventDate dates={event.dates} format='time' style={{'margin-bottom': '10px'}}/>  
                                         <EventTitleGroup title={event.title}/>
                                     </>
                                 )}
@@ -330,7 +335,7 @@ export default function MonthCalendarView({events, selectedDate, showPast}:Month
                                 { calendarDayHeader(openPopover, popoverEvents[0].dates[0].start_date) }
                                 { popoverEvents.map((event) => (
                                     <EventCardCalendarView
-                                        key={event.id}
+                                        key={`${event.id}+${event.dates[0].start_date}`}
                                         event={event}
                                         />
                                 ))}

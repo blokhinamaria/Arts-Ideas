@@ -11,6 +11,7 @@ import Location from './event-components/EventLocation.js';
 //utils
 import { formatEventDate } from './utilities/FormatEventDate'
 import './UpcomingEvents.css';
+import EventDate from './event-components/EventDate.js';
 
 function preloadImage(src:string):Promise<void> {
     return new Promise((resolve) => {
@@ -238,7 +239,7 @@ export default function UpcomingEvents() {
             setOpenPopover(null)
         }
     }
-
+    
     return (
         <>
         {isLoaderVisible ? (
@@ -270,17 +271,13 @@ export default function UpcomingEvents() {
                         <div className='event-description'>
                             <h3 className="secondary-title">{currentEvents[0]?.title}</h3>
                             <hr />
-                            {
-                                currentEvents[0]?.dates.map(date => (
-                                    <p key={`${currentEvents[0]?.id}${date.start_date}`} className='body-large'>{formatEventDate(date.start_date)}</p>
-                                ))
-                            }
+                            <EventDate event={currentEvents[0]} dates={currentEvents[0]?.dates}/>
                             <Location location={currentEvents[0]?.location}/>
                             <p>{currentEvents[0]?.description}</p>
                         </div>
                         <div></div>
                     {/* <EventCard event={currentEvents[0]} /> */}
-                        {/* <button disabled>Add to calendar</button> */}
+                        
                     </div>
                 </div>
 
@@ -311,18 +308,12 @@ export default function UpcomingEvents() {
                                 <div className='event-description'>
                                     <h3 className="secondary-title">{currentEvents[1]?.title}</h3>
                                     <hr />
-                                    {
-                                        currentEvents[1]?.dates.map(date => (
-                                            <p key={`${currentEvents[1]?.id}${date.start_date}`} className='body-large'>{formatEventDate(date.start_date)}</p>
-                                        ))
-                                    }
+                                    <EventDate event={currentEvents[1]} dates={currentEvents[1]?.dates}/>
                                     <Location location={currentEvents[1]?.location}/>
                                     {isNarrow ? <p>{currentEvents[1]?.description}</p> : null}
                                 </div>
                                 
-                                {/* <button className='add-to-calendar-icon'><span className="material-symbols-outlined">
-                                    calendar_add_on
-                                </span></button> */}
+                                
                         </div>
                 </div>
 
@@ -353,18 +344,12 @@ export default function UpcomingEvents() {
                                 <div className='event-description'>
                                     <h3 className="secondary-title">{currentEvents[2]?.title}</h3>
                                     <hr />
-                                    {
-                                        currentEvents[2]?.dates.map(date => (
-                                            <p key={`${currentEvents[2]?.id}${date.start_date}`} className='body-large'>{formatEventDate(date.start_date)}</p>
-                                        ))
-                                    }
+                                    <EventDate event={currentEvents[2]} dates={currentEvents[2]?.dates}/>
                                     <Location location={currentEvents[2]?.location}/>
                                     {isNarrow ? <p>{currentEvents[2]?.description}</p> : null} 
                                 </div>
                                 
-                                {/* <button className='add-to-calendar-icon'><span className="material-symbols-outlined">
-                                    calendar_add_on
-                                </span></button> */}
+                                
                         </div>
                 </div>
             </section>

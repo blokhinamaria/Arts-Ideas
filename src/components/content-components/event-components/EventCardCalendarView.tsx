@@ -9,14 +9,10 @@ export default function EventCardCalendarView({event}:{event:EventType}) {
 
     return (
         <div style={{ padding: '0'}}>
-            {
-                event.dates.map(date => (
-                    <EventDate key={date.start_date} 
-                        date={date}
-                        format='time'
-                    />
-                ))
-            }
+            <EventDate 
+                dates={event.dates}
+                format='time'
+            />
             <EventTitleGroup title={event.title} />
             <hr />
             <EventLocation location={event.location} />

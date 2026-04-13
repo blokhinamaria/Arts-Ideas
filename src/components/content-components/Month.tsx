@@ -88,15 +88,27 @@ export default function Month() {
             try {
                 setIsLoading(true)
                 const data:EventType[] = await fetchData();
-                setEvents(data);
+                const allEvents:EventType[] = data.flatMap(e => {
+                    if (e.dates.length === 1) return [e]
+                    let result = []
+                    for (let i = 0; i < e.dates.length; i++) {
+                        result.push({
+                        ...e, 
+                        dates: e.dates.slice(i)
+                        })
+                    }
+                    return result
+                    }
+                )
+                setEvents(allEvents);
                 
                 //Is it current month?
                 if (today.getMonth() === selectedDate.getMonth()) {
                     //Does the current month have events that passed?
-                    const hasPastEvents:boolean = data.some((event:EventType):boolean => hasEventPassed(event.dates)) 
+                    const hasPastEvents:boolean = allEvents.some((event:EventType):boolean => hasEventPassed(event.dates)) 
                     if (hasPastEvents) {
                         //filter upcoming events from passed events
-                        const filteredData:EventType[] = data.filter((event:EventType):boolean => !hasEventPassed(event.dates))
+                        const filteredData:EventType[] = allEvents.filter((event:EventType):boolean => !hasEventPassed(event.dates))
                         //Does the current month have upcoming events?
                         if (filteredData.length > 0) {
                             setUpcomingEventsOnly(filteredData)
@@ -185,11 +197,9 @@ export default function Month() {
                             <span className="material-symbols-outlined">keyboard_double_arrow_left</span>
                     </button>
                     <div className='month-name-container'>
+                        <span className="subtitle">Events</span>
                         <h2 className='month-name article-title'>{monthName}</h2>
-                        <div className='month-name-details'>
-                            <h3 className="subtitle">Events</h3>
-                            <h4 className="date">{year}</h4>
-                        </div>
+                        <span className="date">{year}</span>
                     </div>
                     <button
                         onClick={() => handleNextMonth(true)}
@@ -219,7 +229,7 @@ export default function Month() {
                     <section className='month-buttons' ref={sectionRef}>
                         <button onClick={switchViews}>Switch to {isListView ? "Calendar" : "List"} view</button>
                         {showPastButton && <button onClick={() => setShowPast(prev => !prev)}>{showPast ? 'Hide' : 'Show'} past events</button>}
-                        {/* <button disabled>Add to calendar</button> */}
+                        {/* <button disabled>Add all to calendar</button> */}
                     </section>
                     { events.length > 0 ? 
                         <>

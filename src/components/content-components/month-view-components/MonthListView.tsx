@@ -47,13 +47,13 @@ export default function MonthListView({events}:{events: EventType[]}) {
             {events.map((event:EventType):ReactNode => {
                 //not mobile => regular card
                 if (!isMobile) {
-                    return <EventCard key={event.id} event={event}/> 
+                    return <EventCard key={`${event.id}+${event.dates[0].start_date}`} event={event}/> 
                 }
                 //on mobile and upcoming, show full
                 if (hasEventPassed(event.dates) && !expandedEventIds.includes(event.id)) {
                     return (
                         <div
-                            key={event.id}
+                            key={`${event.id}+${event.dates[0].start_date}`}
                             role="button"
                             tabIndex={0}
                             aria-expanded={expandedEventIds.includes(event.id)}
@@ -69,7 +69,7 @@ export default function MonthListView({events}:{events: EventType[]}) {
                 } else {
                     return (
                         <div
-                            key={event.id}
+                            key={`${event.id}+${event.dates[0].start_date}`}
                             role="button"
                             tabIndex={0}
                             aria-expanded={expandedEventIds.includes(event.id)}

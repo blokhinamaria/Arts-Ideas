@@ -6,6 +6,8 @@ import './App.css'
 import Layout from './components/Layout.jsx';
 import HomePage from './components/HomePage.jsx';
 import Styles from './components/layout-components/Styles.jsx'
+import CampusMap from './components/content-components/CampusMap'
+import SubmitEvent from './components/content-components/SubmitEvent'
 
 function App() {
 
@@ -27,6 +29,8 @@ function App() {
             <Route path='/' element={<Layout />}>
               <Route index element={<HomePage />} />
               <Route path='/styles' element={<Styles />}/>
+              <Route path='/campus-map' element={<CampusMap />}/>
+              <Route path='/submit-event' element={<SubmitEvent />}/>
             </Route>
           </Routes>
         </Wrapper>

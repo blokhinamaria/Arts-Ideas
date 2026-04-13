@@ -32,3 +32,65 @@
 .default-event p:last-child {
     margin-bottom: 0;
 }
+
+.date-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.add-to-calendar-icon {
+    border: none;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    margin-top: 0.2rem;
+}
+
+/* Add-to-calendar popover */
+.add-to-calendar-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.add-to-calendar-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: var(--accent-color-1-opaque);
+    z-index: 4;
+    cursor: default;
+}
+
+.add-to-calendar-popover {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    background-color: var(--white);
+    color: var(--black);
+    border: 0.5px solid var(--black);
+    width: min(400px, 90vw);
+    padding: var(--small-gap);
+}
+
+.add-to-calendar-popover h5 {
+    margin-bottom: var(--small-gap);
+}
+
+.add-to-calendar-popover .calendar-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 12px 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--black);
+}
+
+.add-to-calendar-popover .calendar-option:hover {
+    background-color: var(--accent1);
+    padding-left: 8px;
+    margin-left: -8px;
+    width: calc(100% + 8px);
+}

@@ -50,17 +50,15 @@ type EventCardProps = {
 export default function EventCard({event, format='full'}:EventCardProps) {
 
     const today:Date = new Date()
-    const eventStartDate:Date = new Date(event.dates[event.dates.length - 1].start_date)
+    const eventStartDate:Date = new Date(event.dates[0].start_date)
 
     return (
         <div className={eventStartDate < today ? 'default-event completed' : 'default-event'}>
             <EventTitleGroup title={event.title}/>
             <hr />
-            {event.dates.map(date => (
-                <EventDate
-                    key={date.start_date}
-                    date={date}/>
-            ))} 
+            <EventDate
+                dates={event.dates}
+                event={event}/>
             {format==='full' && 
                 <>
                     <EventLocation location={event.location} />
