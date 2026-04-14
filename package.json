@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "seed": "tsx server/seed/seed.ts",
     "server": "tsx --tsconfig tsconfig.server.json server/index.ts",
-    "dev:all": "npm run server & npm run dev"
+    "dev:all": "npm run server & npm run dev",
+    "create-user": "tsx --tsconfig tsconfig.server.json server/seed/createUser.ts"
   },
   "dependencies": {
     "@cloudinary/react": "^1.14.3",
@@ -18,10 +19,13 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mui/material": "^7.3.6",
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "hamburger-react": "^2.5.2",
+    "jsonwebtoken": "^9.0.3",
     "pg": "^8.16.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
@@ -31,6 +35,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
+    "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^25.0.2",

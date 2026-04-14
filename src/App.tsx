@@ -1,5 +1,5 @@
 import { useLayoutEffect, ReactNode } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet, useLocation} from 'react-router-dom';
 import './App.css'
 
 //Components
@@ -8,6 +8,17 @@ import HomePage from './components/HomePage.jsx';
 import Styles from './components/layout-components/Styles.jsx'
 import CampusMap from './components/content-components/CampusMap'
 import SubmitEvent from './components/content-components/SubmitEvent'
+import Login from './components/content-components/admin-components/Login.js';
+import { AuthProvider } from './context/AuthContext.js';
+import AdminDashboard from './components/content-components/admin-components/AdminDashboard.js';
+
+function AuthLayout() {
+  return (
+    <AuthProvider>
+      <Outlet />
+    </AuthProvider>
+  );
+}
 
 function App() {
 
@@ -31,6 +42,10 @@ function App() {
               <Route path='/styles' element={<Styles />}/>
               <Route path='/campus-map' element={<CampusMap />}/>
               <Route path='/submit-event' element={<SubmitEvent />}/>
+              <Route element={<AuthLayout />}>
+                <Route path='/login' element={<Login />} />
+                <Route path='/admin-dashboard' element={<AdminDashboard />} />
+              </Route>
             </Route>
           </Routes>
         </Wrapper>

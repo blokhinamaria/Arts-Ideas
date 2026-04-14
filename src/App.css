@@ -344,3 +344,43 @@ img {
   height: 100%;
   object-fit: cover;
 }
+
+article#login {
+  text-align: center;
+  margin-block: var(--large-gap);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 450px);
+  margin-inline: auto;
+  margin-block: var(--large-gap);
+}
+
+form label {
+  margin-bottom: calc(var(--small-gap) / 2);
+  text-align: left;
+}
+
+form input {
+  font-family: 'Chronicle', serif;
+  font-weight: 400;
+
+  font-size: var(--type-label);
+  color: var(--black);
+  
+  /* box */
+  padding: 10px;
+  background-color: var(--white);
+  border: 0.75px solid var(--black) ;
+
+  margin-bottom: var(--small-gap);
+}
+
+form input.invalid {
+  background-color: rgb(255, 184, 184)
+}
+
+
+
