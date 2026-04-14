@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import type { Request, Response, NextFunction } from "express";
 import { getPool } from "../config/database.js"
 
 const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
@@ -9,11 +10,11 @@ const isProd = process.env.NODE_ENV === 'production';
 const cookieOptions = {
     httpOnly: true,
     secure: isProd,
-    sameSite: isProd ? 'none' : 'lax',
+    sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax',
     maxAge: 1000 * 60 * 60 * 24
 };
 
-export async function login(req, res) {
+export async function login(req: Request, res: Response) {
     const { username, password } = req.body;
     const pool = getPool()
     try {
@@ -46,36 +47,35 @@ export async function login(req, res) {
     }
 }
 
-export function getMe(req, res) {
+export function getMe(req: Request, res: Response) {
     const token = req.cookies?.[COOKIE_NAME];
     if (!token) return res.status(401).json({ user: null });
 
     try {
-        const user = jwt.verify(token, JWT_SECRET);
+        const user = jwt.verify(token, JWT_SECRET) as { id: number; username: string; role: string };
         res.json({ user: { id: user.id, username: user.username, role: user.role } });
     } catch {
         return res.status(401).json({ user: null });
     }
 }
 
-export function authMiddleware(req, res, next) {
+export function authMiddleware(req: Request, res: Response, next: NextFunction) {
     const token = req.cookies?.[COOKIE_NAME];
     if (!token) return res.status(401).json({ error: "Unauthorized" });
 
     try {
-        req.user = jwt.verify(token, JWT_SECRET);
+        (req as Request & { user: unknown }).user = jwt.verify(token, JWT_SECRET);
         next();
     } catch {
         return res.status(401).json({ error: "Unauthorized" });
     }
 }
 
-export function logout(req, res) {
+export function logout(req: Request, res: Response) {
     res.clearCookie(COOKIE_NAME, {
         httpOnly: true,
         secure: isProd,
-        sameSite: isProd ? 'none' : 'lax'
+        sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax'
     });
     res.json({ success: true });
 }
-
