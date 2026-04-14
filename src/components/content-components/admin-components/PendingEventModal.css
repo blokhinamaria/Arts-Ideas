@@ -1,0 +1,190 @@
+/* Reuses edit-modal-* classes from EditEventModal.css */
+/* This file only adds pending-specific styles */
+
+/* ── Submitter info ───────────────────────────────────────── */
+
+.pending-submitter-info {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 28px;
+    padding: 12px 16px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-left: 3px solid var(--accent1);
+}
+
+.pending-submitter-label {
+    font-family: 'Univers', sans-serif;
+    font-size: var(--type-small);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent1);
+    flex-shrink: 0;
+}
+
+.pending-submitter-name {
+    font-family: 'Univers', sans-serif;
+    font-size: var(--type-body);
+    color: var(--white);
+}
+
+.pending-submitter-email {
+    font-family: 'Univers', sans-serif;
+    font-size: var(--type-body);
+    color: rgba(255, 255, 255, 0.55);
+}
+
+/* ── Form action row ─────────────────────────────────────── */
+
+.pending-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+}
+
+.pending-action-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.pending-action-group--right {
+    margin-left: auto;
+}
+
+.pending-confirm-label {
+    font-family: 'Univers', sans-serif;
+    font-size: var(--type-body);
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* ── Delete button ───────────────────────────────────────── */
+
+.pending-btn-delete {
+    background: transparent;
+    border: 1px solid rgba(217, 83, 79, 0.5);
+    color: rgba(217, 83, 79, 0.8);
+    font-family: 'Univers', sans-serif;
+    font-size: var(--type-label);
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    width: auto;
+}
+
+.pending-btn-delete:hover {
+    background-color: rgba(217, 83, 79, 0.12);
+    border-color: #d9534f;
+    color: #d9534f;
+}
+
+.pending-btn-confirm-delete {
+    background-color: #d9534f;
+    border: 1px solid #d9534f;
+    color: var(--white);
+    font-family: 'Univers', sans-serif;
+    font-weight: 700;
+    font-size: var(--type-label);
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: auto;
+}
+
+.pending-btn-confirm-delete:hover:not(:disabled) {
+    background-color: #c9302c;
+}
+
+.pending-btn-confirm-delete:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+/* ── Publish button ──────────────────────────────────────── */
+
+.pending-btn-publish {
+    background-color: var(--accent2);
+    border: 1px solid var(--accent2);
+    color: var(--black);
+    font-family: 'Univers', sans-serif;
+    font-weight: 700;
+    font-size: var(--type-label);
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    width: auto;
+}
+
+.pending-btn-publish:hover {
+    background-color: transparent;
+    color: var(--accent2);
+}
+
+.pending-btn-confirm-publish {
+    background-color: var(--accent2);
+    border: 1px solid var(--accent2);
+    color: var(--black);
+    font-family: 'Univers', sans-serif;
+    font-weight: 700;
+    font-size: var(--type-label);
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    width: auto;
+}
+
+.pending-btn-confirm-publish:hover:not(:disabled) {
+    background-color: transparent;
+    color: var(--accent2);
+}
+
+.pending-btn-confirm-publish:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+/* ── Cancel action button ────────────────────────────────── */
+
+.pending-btn-cancel-action {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.45);
+    font-family: 'Univers', sans-serif;
+    font-size: var(--type-body);
+    padding: 4px 0;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    width: auto;
+    transition: color 0.2s;
+}
+
+.pending-btn-cancel-action:hover {
+    color: var(--white);
+    background: transparent;
+}
+
+/* ── Submitter column in table ───────────────────────────── */
+
+.admin-td-submitter {
+    min-width: 160px;
+    white-space: nowrap;
+    font-size: var(--type-small);
+}
+
+.admin-submitter-email {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.7rem;
+}
+
+/* ── Status badge for pending ────────────────────────────── */
+
+.admin-status-pending {
+    border-color: var(--accent1);
+    color: var(--accent1);
+}

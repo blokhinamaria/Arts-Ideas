@@ -1,18 +1,16 @@
 import { useState } from 'react';
 import './SubmitEvent.css';
 
+// IMPORT FROM DB
 const LOCATION_OPTIONS = [
-    { key: 'ferman',              label: 'Ferman Center' },
     { key: 'gordon_theater',      label: 'Gordon Theater' },
     { key: 'performance_gallery', label: 'Performance Gallery' },
     { key: 'saunders_gallery',    label: 'Saunders Gallery' },
     { key: 'black_box_theater',   label: 'Black Box Theater' },
-    { key: 'bailey',              label: 'Bailey Arts Center' },
     { key: 'design_studios',      label: 'Design Studios' },
     { key: 'scarfone_gallery',    label: 'Scarfone Gallery' },
     { key: 'sykes_plaza',         label: 'Sykes Plaza' },
     { key: 'sykes_chapel',        label: 'Sykes Chapel' },
-    { key: 'vaughn',              label: 'Vaughn Center' },
     { key: 'reeves_theater',      label: 'Reeves Theater' },
     { key: 'crescent_club',       label: 'Crescent Club' },
     { key: 'falk_theatre',        label: 'Falk Theatre' },
@@ -20,7 +18,6 @@ const LOCATION_OPTIONS = [
     { key: 'fletcher_lounge',     label: 'Fletcher Lounge' },
     { key: 'music_room',          label: 'Music Room' },
     { key: 'grand_salon',         label: 'Grand Salon' },
-    { key: 'parking',             label: 'Parking' },
     { key: 'other',               label: 'Other' },
 ];
 
@@ -75,7 +72,7 @@ type FormErrors = {
     contact_email?: string;
 };
 
-const today = new Date().toISOString().split('T')[0];
+const today = new Date();
 
 function newDateEntry(): DateEntry {
     return { id: crypto.randomUUID(), start_date: '', has_end_date: false, end_date: '' };
@@ -100,6 +97,7 @@ export default function SubmitEvent() {
     });
 
     const [errors, setErrors] = useState<FormErrors>({});
+    //DELETE?
     const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
     function updateField<K extends keyof FormState>(field: K, value: FormState[K]) {
@@ -152,13 +150,13 @@ export default function SubmitEvent() {
             form.dates.forEach(d => {
                 if (!d.start_date) {
                     startErrors[d.id] = 'Start date is required'; valid = false;
-                } else if (d.start_date < today) {
+                } else if (new Date(d.start_date) < today) {
                     startErrors[d.id] = 'Date must be in the future'; valid = false;
                 }
                 if (d.has_end_date) {
                     if (!d.end_date) {
                         endErrors[d.id] = 'End date is required'; valid = false;
-                    } else if (d.end_date <= d.start_date) {
+                    } else if (new Date(d.end_date) <= new Date(d.start_date)) {
                         endErrors[d.id] = 'End date must be after start date'; valid = false;
                     }
                 }
@@ -206,6 +204,7 @@ export default function SubmitEvent() {
             })),
             location_key: form.location_key,
             custom_location: form.location_key === 'other' ? form.custom_location : null,
+            description: form.description,
             category: form.category === 'Other' ? form.custom_category : form.category,
             custom_category: form.category === 'Other' ? form.custom_category : null,
             contact_email: form.contact_email,
@@ -233,14 +232,12 @@ export default function SubmitEvent() {
         return (
             <div className="submit-event-page">
                 <div className="submit-event-card">
-                    <div className="submit-event-success">
-                        <span className="subtitle">Thank You</span>
-                        <h2 className="article-title">Event Submitted</h2>
-                        <p>
-                            Your event has been submitted and is pending review. You will be
-                            contacted at <strong>{form.submitter_email}</strong> once it has been approved.
-                        </p>
-                    </div>
+                    <span className="subtitle">Thank You</span>
+                    <h2>Event Submitted</h2>
+                    <p className='body-large'>
+                        Your event has been submitted and is pending review. You will be
+                        contacted at <strong>{form.submitter_email}</strong> if more information is required.
+                    </p>
                 </div>
             </div>
         );
@@ -249,24 +246,20 @@ export default function SubmitEvent() {
     return (
         <div className="submit-event-page">
             <div className="submit-event-card">
-
-                <header className="submit-event-header">
-                    <span className="subtitle">Submit</span>
-                    <h2 className="article-title">An Event</h2>
-                    <p>
-                        Fill out the form below to submit your event for review. Once approved
-                        by the administrator, it will appear on the Arts &amp; Ideas calendar.
-                    </p>
-                </header>
+                <h1>Submit An Event</h1>
+                <p className='body-large'>
+                    Fill out the form below to submit your event for review. Once approved
+                    by the administrator, it will appear on the Arts&amp;Ideas calendar.
+                </p>
 
                 <form className="event-form" onSubmit={handleSubmit} noValidate>
 
                     {/* ── About You ──────────────────────────────── */}
                     <section className="form-section">
-                        <h5 className="form-section-title">About You</h5>
+                        <h4 className="form-section-title">About You</h4>
 
                         <div className="form-field">
-                            <label className="label" htmlFor="submitter_name">Your Name</label>
+                            <label htmlFor="submitter_name">Your Name</label>
                             <input
                                 id="submitter_name"
                                 type="text"
@@ -283,7 +276,7 @@ export default function SubmitEvent() {
                         </div>
 
                         <div className="form-field">
-                            <label className="label" htmlFor="submitter_email">UT Email Address</label>
+                            <label htmlFor="submitter_email">UTampa Email Address</label>
                             <input
                                 id="submitter_email"
                                 type="email"
@@ -308,7 +301,7 @@ export default function SubmitEvent() {
 
                     {/* ── Event Details ──────────────────────────── */}
                     <section className="form-section">
-                        <h5 className="form-section-title">Event Details</h5>
+                        <h4 className="form-section-title">Event Details</h4>
 
                         <div className="form-field">
                             <label className="label" htmlFor="title">Event Title</label>
@@ -329,7 +322,7 @@ export default function SubmitEvent() {
 
                         {/* Dates */}
                         <fieldset className="form-field form-dates-fieldset">
-                            <legend className="label">Date(s)</legend>
+                            <legend><h3>Date(s)</h3></legend>
                             {errors.dates && (
                                 <span className="form-error" role="alert">{errors.dates}</span>
                             )}
@@ -344,8 +337,8 @@ export default function SubmitEvent() {
                                                 </label>
                                                 <input
                                                     id={`start_${entry.id}`}
-                                                    type="date"
-                                                    min={today}
+                                                    type="datetime-local"
+                                                    min={today.toISOString()}
                                                     value={entry.start_date}
                                                     onChange={e => updateDate(entry.id, { start_date: e.target.value })}
                                                     aria-invalid={!!errors.date_start?.[entry.id]}
@@ -364,8 +357,8 @@ export default function SubmitEvent() {
                                                     </label>
                                                     <input
                                                         id={`end_${entry.id}`}
-                                                        type="date"
-                                                        min={entry.start_date || today}
+                                                        type="datetime-local"
+                                                        min={entry.start_date || today.toISOString()}
                                                         value={entry.end_date}
                                                         onChange={e => updateDate(entry.id, { end_date: e.target.value })}
                                                         aria-invalid={!!errors.date_end?.[entry.id]}
@@ -414,7 +407,7 @@ export default function SubmitEvent() {
 
                         {/* Location */}
                         <div className="form-field">
-                            <label className="label" htmlFor="location_key">Location</label>
+                            <label htmlFor="location_key">Location</label>
                             <select
                                 id="location_key"
                                 value={form.location_key}
@@ -433,7 +426,7 @@ export default function SubmitEvent() {
 
                         {form.location_key === 'other' && (
                             <div className="form-field">
-                                <label className="label" htmlFor="custom_location">Specify Location</label>
+                                <label htmlFor="custom_location">Specify Location</label>
                                 <input
                                     id="custom_location"
                                     type="text"
@@ -449,10 +442,10 @@ export default function SubmitEvent() {
 
                         {/* Description */}
                         <div className="form-field">
-                            <label className="label" htmlFor="description">Event Description</label>
+                            <label htmlFor="description">Event Description</label>
                             <textarea
                                 id="description"
-                                rows={5}
+                                rows={10}
                                 value={form.description}
                                 onChange={e => updateField('description', e.target.value)}
                                 aria-invalid={!!errors.description}
@@ -464,7 +457,7 @@ export default function SubmitEvent() {
 
                         {/* Category */}
                         <div className="form-field">
-                            <label className="label" htmlFor="category">Category</label>
+                            <label htmlFor="category">Category</label>
                             <select
                                 id="category"
                                 value={form.category}
@@ -483,7 +476,7 @@ export default function SubmitEvent() {
 
                         {form.category === 'Other' && (
                             <div className="form-field">
-                                <label className="label" htmlFor="custom_category">Specify Category</label>
+                                <label htmlFor="custom_category">Specify Category</label>
                                 <input
                                     id="custom_category"
                                     type="text"
@@ -502,8 +495,8 @@ export default function SubmitEvent() {
 
                     {/* ── Contact Information ────────────────────── */}
                     <section className="form-section">
-                        <h5 className="form-section-title">Contact Information</h5>
-                        <p className="form-section-note">Public-facing contact details for this event.</p>
+                        <h4>Contact Information</h4>
+                        <p>Public-facing contact details for this event.</p>
 
                         <div className="form-field">
                             <label className="label" htmlFor="contact_email">Contact Email</label>

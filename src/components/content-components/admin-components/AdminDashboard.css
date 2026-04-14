@@ -1,0 +1,366 @@
+.admin-dashboard {
+    padding-block: 60px;
+    min-height: 100vh;
+}
+
+/* ── Top-level tabs ──────────────────────────────────────── */
+
+.admin-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    margin-bottom: 36px;
+}
+
+.admin-tab-btn {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: 'Univers', sans-serif;
+    font-weight: 700;
+    font-size: var(--type-label);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 10px 24px 12px;
+    cursor: pointer;
+    transition: color 0.2s, border-bottom-color 0.2s;
+    width: auto;
+}
+
+.admin-tab-btn:hover {
+    color: var(--white);
+    background: transparent;
+}
+
+.admin-tab-btn.is-active {
+    color: var(--white);
+    border-bottom-color: var(--white);
+    background: transparent;
+}
+
+.admin-tab-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    background-color: var(--accent1);
+    color: var(--white);
+    font-size: 0.65rem;
+    font-weight: 700;
+    border-radius: 9px;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+/* ── Academic year sub-tabs ──────────────────────────────── */
+
+.admin-year-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+.admin-year-tab-btn {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    color: rgba(255, 255, 255, 0.45);
+    font-family: 'Univers', sans-serif;
+    font-weight: 400;
+    font-size: var(--type-small);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 8px 18px 10px;
+    cursor: pointer;
+    transition: color 0.2s, border-bottom-color 0.2s;
+    width: auto;
+}
+
+.admin-year-tab-btn:hover {
+    color: var(--white);
+    background: transparent;
+}
+
+.admin-year-tab-btn.is-active {
+    color: var(--accent1);
+    border-bottom-color: var(--accent1);
+    background: transparent;
+}
+
+.admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    gap: 16px;
+}
+
+.admin-title {
+    font-family: 'Univers', sans-serif;
+    font-weight: 700;
+    font-size: var(--type-subtitle);
+    margin: 0;
+    color: var(--white);
+}
+
+.admin-logout {
+    font-family: 'Univers', sans-serif;
+    font-size: var(--type-label);
+    font-weight: 400;
+    background: transparent;
+    color: var(--white);
+    border: 1px solid var(--white);
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    white-space: nowrap;
+}
+
+.admin-logout:hover {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+/* Section header */
+
+.admin-events-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.admin-events-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.admin-section-title {
+    font-family: 'Chronicle', serif;
+    font-weight: 600;
+    font-size: var(--type-title);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0;
+    color: var(--white);
+}
+
+.admin-total {
+    font-family: 'Univers', sans-serif;
+    font-size: var(--type-small);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.admin-status {
+    font-family: 'Univers', sans-serif;
+    font-size: var(--type-body);
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+    padding-block: 8px;
+}
+
+.admin-error {
+    color: #e07070;
+}
+
+/* ── All Events tab wrapper ─────────────────────────────── */
+
+.all-events-tab {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ── Table ──────────────────────────────────────────────── */
+
+.admin-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Univers', sans-serif;
+    font-size: var(--type-small);
+    color: var(--white);
+    table-layout: auto;
+}
+
+.admin-table thead tr {
+    background-color: rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.admin-table th {
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 700;
+    white-space: nowrap;
+    font-size: var(--type-small);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.admin-table td {
+    padding: 10px 12px;
+    vertical-align: top;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    line-height: 1.45;
+}
+
+.admin-table-row {
+    cursor: pointer;
+}
+
+.admin-table-row--past {
+    cursor: default;
+}
+
+/* Editable row: prominent hover with left accent bar */
+.admin-table tbody tr.admin-table-row:not(.admin-table-row--past):hover {
+    background-color: rgba(255, 255, 255, 0.09);
+    box-shadow: inset 3px 0 0 var(--accent1);
+}
+
+.admin-table tbody tr.admin-table-row:not(.admin-table-row--past):focus-visible {
+    outline: 2px solid var(--accent1);
+    outline-offset: -2px;
+}
+
+/* Past rows: no hover effect */
+.admin-table tbody tr.admin-table-row--past:hover {
+    background-color: transparent;
+}
+
+/* Column-specific widths / constraints */
+
+.admin-td-image {
+    width: 90px;
+    min-width: 90px;
+}
+
+.admin-thumbnail {
+    display: block;
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+}
+
+.admin-td-title {
+    min-width: 160px;
+    font-weight: 600;
+}
+
+.admin-td-dates {
+    min-width: 200px;
+}
+
+.admin-date-row {
+    margin: 0 0 4px 0;
+    white-space: nowrap;
+}
+
+.admin-date-row:last-child {
+    margin-bottom: 0;
+}
+
+.admin-td-location {
+    min-width: 130px;
+    white-space: nowrap;
+}
+
+.admin-td-description {
+    min-width: 200px;
+    max-width: 280px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
+.admin-td-tags {
+    min-width: 120px;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.admin-td-contact {
+    min-width: 160px;
+    white-space: nowrap;
+}
+
+.admin-td-timestamp {
+    min-width: 140px;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.7rem;
+}
+
+/* Status badge */
+
+.admin-status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--white);
+    white-space: nowrap;
+}
+
+.admin-status-published {
+    border-color: var(--accent2);
+    color: var(--accent2);
+}
+
+.admin-status-draft {
+    border-color: var(--accent1);
+    color: var(--accent1);
+}
+
+/* Pagination */
+
+.admin-pagination {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 8px;
+}
+
+.admin-page-btn {
+    font-family: 'Univers', sans-serif;
+    font-size: var(--type-body);
+    font-weight: 400;
+    background: transparent;
+    color: var(--white);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 6px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.admin-page-btn:hover:not(:disabled) {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+.admin-page-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.admin-page-info {
+    font-family: 'Univers', sans-serif;
+    font-size: var(--type-body);
+    color: rgba(255, 255, 255, 0.6);
+}

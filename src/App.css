@@ -291,6 +291,10 @@ button {
   }
 }
 
+button:hover {
+  background-color: var(--accent1);
+}
+
 button:disabled {
   opacity: 0.25;
 }
@@ -359,8 +363,12 @@ form {
 }
 
 form label {
-  margin-bottom: calc(var(--small-gap) / 2);
+  margin-bottom: calc(var(--small-gap) / 4);
   text-align: left;
+  font-family: 'Univers', sans-serif;
+  font-weight: 300;
+  text-transform: uppercase;
+  font-size: var(--type-label);
 }
 
 form input {

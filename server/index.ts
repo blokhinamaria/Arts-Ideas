@@ -6,6 +6,7 @@ import { eventsRouter } from './routers/eventsRouter.js';
 import { locationsRouter } from './routers/locationsRouter.js';
 import { submitEventRouter } from './routers/submitEventRouter.js';
 import { authRouter } from './routers/authRouter.js';
+import { imageRouter } from './routers/imageRouter.js';
 
 const app:Express = express();
 
@@ -24,6 +25,7 @@ app.use('/auth', authRouter)
 app.use('/api/events', eventsRouter)
 app.use('/api/locations', locationsRouter)
 app.use('/api/submit-event', submitEventRouter)
+app.use('/api/images', imageRouter)
 
 app.use((_req:Request, res:Response<{message: string}>):void => {
     res.status(404).json({message: 'No endpoint found'})

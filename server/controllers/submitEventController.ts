@@ -25,8 +25,7 @@ export async function submitNewEvent(
     req: Request<object, object, SubmitEventBody>,
     res: Response<{ message: string; id?: number }>
 ): Promise<void> {
-    try {
-        const {
+    const {
             submitter_name,
             submitter_email,
             title,
@@ -41,6 +40,9 @@ export async function submitNewEvent(
             dates,
         } = req.body
 
+    const pool = getPool()
+    
+    try {
         if (
             !submitter_name ||
             !submitter_email ||
@@ -73,15 +75,15 @@ export async function submitNewEvent(
             }
         }
 
-        const pool = getPool()
+        await pool.query('BEGIN');
 
-        const result = await pool.query(
+        const eventResult = await pool.query(
             `INSERT INTO new_events
                 (submitter_name, submitter_email, title, description,
-                 location_key, custom_location, category, custom_category,
-                 contact_email, contact_phone, contact_name, dates, status)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, 'pending')
-             RETURNING id`,
+                    location_key, custom_location, category, custom_category,
+                    contact_email, contact_phone, contact_name, status)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, 'pending')
+                RETURNING id`,
             [
                 submitter_name,
                 submitter_email,
@@ -94,12 +96,29 @@ export async function submitNewEvent(
                 contact_email,
                 contact_phone ?? null,
                 contact_name ?? null,
-                JSON.stringify(dates),
             ]
         )
 
-        res.status(201).json({ message: 'Event submitted successfully', id: result.rows[0].id })
+        const eventId = eventResult.rows[0].id;
+
+        for (const date of dates) {
+            await pool.query(
+                `INSERT INTO new_event_dates
+                    (event_id, start_date, end_date)
+                    VALUES ($1, $2, $3)`,
+                [
+                    eventId,
+                    date.start_date,
+                    date.end_date || null
+                ]
+            );
+        }
+        
+        await pool.query('COMMIT');
+
+        res.status(201).json({ message: 'Event submitted successfully', id: eventId })
     } catch (err) {
+        await pool.query('ROLLBACK');
         console.error('Error submitting event:', err)
         res.status(500).json({ message: 'Failed to submit event. Please try again.' })
     }
