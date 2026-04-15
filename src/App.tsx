@@ -1,4 +1,4 @@
-import { useLayoutEffect, ReactNode } from 'react';
+import { useLayoutEffect, ReactNode, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Outlet, useLocation} from 'react-router-dom';
 import './App.css'
 
@@ -6,11 +6,12 @@ import './App.css'
 import Layout from './components/Layout.jsx';
 import HomePage from './components/HomePage.jsx';
 import Styles from './components/layout-components/Styles.jsx'
-import CampusMap from './components/content-components/CampusMap'
-import SubmitEvent from './components/content-components/SubmitEvent'
-import Login from './components/content-components/admin-components/Login.js';
+const CampusMap = lazy(() => import('./components/content-components/CampusMap'));
+const SubmitEvent = lazy(() => import('./components/content-components/SubmitEvent'));
 import { AuthProvider } from './context/AuthContext.js';
-import AdminDashboard from './components/content-components/admin-components/AdminDashboard.js';
+
+const Login = lazy(() => import('./components/content-components/admin-components/Login.js'));
+const AdminDashboard = lazy(() => import('./components/content-components/admin-components/AdminDashboard.js'));
 
 function AuthLayout() {
   return (
@@ -40,11 +41,11 @@ function App() {
             <Route path='/' element={<Layout />}>
               <Route index element={<HomePage />} />
               <Route path='/styles' element={<Styles />}/>
-              <Route path='/campus-map' element={<CampusMap />}/>
-              <Route path='/submit-event' element={<SubmitEvent />}/>
+              <Route path='/campus-map' element={<Suspense><CampusMap /></Suspense>}/>
+              <Route path='/submit-event' element={<Suspense><SubmitEvent /></Suspense>}/>
               <Route element={<AuthLayout />}>
-                <Route path='/login' element={<Login />} />
-                <Route path='/admin-dashboard' element={<AdminDashboard />} />
+                <Route path='/login' element={<Suspense><Login /></Suspense>} />
+                <Route path='/admin-dashboard' element={<Suspense><AdminDashboard /></Suspense>} />
               </Route>
             </Route>
           </Routes>
