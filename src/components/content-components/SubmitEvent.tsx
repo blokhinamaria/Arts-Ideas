@@ -1,24 +1,25 @@
 import { useState } from 'react';
 import './SubmitEvent.css';
+import Form from '../elements/Form/Form';
 
 // IMPORT FROM DB
 const LOCATION_OPTIONS = [
-    { key: 'gordon_theater',      label: 'Gordon Theater' },
-    { key: 'performance_gallery', label: 'Performance Gallery' },
-    { key: 'saunders_gallery',    label: 'Saunders Gallery' },
-    { key: 'black_box_theater',   label: 'Black Box Theater' },
-    { key: 'design_studios',      label: 'Design Studios' },
-    { key: 'scarfone_gallery',    label: 'Scarfone Gallery' },
-    { key: 'sykes_plaza',         label: 'Sykes Plaza' },
-    { key: 'sykes_chapel',        label: 'Sykes Chapel' },
-    { key: 'reeves_theater',      label: 'Reeves Theater' },
-    { key: 'crescent_club',       label: 'Crescent Club' },
-    { key: 'falk_theatre',        label: 'Falk Theatre' },
-    { key: 'plant_hall',          label: 'Plant Hall' },
-    { key: 'fletcher_lounge',     label: 'Fletcher Lounge' },
-    { key: 'music_room',          label: 'Music Room' },
-    { key: 'grand_salon',         label: 'Grand Salon' },
-    { key: 'other',               label: 'Other' },
+    { value: 'gordon_theater',      label: 'Gordon Theater' },
+    { value: 'performance_gallery', label: 'Performance Gallery' },
+    { value: 'saunders_gallery',    label: 'Saunders Gallery' },
+    { value: 'black_box_theater',   label: 'Black Box Theater' },
+    { value: 'design_studios',      label: 'Design Studios' },
+    { value: 'scarfone_gallery',    label: 'Scarfone Gallery' },
+    { value: 'sykes_plaza',         label: 'Sykes Plaza' },
+    { value: 'sykes_chapel',        label: 'Sykes Chapel' },
+    { value: 'reeves_theater',      label: 'Reeves Theater' },
+    { value: 'crescent_club',       label: 'Crescent Club' },
+    { value: 'falk_theatre',        label: 'Falk Theatre' },
+    { value: 'plant_hall',          label: 'Plant Hall' },
+    { value: 'fletcher_lounge',     label: 'Fletcher Lounge' },
+    { value: 'music_room',          label: 'Music Room' },
+    { value: 'grand_salon',         label: 'Grand Salon' },
+    { value: 'other',               label: 'Other' },
 ];
 
 const CATEGORY_OPTIONS = [
@@ -81,7 +82,7 @@ function newDateEntry(): DateEntry {
 const API_BASE = import.meta.env.DEV ? 'http://localhost:3000' : '';
 
 export default function SubmitEvent() {
-    const [form, setForm] = useState<FormState>({
+    const [formData, setFormData] = useState<FormState>({
         submitter_name: '',
         submitter_email: '',
         title: '',
@@ -96,21 +97,21 @@ export default function SubmitEvent() {
         contact_name: '',
     });
 
-    const [errors, setErrors] = useState<FormErrors>({});
-    //DELETE?
+    const [formErrors, setFormErrors] = useState<FormErrors>({});
+
     const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
     function updateField<K extends keyof FormState>(field: K, value: FormState[K]) {
-        setForm(prev => ({ ...prev, [field]: value }));
-        setErrors(prev => ({ ...prev, [field]: undefined }));
+        setFormData(prev => ({ ...prev, [field]: value }));
+        setFormErrors(prev => ({ ...prev, [field]: undefined }));
     }
 
     function updateDate(id: string, changes: Partial<DateEntry>) {
-        setForm(prev => ({
+        setFormData(prev => ({
             ...prev,
             dates: prev.dates.map(d => (d.id === id ? { ...d, ...changes } : d)),
         }));
-        setErrors(prev => ({
+        setFormErrors(prev => ({
             ...prev,
             date_start: { ...prev.date_start, [id]: undefined },
             date_end: { ...prev.date_end, [id]: undefined },
@@ -119,35 +120,35 @@ export default function SubmitEvent() {
     }
 
     function addDate() {
-        setForm(prev => ({ ...prev, dates: [...prev.dates, newDateEntry()] }));
+        setFormData(prev => ({ ...prev, dates: [...prev.dates, newDateEntry()] }));
     }
 
     function removeDate(id: string) {
-        setForm(prev => ({ ...prev, dates: prev.dates.filter(d => d.id !== id) }));
+        setFormData(prev => ({ ...prev, dates: prev.dates.filter(d => d.id !== id) }));
     }
 
     function validate(): boolean {
         const errs: FormErrors = {};
         let valid = true;
 
-        if (!form.submitter_name.trim()) {
+        if (!formData.submitter_name.trim()) {
             errs.submitter_name = 'Name is required'; valid = false;
         }
-        if (!form.submitter_email.trim()) {
+        if (!formData.submitter_email.trim()) {
             errs.submitter_email = 'Email is required'; valid = false;
-        } else if (!form.submitter_email.toLowerCase().endsWith('@ut.edu')) {
+        } else if (!formData.submitter_email.toLowerCase().endsWith('@ut.edu')) {
             errs.submitter_email = 'Must be a @ut.edu email address'; valid = false;
         }
-        if (!form.title.trim()) {
+        if (!formData.title.trim()) {
             errs.title = 'Event title is required'; valid = false;
         }
 
-        if (form.dates.length === 0) {
+        if (formData.dates.length === 0) {
             errs.dates = 'At least one date is required'; valid = false;
         } else {
             const startErrors: Record<string, string> = {};
             const endErrors: Record<string, string> = {};
-            form.dates.forEach(d => {
+            formData.dates.forEach(d => {
                 if (!d.start_date) {
                     startErrors[d.id] = 'Start date is required'; valid = false;
                 } else if (new Date(d.start_date) < today) {
@@ -165,26 +166,26 @@ export default function SubmitEvent() {
             if (Object.keys(endErrors).length) errs.date_end = endErrors;
         }
 
-        if (!form.location_key) {
+        if (!formData.location_key) {
             errs.location_key = 'Location is required'; valid = false;
         }
-        if (form.location_key === 'other' && !form.custom_location.trim()) {
+        if (formData.location_key === 'other' && !formData.custom_location.trim()) {
             errs.custom_location = 'Please specify the location'; valid = false;
         }
-        if (!form.description.trim()) {
+        if (!formData.description.trim()) {
             errs.description = 'Description is required'; valid = false;
         }
-        if (!form.category) {
+        if (!formData.category) {
             errs.category = 'Category is required'; valid = false;
         }
-        if (form.category === 'Other' && !form.custom_category.trim()) {
+        if (formData.category === 'Other' && !formData.custom_category.trim()) {
             errs.custom_category = 'Please specify the category'; valid = false;
         }
-        if (!form.contact_email.trim()) {
+        if (!formData.contact_email.trim()) {
             errs.contact_email = 'Contact email is required'; valid = false;
         }
 
-        setErrors(errs);
+        setFormErrors(errs);
         return valid;
     }
 
@@ -195,21 +196,21 @@ export default function SubmitEvent() {
         setSubmitStatus('loading');
 
         const payload = {
-            submitter_name: form.submitter_name,
-            submitter_email: form.submitter_email,
-            title: form.title,
-            dates: form.dates.map(d => ({
+            submitter_name: formData.submitter_name,
+            submitter_email: formData.submitter_email,
+            title: formData.title,
+            dates: formData.dates.map(d => ({
                 start_date: d.start_date,
                 end_date: d.has_end_date ? d.end_date : null,
             })),
-            location_key: form.location_key,
-            custom_location: form.location_key === 'other' ? form.custom_location : null,
-            description: form.description,
-            category: form.category === 'Other' ? form.custom_category : form.category,
-            custom_category: form.category === 'Other' ? form.custom_category : null,
-            contact_email: form.contact_email,
-            contact_phone: form.contact_phone || null,
-            contact_name: form.contact_name || null,
+            location_key: formData.location_key,
+            custom_location: formData.location_key === 'other' ? formData.custom_location : null,
+            description: formData.description,
+            category: formData.category === 'Other' ? formData.custom_category : formData.category,
+            custom_category: formData.category === 'Other' ? formData.custom_category : null,
+            contact_email: formData.contact_email,
+            contact_phone: formData.contact_phone || null,
+            contact_name: formData.contact_name || null,
         };
 
         try {
@@ -236,7 +237,7 @@ export default function SubmitEvent() {
                     <h2>Event Submitted</h2>
                     <p className='body-large'>
                         Your event has been submitted and is pending review. You will be
-                        contacted at <strong>{form.submitter_email}</strong> if more information is required.
+                        contacted at <strong>{formData.submitter_email}</strong> if more information is required.
                     </p>
                 </div>
             </div>
@@ -255,7 +256,38 @@ export default function SubmitEvent() {
                 <form className="event-form" onSubmit={handleSubmit} noValidate>
 
                     {/* ── About You ──────────────────────────────── */}
-                    <section className="form-section">
+                    <Form.Section
+                        title='About You'
+                        divider={true}
+                    >
+                        <Form.Input
+                            label='Your Name'
+                            inputType='text'
+                            inputName='submitter_name'
+                            inputValue={formData.submitter_name}
+                            onChange={e => updateField('submitter_name', e.target.value)}
+                            inputInvalid={!!formErrors.submitter_name}
+                        >
+                            {formErrors.submitter_name && (
+                                <Form.Error>{formErrors.submitter_name}</Form.Error>
+                            )}
+                        </Form.Input>
+                        <Form.Input
+                            label='UTampa Email Address'
+                            inputType='email'
+                            inputName='submitter_name'
+                            inputValue={formData.submitter_email}
+                            placeholder="example@ut.edu"
+                            onChange={e => updateField('submitter_email', e.target.value)}
+                            inputInvalid={!!formErrors.submitter_email}
+                        >
+                            <Form.Hint>Used to contact you about your submission.</Form.Hint>
+                            {formErrors.submitter_email && (
+                                <Form.Error>{formErrors.submitter_email}</Form.Error>
+                            )}
+                        </Form.Input>
+                    </Form.Section>
+                    {/* <section className="form-section">
                         <h4 className="form-section-title">About You</h4>
 
                         <div className="form-field">
@@ -263,14 +295,14 @@ export default function SubmitEvent() {
                             <input
                                 id="submitter_name"
                                 type="text"
-                                value={form.submitter_name}
+                                value={formData.submitter_name}
                                 onChange={e => updateField('submitter_name', e.target.value)}
-                                aria-invalid={!!errors.submitter_name}
-                                aria-describedby={errors.submitter_name ? 'err-submitter_name' : undefined}
+                                aria-invalid={!!formErrors.submitter_name}
+                                aria-describedby={formErrors.submitter_name ? 'err-submitter_name' : undefined}
                             />
-                            {errors.submitter_name && (
+                            {formErrors.submitter_name && (
                                 <span id="err-submitter_name" className="form-error" role="alert">
-                                    {errors.submitter_name}
+                                    {formErrors.submitter_name}
                                 </span>
                             )}
                         </div>
@@ -281,59 +313,71 @@ export default function SubmitEvent() {
                                 id="submitter_email"
                                 type="email"
                                 placeholder="example@ut.edu"
-                                value={form.submitter_email}
+                                value={formData.submitter_email}
                                 onChange={e => updateField('submitter_email', e.target.value)}
-                                aria-invalid={!!errors.submitter_email}
-                                aria-describedby={errors.submitter_email ? 'err-submitter_email' : 'hint-submitter_email'}
+                                aria-invalid={!!formErrors.submitter_email}
+                                aria-describedby={formErrors.submitter_email ? 'err-submitter_email' : 'hint-submitter_email'}
                             />
-                            <span id="hint-submitter_email" className="form-hint small">
-                                Used to contact you about your submission.
-                            </span>
-                            {errors.submitter_email && (
+                            
+                            {formErrors.submitter_email && (
                                 <span id="err-submitter_email" className="form-error" role="alert">
-                                    {errors.submitter_email}
+                                    {formErrors.submitter_email}
                                 </span>
                             )}
                         </div>
-                    </section>
+                    </section> */}
 
-                    <hr className="form-divider" />
+                    {/* <hr className="form-divider" /> */}
 
                     {/* ── Event Details ──────────────────────────── */}
-                    <section className="form-section">
-                        <h4 className="form-section-title">Event Details</h4>
-
-                        <div className="form-field">
-                            <label className="label" htmlFor="title">Event Title</label>
-                            <input
-                                id="title"
-                                type="text"
-                                value={form.title}
-                                onChange={e => updateField('title', e.target.value)}
-                                aria-invalid={!!errors.title}
-                                aria-describedby={errors.title ? 'err-title' : undefined}
-                            />
-                            {errors.title && (
-                                <span id="err-title" className="form-error" role="alert">
-                                    {errors.title}
-                                </span>
-                            )}
-                        </div>
-
-                        {/* Dates */}
-                        <fieldset className="form-field form-dates-fieldset">
-                            <legend><h3>Date(s)</h3></legend>
-                            {errors.dates && (
-                                <span className="form-error" role="alert">{errors.dates}</span>
-                            )}
+                    <Form.Section
+                        title="Event Details"
+                    >
+                        <Form.Input
+                            label='Event Title'
+                            inputType='text'
+                            inputName='title'
+                            inputValue={formData.title}
+                            onChange={e => updateField('title', e.target.value)}
+                            inputInvalid={!!formErrors.title}
+                        >
+                            {formErrors.title && <Form.Error>{formErrors.title}</Form.Error>}
+                        </Form.Input>
+                        <Form.Fieldset legend='Date(s)'>
                             <div className="form-dates-list">
-                                {form.dates.map((entry, idx) => (
+                                {formData.dates.map((entry, idx) => (
                                     <div key={entry.id} className="form-date-entry">
                                         <div className="form-date-row">
-                                            <div className="form-field">
+                                            <Form.Input 
+                                                label={`${entry.has_end_date ? 'Start Date' : 'Date'}${formData.dates.length > 1 ? ` ${idx + 1}` : ''}`}
+                                                id = {`start_${entry.id}`}
+                                                inputType="datetime-local"
+                                                inputName='start_date'
+                                                min={today.toISOString()}
+                                                inputValue={entry.start_date} 
+                                                onChange={e => updateDate(entry.id, { start_date: e.target.value })}
+                                                inputInvalid={!!formErrors.date_start?.[entry.id]}
+                                            >
+                                                {formErrors.date_start?.[entry.id] && <Form.Error>{formErrors.date_start[entry.id]}</Form.Error>}
+                                            </Form.Input>
+                                            {entry.has_end_date && (
+                                                <Form.Input 
+                                                    label='End Date'
+                                                    id = {`end_${entry.id}`}
+                                                    inputType="datetime-local"
+                                                    inputName='end_date'
+                                                    min={entry.start_date || today.toISOString()}
+                                                    inputValue={entry.end_date}
+                                                    onChange={e => updateDate(entry.id, { end_date: e.target.value })}
+                                                    inputInvalid={!!formErrors.date_end?.[entry.id]}
+                                                >
+                                                    {formErrors.date_end?.[entry.id] && <Form.Error>{formErrors.date_end[entry.id]}</Form.Error>}
+                                                </Form.Input>
+                                            )}
+                                            {/* <div className="form-field">
                                                 <label className="small form-label-muted" htmlFor={`start_${entry.id}`}>
                                                     {entry.has_end_date ? 'Start Date' : 'Date'}
-                                                    {form.dates.length > 1 && ` ${idx + 1}`}
+                                                    {formData.dates.length > 1 && ` ${idx + 1}`}
                                                 </label>
                                                 <input
                                                     id={`start_${entry.id}`}
@@ -341,11 +385,191 @@ export default function SubmitEvent() {
                                                     min={today.toISOString()}
                                                     value={entry.start_date}
                                                     onChange={e => updateDate(entry.id, { start_date: e.target.value })}
-                                                    aria-invalid={!!errors.date_start?.[entry.id]}
+                                                    aria-invalid={!!formErrors.date_start?.[entry.id]}
                                                 />
-                                                {errors.date_start?.[entry.id] && (
+                                                {formErrors.date_start?.[entry.id] && (
                                                     <span className="form-error" role="alert">
-                                                        {errors.date_start[entry.id]}
+                                                        {formErrors.date_start[entry.id]}
+                                                    </span>
+                                                )}
+                                            </div> */}
+
+                                            {/* {entry.has_end_date && (
+                                                <div className="form-field">
+                                                    <label className="small form-label-muted" htmlFor={`end_${entry.id}`}>
+                                                        End Date
+                                                    </label>
+                                                    <input
+                                                        id={`end_${entry.id}`}
+                                                        type="datetime-local"
+                                                        min={entry.start_date || today.toISOString()}
+                                                        value={entry.end_date}
+                                                        onChange={e => updateDate(entry.id, { end_date: e.target.value })}
+                                                        aria-invalid={!!formErrors.date_end?.[entry.id]}
+                                                    />
+                                                    {formErrors.date_end?.[entry.id] && (
+                                                        <span className="form-error" role="alert">
+                                                            {formErrors.date_end[entry.id]}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            )} */}
+                                        </div>
+
+                                        <div className="form-date-actions">
+                                            <Form.Checkbox
+                                                checked={entry.has_end_date}
+                                                onChange={e =>
+                                                    updateDate(entry.id, {
+                                                        has_end_date: e.target.checked,
+                                                        end_date: '',
+                                                    })}
+                                            >
+                                                Date range
+                                            </Form.Checkbox>
+                                            {formData.dates.length > 1 && (
+                                                <button
+                                                    type="button"
+                                                    className="btn-remove-date"
+                                                    onClick={() => removeDate(entry.id)}
+                                                    aria-label={`Remove date ${idx + 1}`}
+                                                >
+                                                    Remove
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <button type="button" className="btn-add-date" onClick={addDate}>
+                                + Add another date
+                            </button>
+                        </Form.Fieldset>
+                        <Form.Select
+                            label='Location'
+                            id='location_key'
+                            inputName='location_key'
+                            inputValue={formData.location_key}
+                            inputInvalid={!!formErrors.location_key}
+                            placeholder='Select a location'
+                            onChange={e => updateField('location_key', e.target.value)}
+                            options={LOCATION_OPTIONS}
+                        >
+                            {formErrors.location_key && <Form.Error>{formErrors.location_key}</Form.Error>}
+                        </Form.Select>
+                        {formData.location_key === 'other' && (
+                            <div className="form-field">
+                                <label htmlFor="custom_location">Specify Location</label>
+                                <input
+                                    id="custom_location"
+                                    type="text"
+                                    value={formData.custom_location}
+                                    onChange={e => updateField('custom_location', e.target.value)}
+                                    aria-invalid={!!formErrors.custom_location}
+                                />
+                                {formErrors.custom_location && (
+                                    <span className="form-error" role="alert">{formErrors.custom_location}</span>
+                                )}
+                            </div>
+                        )}
+
+                        {/* Description */}
+                        <div className="form-field">
+                            <label htmlFor="description">Event Description</label>
+                            <textarea
+                                id="description"
+                                rows={10}
+                                value={formData.description}
+                                onChange={e => updateField('description', e.target.value)}
+                                aria-invalid={!!formErrors.description}
+                            />
+                            {formErrors.description && (
+                                <span className="form-error" role="alert">{formErrors.description}</span>
+                            )}
+                        </div>
+
+                        {/* Category */}
+                        <div className="form-field">
+                            <label htmlFor="category">Category</label>
+                            <select
+                                id="category"
+                                value={formData.category}
+                                onChange={e => updateField('category', e.target.value)}
+                                aria-invalid={!!formErrors.category}
+                            >
+                                <option value="" disabled>Select a category</option>
+                                {CATEGORY_OPTIONS.map(cat => (
+                                    <option key={cat} value={cat}>{cat}</option>
+                                ))}
+                            </select>
+                            {formErrors.category && (
+                                <span className="form-error" role="alert">{formErrors.category}</span>
+                            )}
+                        </div>
+
+                        {formData.category === 'Other' && (
+                            <div className="form-field">
+                                <label htmlFor="custom_category">Specify Category</label>
+                                <input
+                                    id="custom_category"
+                                    type="text"
+                                    value={formData.custom_category}
+                                    onChange={e => updateField('custom_category', e.target.value)}
+                                    aria-invalid={!!formErrors.custom_category}
+                                />
+                                {formErrors.custom_category && (
+                                    <span className="form-error" role="alert">{formErrors.custom_category}</span>
+                                )}
+                            </div>
+                        )}
+                    </Form.Section>
+
+                    {/* <section className="form-section">
+                        <h4 className="form-section-title">Event Details</h4>
+
+                        <div className="form-field">
+                            <label className="label" htmlFor="title">Event Title</label>
+                            <input
+                                id="title"
+                                type="text"
+                                value={formData.title}
+                                onChange={e => updateField('title', e.target.value)}
+                                aria-invalid={!!formErrors.title}
+                                aria-describedby={formErrors.title ? 'err-title' : undefined}
+                            />
+                            {formErrors.title && (
+                                <span id="err-title" className="form-error" role="alert">
+                                    {formErrors.title}
+                                </span>
+                            )}
+                        </div> */}
+
+                        {/* Dates */}
+                        {/* <fieldset className="form-field form-dates-fieldset">
+                            <legend><h3>Date(s)</h3></legend>
+                            {formErrors.dates && (
+                                <span className="form-error" role="alert">{formErrors.dates}</span>
+                            )}
+                            <div className="form-dates-list">
+                                {formData.dates.map((entry, idx) => (
+                                    <div key={entry.id} className="form-date-entry">
+                                        <div className="form-date-row">
+                                            <div className="form-field">
+                                                <label className="small form-label-muted" htmlFor={`start_${entry.id}`}>
+                                                    {entry.has_end_date ? 'Start Date' : 'Date'}
+                                                    {formData.dates.length > 1 && ` ${idx + 1}`}
+                                                </label>
+                                                <input
+                                                    id={`start_${entry.id}`}
+                                                    type="datetime-local"
+                                                    min={today.toISOString()}
+                                                    value={entry.start_date}
+                                                    onChange={e => updateDate(entry.id, { start_date: e.target.value })}
+                                                    aria-invalid={!!formErrors.date_start?.[entry.id]}
+                                                />
+                                                {formErrors.date_start?.[entry.id] && (
+                                                    <span className="form-error" role="alert">
+                                                        {formErrors.date_start[entry.id]}
                                                     </span>
                                                 )}
                                             </div>
@@ -361,11 +585,11 @@ export default function SubmitEvent() {
                                                         min={entry.start_date || today.toISOString()}
                                                         value={entry.end_date}
                                                         onChange={e => updateDate(entry.id, { end_date: e.target.value })}
-                                                        aria-invalid={!!errors.date_end?.[entry.id]}
+                                                        aria-invalid={!!formErrors.date_end?.[entry.id]}
                                                     />
-                                                    {errors.date_end?.[entry.id] && (
+                                                    {formErrors.date_end?.[entry.id] && (
                                                         <span className="form-error" role="alert">
-                                                            {errors.date_end[entry.id]}
+                                                            {formErrors.date_end[entry.id]}
                                                         </span>
                                                     )}
                                                 </div>
@@ -386,7 +610,7 @@ export default function SubmitEvent() {
                                                 />
                                                 Date range
                                             </label>
-                                            {form.dates.length > 1 && (
+                                            {formData.dates.length > 1 && (
                                                 <button
                                                     type="button"
                                                     className="btn-remove-date"
@@ -403,93 +627,61 @@ export default function SubmitEvent() {
                             <button type="button" className="btn-add-date" onClick={addDate}>
                                 + Add another date
                             </button>
-                        </fieldset>
+                        </fieldset> */}
 
                         {/* Location */}
-                        <div className="form-field">
-                            <label htmlFor="location_key">Location</label>
-                            <select
-                                id="location_key"
-                                value={form.location_key}
-                                onChange={e => updateField('location_key', e.target.value)}
-                                aria-invalid={!!errors.location_key}
-                            >
-                                <option value="" disabled>Select a location</option>
-                                {LOCATION_OPTIONS.map(loc => (
-                                    <option key={loc.key} value={loc.key}>{loc.label}</option>
-                                ))}
-                            </select>
-                            {errors.location_key && (
-                                <span className="form-error" role="alert">{errors.location_key}</span>
-                            )}
-                        </div>
-
-                        {form.location_key === 'other' && (
-                            <div className="form-field">
-                                <label htmlFor="custom_location">Specify Location</label>
-                                <input
-                                    id="custom_location"
-                                    type="text"
-                                    value={form.custom_location}
-                                    onChange={e => updateField('custom_location', e.target.value)}
-                                    aria-invalid={!!errors.custom_location}
-                                />
-                                {errors.custom_location && (
-                                    <span className="form-error" role="alert">{errors.custom_location}</span>
-                                )}
-                            </div>
-                        )}
+                        ?
 
                         {/* Description */}
-                        <div className="form-field">
+                        {/* <div className="form-field">
                             <label htmlFor="description">Event Description</label>
                             <textarea
                                 id="description"
                                 rows={10}
-                                value={form.description}
+                                value={formData.description}
                                 onChange={e => updateField('description', e.target.value)}
-                                aria-invalid={!!errors.description}
+                                aria-invalid={!!formErrors.description}
                             />
-                            {errors.description && (
-                                <span className="form-error" role="alert">{errors.description}</span>
+                            {formErrors.description && (
+                                <span className="form-error" role="alert">{formErrors.description}</span>
                             )}
-                        </div>
+                        </div> */}
 
                         {/* Category */}
-                        <div className="form-field">
+                        {/* <div className="form-field">
                             <label htmlFor="category">Category</label>
                             <select
                                 id="category"
-                                value={form.category}
+                                value={formData.category}
                                 onChange={e => updateField('category', e.target.value)}
-                                aria-invalid={!!errors.category}
+                                aria-invalid={!!formErrors.category}
                             >
                                 <option value="" disabled>Select a category</option>
                                 {CATEGORY_OPTIONS.map(cat => (
                                     <option key={cat} value={cat}>{cat}</option>
                                 ))}
                             </select>
-                            {errors.category && (
-                                <span className="form-error" role="alert">{errors.category}</span>
+                            {formErrors.category && (
+                                <span className="form-error" role="alert">{formErrors.category}</span>
                             )}
                         </div>
 
-                        {form.category === 'Other' && (
+                        {formData.category === 'Other' && (
                             <div className="form-field">
                                 <label htmlFor="custom_category">Specify Category</label>
                                 <input
                                     id="custom_category"
                                     type="text"
-                                    value={form.custom_category}
+                                    value={formData.custom_category}
                                     onChange={e => updateField('custom_category', e.target.value)}
-                                    aria-invalid={!!errors.custom_category}
+                                    aria-invalid={!!formErrors.custom_category}
                                 />
-                                {errors.custom_category && (
-                                    <span className="form-error" role="alert">{errors.custom_category}</span>
+                                {formErrors.custom_category && (
+                                    <span className="form-error" role="alert">{formErrors.custom_category}</span>
                                 )}
                             </div>
                         )}
-                    </section>
+                    </section> */}
 
                     <hr className="form-divider" />
 
@@ -503,12 +695,12 @@ export default function SubmitEvent() {
                             <input
                                 id="contact_email"
                                 type="email"
-                                value={form.contact_email}
+                                value={formData.contact_email}
                                 onChange={e => updateField('contact_email', e.target.value)}
-                                aria-invalid={!!errors.contact_email}
+                                aria-invalid={!!formErrors.contact_email}
                             />
-                            {errors.contact_email && (
-                                <span className="form-error" role="alert">{errors.contact_email}</span>
+                            {formErrors.contact_email && (
+                                <span className="form-error" role="alert">{formErrors.contact_email}</span>
                             )}
                         </div>
 
@@ -519,7 +711,7 @@ export default function SubmitEvent() {
                             <input
                                 id="contact_phone"
                                 type="tel"
-                                value={form.contact_phone}
+                                value={formData.contact_phone}
                                 onChange={e => updateField('contact_phone', e.target.value)}
                             />
                         </div>
@@ -531,7 +723,7 @@ export default function SubmitEvent() {
                             <input
                                 id="contact_name"
                                 type="text"
-                                value={form.contact_name}
+                                value={formData.contact_name}
                                 onChange={e => updateField('contact_name', e.target.value)}
                             />
                         </div>

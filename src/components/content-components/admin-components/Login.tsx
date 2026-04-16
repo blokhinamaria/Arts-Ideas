@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
+import Form from '../../elements/Form/Form';
 
 export default function Login() {
 
@@ -90,35 +91,56 @@ export default function Login() {
     return (
             <article id='login'>
                 <h1>Admin Login</h1>
-                    <form id='login' onSubmit={handleSubmit}>
-                        <label htmlFor='username'>Username</label>
-                        <input
-                            aria-label='username'
-                            aria-required={true}
-                            type='text'
-                            id='username'
-                            name='username'
-                            value={formData.username}
-                            onChange={handleChange}
-                            required
-                            className={invalidEmail ? 'invalid' : ''}
-                            >
-                        </input>
-                        <label htmlFor='password'>Password</label>
-                        <input
-                            aria-label='password'
-                            aria-required={true}
-                            type='password'
-                            id='password'
-                            name='password'
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                            >
-                        </input>
-                        { errorMessage ? <p aria-live='polite' className='error-message'>{errorMessage}</p> : null}
-                        <button type='submit' disabled={authInProgress}>{!authInProgress ? 'Login' : 'Loggin in...'}</button>
-                    </form>
+                <Form
+                    onSubmit={handleSubmit}
+                    errorMessage={errorMessage}
+                >
+                    <Form.Input 
+                        label='Username'
+                        inputType='text'
+                        inputName='username'
+                        inputValue={formData.username}
+                        onChange={handleChange}
+                        inputInvalid={invalidEmail}
+                    />
+                    <Form.Input 
+                        label='Password'
+                        inputType='password'
+                        inputName='password'
+                        inputValue={formData.password}
+                        onChange={handleChange}
+                    />  
+                    <Form.SubmitButton 
+                        buttonText='Log In'
+                        inProgress='Logging In'
+                        disabled={authInProgress}
+                    />
+                </Form>
+
+                
+                {/* <form id='login' onSubmit={handleSubmit}>
+                    <FormInput 
+                        label='Username'
+                        inputType='text'
+                        inputName='username'
+                        inputValue={formData.username}
+                        onChange={handleChange}
+                        inputInvalid={invalidEmail}
+                    />
+                    <FormInput 
+                        label='Password'
+                        inputType='password'
+                        inputName='password'
+                        inputValue={formData.password}
+                        onChange={handleChange}
+                    />
+                    <FormSubmitButton 
+                        buttonText='Log In'
+                        inProgress='Logging In'
+                        disabled={authInProgress}
+                    />
+                    { errorMessage ? <p aria-live='polite' className='error-message'>{errorMessage}</p> : null}
+                </form> */}
             </article>
     )
 }
