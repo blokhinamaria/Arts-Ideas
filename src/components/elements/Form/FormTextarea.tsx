@@ -1,56 +1,51 @@
-import { ChangeEvent, ReactNode } from "react"
+import { ChangeEventHandler, ReactNode } from "react"
 
-type FormInputProps = {
+type FormTextareaProps = {
     children?: ReactNode
     label: string,
     id?: string,
-    inputType?: 'text' | 'password' | 'email' | 'datetime-local' | 'tel',
     inputName: string,
     inputValue: string,
     placeholder?: string,
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void,
+    rows?: number,
+    onChange: ChangeEventHandler<HTMLTextAreaElement>,
     inputInvalid?: boolean,
     required?: boolean
-    [x:string]: any
 }
 
-export default function FormInput({
+export default function FormTextarea({
     children,
     label,
-    inputType = 'text',
-    inputName,
     id = '',
+    inputName,
     inputValue,
     placeholder = '',
+    rows = 10,
     onChange,
     inputInvalid = false,
-    required = true,
-    ...rest
-    }:FormInputProps) {
+    required = true
+    }:FormTextareaProps) {
         
     const inputId:string = id ? id : inputName.toLowerCase().replace(' ', '_')
 
     return (
         <div className="form-field">
-            <label htmlFor={inputId}>{label} {!required && <span className="form-optional subtle">(Optional)</span>}</label>
-            <input
+            <label htmlFor={inputId}>{label}</label>
+            <textarea
                 id={inputId}
                 name={inputName}
                 aria-label={label}
                 aria-required={required}
-                type={inputType}
+                required={required}
                 placeholder={placeholder}
+                rows={rows}
                 value={inputValue}
                 onChange={onChange}
-                required={required}
                 className={inputInvalid ? 'invalid' : ''}
                 aria-invalid={inputInvalid}
-                {...rest}
-                >
-            </input>
+            />
             {children}
         </div>
-        
     )
 }
 

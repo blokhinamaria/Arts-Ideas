@@ -29,7 +29,7 @@ export default function FormSelect({
     options = []
     }:FormSelectProps) {
         
-    const inputId:string = id ? id : label.toLowerCase().replace(' ', '_')
+    const inputId:string = id ? id : inputName.toLowerCase().replace(' ', '_')
 
     return (
         <div className="form-field">
@@ -40,6 +40,7 @@ export default function FormSelect({
                 value={inputValue}
                 onChange={onChange}
                 aria-invalid={inputInvalid}
+                className={inputInvalid ? 'invalid' : ''}
                 required={required}
             >
                 <option value="" disabled>{placeholder}</option>

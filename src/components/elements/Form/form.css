@@ -21,6 +21,21 @@ form {
     margin-bottom: var(--small-gap);
     width: 100%;
     overflow: hidden;
+    font-family: 'Chronicle', serif;
+    font-weight: 400;
+}
+
+.form-field:last-child {
+    margin-bottom: 0;
+}
+
+.form-fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 var(--large-gap);
+    display: flex;
+    flex-direction: column;
+    gap: var(--small-gap)
 }
 
 form label {
@@ -32,19 +47,64 @@ form label {
     font-size: var(--type-label);
 }
 
+.form-optional {
+    text-transform: none;
+    font-size: var(--type-small);
+}
+
+.form-divider {
+    border: none;
+    border-top: 1px solid var(--accent1);
+    margin: 0 0 40px;
+}
+
 form input {
     font-family: 'Chronicle', serif;
     font-weight: 400;
-
     font-size: var(--type-label);
     color: var(--black);
   /* box */
     padding: 10px;
     background-color: var(--white);
     border: 0.75px solid var(--black);
+    outline: none;
+    border-radius: 0;
+    cursor: pointer;
 }
 
-form input.invalid {
+form select {
+    font-family: 'Chronicle', serif;
+    font-weight: 400;
+    font-size: var(--type-label);
+    color: var(--black);
+    padding: 10px;
+    outline: none;
+    border-radius: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23000000' opacity='1' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+    padding-right: 26px;
+    appearance: none;
+    cursor: pointer;
+}
+
+form select option {
+    background-color: #1a1a1a;
+    color: var(--white);
+}
+
+form textarea {
+    font-family: 'Chronicle', serif;
+    font-weight: 400;
+    font-size: var(--type-label);
+    color: var(--black);
+    padding: 10px;
+    outline: none;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+form .invalid {
     background-color: rgb(255, 184, 184)
 }
 
@@ -69,4 +129,79 @@ form button[type='submit']:disabled {
     color: var(--accent1);
     font-weight: 300;
     margin-top: calc(var(--small-gap) / 4);
+}
+
+/* ── Date entries ────────────────────────────────────────── */
+
+.form-date-entry {
+    border-left: 1px solid var(--accent1);
+    padding: 14px 0 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-date-entry .form-field {
+    margin-bottom: 0;
+}
+
+.form-date-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+    gap: 16px;
+}
+
+.form-date-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.form-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.6);
+    user-select: none;
+}
+
+.form-checkbox-label input[type='checkbox'] {
+    width: 14px;
+    height: 14px;
+    accent-color: var(--accent1);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.btn-add {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 8px 20px;
+    width: auto;
+    font-size: var(--type-small);
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-add:hover {
+    border-color: var(--accent1);
+    color: var(--accent1);
+    background: transparent;
+}
+
+.btn-remove-date {
+    background: none;
+    border: none;
+    padding: 0;
+    color: rgba(255, 255, 255, 0.35);
+    font-size: var(--type-small);
+    cursor: pointer;
+    transition: color 0.2s;
+    width: auto;
+}
+
+.btn-remove-date:hover {
+    color: #d9534f;
+    background: none;
 }

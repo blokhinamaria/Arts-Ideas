@@ -7,6 +7,8 @@ import FormError from './FormError';
 import FormHint from './FormHint';
 import FormCheckbox from './FormCheckbox';
 import FormSelect from './FormSelect';
+import FormDateEntry from './FormDateEntry';
+import FormTextarea from './FormTextarea';
 
 import './form.css'
 
@@ -24,12 +26,14 @@ type FormComponent = FC<FormProps> & {
     Error: typeof FormError,
     Hint: typeof FormHint,
     Checkbox: typeof FormCheckbox,
-    Select: typeof FormSelect
+    Select: typeof FormSelect,
+    DateEntry: typeof FormDateEntry,
+    Textarea: typeof FormTextarea
 };
 
 const Form = function Form({children, onSubmit, errorMessage = null}:FormProps) {
     return (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} noValidate>
             {children}
             { errorMessage &&
                 <p
@@ -50,5 +54,7 @@ Form.Error = FormError
 Form.Hint = FormHint
 Form.Checkbox = FormCheckbox
 Form.Select = FormSelect
+Form.DateEntry = FormDateEntry
+Form.Textarea = FormTextarea
 
 export default Form;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './SubmitEvent.css';
 import Form from '../elements/Form/Form';
 
@@ -23,20 +23,20 @@ const LOCATION_OPTIONS = [
 ];
 
 const CATEGORY_OPTIONS = [
-    'Music Performance',
-    'Theatre / Drama',
-    'Dance',
-    'Visual Arts',
-    'Film / Screening',
-    'Lecture / Talk',
-    'Workshop / Master Class',
-    'Gallery Exhibition',
-    'Literary Arts / Reading',
-    'Interdisciplinary',
-    'Other',
+    { value: 'Music Performance', label: 'Music Performance' },
+    { value: 'Theatre / Drama', label: 'Theatre / Drama' },
+    { value: 'Dance', label: 'Dance' },
+    { value: 'Visual Arts', label: 'Visual Arts' },
+    { value: 'Film / Screening', label: 'Film / Screening' },
+    { value: 'Lecture / Talk', label: 'Lecture / Talk' },
+    { value: 'Workshop / Master Class', label: 'Workshop / Master Class' },
+    { value: 'Gallery Exhibition', label: 'Gallery Exhibition' },
+    { value: 'Literary Arts / Reading', label: 'Literary Arts / Reading' },
+    { value: 'Interdisciplinary', label: 'Interdisciplinary' },
+    { value: 'Other', label: 'Other' }
 ];
 
-type DateEntry = {
+export type DateEntry = {
     id: string;
     start_date: string;
     has_end_date: boolean;
@@ -82,7 +82,8 @@ function newDateEntry(): DateEntry {
 const API_BASE = import.meta.env.DEV ? 'http://localhost:3000' : '';
 
 export default function SubmitEvent() {
-    const [formData, setFormData] = useState<FormState>({
+    const successRef = useRef<HTMLDivElement>(null);
+    const newData:FormState = {
         submitter_name: '',
         submitter_email: '',
         title: '',
@@ -95,11 +96,54 @@ export default function SubmitEvent() {
         contact_email: '',
         contact_phone: '',
         contact_name: '',
-    });
+    }
+    const [formData, setFormData] = useState<FormState>(newData);
 
     const [formErrors, setFormErrors] = useState<FormErrors>({});
 
+    const [ locationOptions, setLocationOptions ] = useState<
+        {
+            value: string,
+            label: string,
+        }[]>([])
+    
+    useEffect(() => {
+        getLocations()
+    }, [])
+
+    async function getLocations() {
+        const other = {
+            value: 'other',
+            label: 'Other'
+        }
+        try {
+            const response = await fetch(`${API_BASE}/api/locations`)
+            if (!response.ok) {
+                throw Error
+            }
+            const data: { key:string, venue: string, building: string, address:string }[] = await response.json()
+            const locations = data.map(location => ({
+                    value: location.key,
+                    label: location.building !== null ? `${location.venue}, ${location.building}` : `${location.venue}`
+                }
+            ))
+            locations.push(other)
+            setLocationOptions(locations)
+        } catch (err) {
+            console.log(err)
+            setLocationOptions([])
+            setFormErrors(prev => ({...prev, location_key: 'Failed to load available locations. Try again later'}))
+        }
+    }
+
     const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+    const [ formErrorMessage, setFormErrorMessage] = useState<string>('')
+
+    useEffect(() => {
+        if (submitStatus === 'success') {
+            successRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }
+    }, [submitStatus]);
 
     function updateField<K extends keyof FormState>(field: K, value: FormState[K]) {
         setFormData(prev => ({ ...prev, [field]: value }));
@@ -183,6 +227,8 @@ export default function SubmitEvent() {
         }
         if (!formData.contact_email.trim()) {
             errs.contact_email = 'Contact email is required'; valid = false;
+        } else if (!formData.contact_email.toLowerCase().endsWith('@ut.edu')) {
+            errs.contact_email = 'Must be a @ut.edu email address'; valid = false;
         }
 
         setFormErrors(errs);
@@ -191,7 +237,11 @@ export default function SubmitEvent() {
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        if (!validate()) return;
+        if (!validate()) {
+            setSubmitStatus('error')
+            setFormErrorMessage('Your information has invalid input. Please check your information and submit again.')
+            return
+        }
 
         setSubmitStatus('loading');
 
@@ -226,19 +276,27 @@ export default function SubmitEvent() {
             }
         } catch {
             setSubmitStatus('error');
+            setFormErrorMessage('Something went wrong. Please try again.')
         }
+    }
+
+    function handleSubmitAnother() {
+        console.log('clicked')
+        setSubmitStatus('idle')
+        setFormData(newData)
     }
 
     if (submitStatus === 'success') {
         return (
-            <div className="submit-event-page">
-                <div className="submit-event-card">
+            <div className="submit-event-page" ref={successRef}>
+                <div className="submit-event-card" >
                     <span className="subtitle">Thank You</span>
                     <h2>Event Submitted</h2>
                     <p className='body-large'>
                         Your event has been submitted and is pending review. You will be
                         contacted at <strong>{formData.submitter_email}</strong> if more information is required.
                     </p>
+                    <button onClick={handleSubmitAnother}>Submit another event</button>
                 </div>
             </div>
         );
@@ -253,7 +311,10 @@ export default function SubmitEvent() {
                     by the administrator, it will appear on the Arts&amp;Ideas calendar.
                 </p>
 
-                <form className="event-form" onSubmit={handleSubmit} noValidate>
+                <Form
+                    onSubmit={handleSubmit}
+                    errorMessage={submitStatus === 'error' ? formErrorMessage : null}
+                >
 
                     {/* ── About You ──────────────────────────────── */}
                     <Form.Section
@@ -287,51 +348,10 @@ export default function SubmitEvent() {
                             )}
                         </Form.Input>
                     </Form.Section>
-                    {/* <section className="form-section">
-                        <h4 className="form-section-title">About You</h4>
-
-                        <div className="form-field">
-                            <label htmlFor="submitter_name">Your Name</label>
-                            <input
-                                id="submitter_name"
-                                type="text"
-                                value={formData.submitter_name}
-                                onChange={e => updateField('submitter_name', e.target.value)}
-                                aria-invalid={!!formErrors.submitter_name}
-                                aria-describedby={formErrors.submitter_name ? 'err-submitter_name' : undefined}
-                            />
-                            {formErrors.submitter_name && (
-                                <span id="err-submitter_name" className="form-error" role="alert">
-                                    {formErrors.submitter_name}
-                                </span>
-                            )}
-                        </div>
-
-                        <div className="form-field">
-                            <label htmlFor="submitter_email">UTampa Email Address</label>
-                            <input
-                                id="submitter_email"
-                                type="email"
-                                placeholder="example@ut.edu"
-                                value={formData.submitter_email}
-                                onChange={e => updateField('submitter_email', e.target.value)}
-                                aria-invalid={!!formErrors.submitter_email}
-                                aria-describedby={formErrors.submitter_email ? 'err-submitter_email' : 'hint-submitter_email'}
-                            />
-                            
-                            {formErrors.submitter_email && (
-                                <span id="err-submitter_email" className="form-error" role="alert">
-                                    {formErrors.submitter_email}
-                                </span>
-                            )}
-                        </div>
-                    </section> */}
-
-                    {/* <hr className="form-divider" /> */}
-
-                    {/* ── Event Details ──────────────────────────── */}
+                    
                     <Form.Section
                         title="Event Details"
+                        divider={true}
                     >
                         <Form.Input
                             label='Event Title'
@@ -343,404 +363,162 @@ export default function SubmitEvent() {
                         >
                             {formErrors.title && <Form.Error>{formErrors.title}</Form.Error>}
                         </Form.Input>
-                        <Form.Fieldset legend='Date(s)'>
-                            <div className="form-dates-list">
-                                {formData.dates.map((entry, idx) => (
-                                    <div key={entry.id} className="form-date-entry">
-                                        <div className="form-date-row">
+                        <Form.Fieldset
+                            legend='Date(s)'
+                            onAdd={addDate}
+                            addButtonText='+ Add another date'
+                        >
+                            {formData.dates.map((entry, idx) => (
+                                <Form.DateEntry
+                                    key={entry.id}
+                                    index={idx}
+                                    length={formData.dates.length}
+                                    checked={entry.has_end_date}
+                                    onCheck={e =>
+                                        updateDate(entry.id, {
+                                            has_end_date: e.target.checked,
+                                            end_date: '',
+                                        })}
+                                    onRemove={() => removeDate(entry.id)}
+                                >
+                                    <Form.Input 
+                                            label={`${entry.has_end_date ? 'Start Date' : 'Date'}${formData.dates.length > 1 ? ` ${idx + 1}` : ''}`}
+                                            id = {`start_${entry.id}`}
+                                            inputType="datetime-local"
+                                            inputName='start_date'
+                                            inputValue={entry.start_date} 
+                                            onChange={e => updateDate(entry.id, { start_date: e.target.value })}
+                                            inputInvalid={!!formErrors.date_start?.[entry.id]}
+                                            min={today.toISOString()}
+                                        >
+                                            {formErrors.date_start?.[entry.id] && <Form.Error>{formErrors.date_start[entry.id]}</Form.Error>}
+                                        </Form.Input>
+                                        {entry.has_end_date && (
                                             <Form.Input 
-                                                label={`${entry.has_end_date ? 'Start Date' : 'Date'}${formData.dates.length > 1 ? ` ${idx + 1}` : ''}`}
-                                                id = {`start_${entry.id}`}
+                                                label='End Date'
+                                                id = {`end_${entry.id}`}
                                                 inputType="datetime-local"
-                                                inputName='start_date'
-                                                min={today.toISOString()}
-                                                inputValue={entry.start_date} 
-                                                onChange={e => updateDate(entry.id, { start_date: e.target.value })}
-                                                inputInvalid={!!formErrors.date_start?.[entry.id]}
+                                                inputName='end_date'
+                                                inputValue={entry.end_date}
+                                                onChange={e => updateDate(entry.id, { end_date: e.target.value })}
+                                                inputInvalid={!!formErrors.date_end?.[entry.id]}
+                                                min={entry.start_date || today.toISOString()}
                                             >
-                                                {formErrors.date_start?.[entry.id] && <Form.Error>{formErrors.date_start[entry.id]}</Form.Error>}
+                                                {formErrors.date_end?.[entry.id] && <Form.Error>{formErrors.date_end[entry.id]}</Form.Error>}
                                             </Form.Input>
-                                            {entry.has_end_date && (
-                                                <Form.Input 
-                                                    label='End Date'
-                                                    id = {`end_${entry.id}`}
-                                                    inputType="datetime-local"
-                                                    inputName='end_date'
-                                                    min={entry.start_date || today.toISOString()}
-                                                    inputValue={entry.end_date}
-                                                    onChange={e => updateDate(entry.id, { end_date: e.target.value })}
-                                                    inputInvalid={!!formErrors.date_end?.[entry.id]}
-                                                >
-                                                    {formErrors.date_end?.[entry.id] && <Form.Error>{formErrors.date_end[entry.id]}</Form.Error>}
-                                                </Form.Input>
-                                            )}
-                                            {/* <div className="form-field">
-                                                <label className="small form-label-muted" htmlFor={`start_${entry.id}`}>
-                                                    {entry.has_end_date ? 'Start Date' : 'Date'}
-                                                    {formData.dates.length > 1 && ` ${idx + 1}`}
-                                                </label>
-                                                <input
-                                                    id={`start_${entry.id}`}
-                                                    type="datetime-local"
-                                                    min={today.toISOString()}
-                                                    value={entry.start_date}
-                                                    onChange={e => updateDate(entry.id, { start_date: e.target.value })}
-                                                    aria-invalid={!!formErrors.date_start?.[entry.id]}
-                                                />
-                                                {formErrors.date_start?.[entry.id] && (
-                                                    <span className="form-error" role="alert">
-                                                        {formErrors.date_start[entry.id]}
-                                                    </span>
-                                                )}
-                                            </div> */}
-
-                                            {/* {entry.has_end_date && (
-                                                <div className="form-field">
-                                                    <label className="small form-label-muted" htmlFor={`end_${entry.id}`}>
-                                                        End Date
-                                                    </label>
-                                                    <input
-                                                        id={`end_${entry.id}`}
-                                                        type="datetime-local"
-                                                        min={entry.start_date || today.toISOString()}
-                                                        value={entry.end_date}
-                                                        onChange={e => updateDate(entry.id, { end_date: e.target.value })}
-                                                        aria-invalid={!!formErrors.date_end?.[entry.id]}
-                                                    />
-                                                    {formErrors.date_end?.[entry.id] && (
-                                                        <span className="form-error" role="alert">
-                                                            {formErrors.date_end[entry.id]}
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            )} */}
-                                        </div>
-
-                                        <div className="form-date-actions">
-                                            <Form.Checkbox
-                                                checked={entry.has_end_date}
-                                                onChange={e =>
-                                                    updateDate(entry.id, {
-                                                        has_end_date: e.target.checked,
-                                                        end_date: '',
-                                                    })}
-                                            >
-                                                Date range
-                                            </Form.Checkbox>
-                                            {formData.dates.length > 1 && (
-                                                <button
-                                                    type="button"
-                                                    className="btn-remove-date"
-                                                    onClick={() => removeDate(entry.id)}
-                                                    aria-label={`Remove date ${idx + 1}`}
-                                                >
-                                                    Remove
-                                                </button>
-                                            )}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            <button type="button" className="btn-add-date" onClick={addDate}>
-                                + Add another date
-                            </button>
+                                        )}
+                                </Form.DateEntry>
+                            ))}
                         </Form.Fieldset>
+
+                        {/* Location */}
                         <Form.Select
                             label='Location'
-                            id='location_key'
                             inputName='location_key'
                             inputValue={formData.location_key}
                             inputInvalid={!!formErrors.location_key}
                             placeholder='Select a location'
                             onChange={e => updateField('location_key', e.target.value)}
-                            options={LOCATION_OPTIONS}
+                            options={locationOptions}
                         >
                             {formErrors.location_key && <Form.Error>{formErrors.location_key}</Form.Error>}
                         </Form.Select>
                         {formData.location_key === 'other' && (
-                            <div className="form-field">
-                                <label htmlFor="custom_location">Specify Location</label>
-                                <input
-                                    id="custom_location"
-                                    type="text"
-                                    value={formData.custom_location}
-                                    onChange={e => updateField('custom_location', e.target.value)}
-                                    aria-invalid={!!formErrors.custom_location}
-                                />
+                            <Form.Input
+                                label='Specify Location'
+                                inputName='custom_location'
+                                inputValue={formData.custom_location}
+                                onChange={e => updateField('custom_location', e.target.value)}
+                                inputInvalid = {!!formErrors.custom_location}
+                            >
                                 {formErrors.custom_location && (
-                                    <span className="form-error" role="alert">{formErrors.custom_location}</span>
+                                    <Form.Error>{formErrors.custom_location}</Form.Error>
                                 )}
-                            </div>
+                            </Form.Input>
                         )}
 
                         {/* Description */}
-                        <div className="form-field">
-                            <label htmlFor="description">Event Description</label>
-                            <textarea
-                                id="description"
-                                rows={10}
-                                value={formData.description}
-                                onChange={e => updateField('description', e.target.value)}
-                                aria-invalid={!!formErrors.description}
-                            />
+                        <Form.Textarea
+                            label='Event Description'
+                            inputName='description'
+                            inputValue={formData.description}
+                            inputInvalid={!!formErrors.description}
+                            onChange={e => updateField('description', e.target.value)}
+                        >
                             {formErrors.description && (
-                                <span className="form-error" role="alert">{formErrors.description}</span>
+                                <Form.Error>{formErrors.description}</Form.Error>
                             )}
-                        </div>
+                        </Form.Textarea>
 
                         {/* Category */}
-                        <div className="form-field">
-                            <label htmlFor="category">Category</label>
-                            <select
-                                id="category"
-                                value={formData.category}
-                                onChange={e => updateField('category', e.target.value)}
-                                aria-invalid={!!formErrors.category}
-                            >
-                                <option value="" disabled>Select a category</option>
-                                {CATEGORY_OPTIONS.map(cat => (
-                                    <option key={cat} value={cat}>{cat}</option>
-                                ))}
-                            </select>
-                            {formErrors.category && (
-                                <span className="form-error" role="alert">{formErrors.category}</span>
-                            )}
-                        </div>
-
+                        <Form.Select
+                            label='Category'
+                            inputName='category'
+                            inputValue={formData.category}
+                            inputInvalid={!!formErrors.category}
+                            placeholder='Select a category'
+                            onChange={e => updateField('category', e.target.value)}
+                            options={CATEGORY_OPTIONS}
+                        >
+                            {formErrors.category && <Form.Error>{formErrors.category}</Form.Error>}
+                        </Form.Select>
                         {formData.category === 'Other' && (
-                            <div className="form-field">
-                                <label htmlFor="custom_category">Specify Category</label>
-                                <input
-                                    id="custom_category"
-                                    type="text"
-                                    value={formData.custom_category}
-                                    onChange={e => updateField('custom_category', e.target.value)}
-                                    aria-invalid={!!formErrors.custom_category}
-                                />
+                            <Form.Input
+                                label='Specify Category'
+                                inputName='custom_category'
+                                inputValue={formData.custom_category}
+                                onChange={e => updateField('custom_category', e.target.value)}
+                                inputInvalid = {!!formErrors.custom_category}
+                            >
                                 {formErrors.custom_category && (
-                                    <span className="form-error" role="alert">{formErrors.custom_category}</span>
+                                    <Form.Error>{formErrors.custom_category}</Form.Error>
                                 )}
-                            </div>
+                            </Form.Input>
                         )}
                     </Form.Section>
 
-                    {/* <section className="form-section">
-                        <h4 className="form-section-title">Event Details</h4>
-
-                        <div className="form-field">
-                            <label className="label" htmlFor="title">Event Title</label>
-                            <input
-                                id="title"
-                                type="text"
-                                value={formData.title}
-                                onChange={e => updateField('title', e.target.value)}
-                                aria-invalid={!!formErrors.title}
-                                aria-describedby={formErrors.title ? 'err-title' : undefined}
-                            />
-                            {formErrors.title && (
-                                <span id="err-title" className="form-error" role="alert">
-                                    {formErrors.title}
-                                </span>
-                            )}
-                        </div> */}
-
-                        {/* Dates */}
-                        {/* <fieldset className="form-field form-dates-fieldset">
-                            <legend><h3>Date(s)</h3></legend>
-                            {formErrors.dates && (
-                                <span className="form-error" role="alert">{formErrors.dates}</span>
-                            )}
-                            <div className="form-dates-list">
-                                {formData.dates.map((entry, idx) => (
-                                    <div key={entry.id} className="form-date-entry">
-                                        <div className="form-date-row">
-                                            <div className="form-field">
-                                                <label className="small form-label-muted" htmlFor={`start_${entry.id}`}>
-                                                    {entry.has_end_date ? 'Start Date' : 'Date'}
-                                                    {formData.dates.length > 1 && ` ${idx + 1}`}
-                                                </label>
-                                                <input
-                                                    id={`start_${entry.id}`}
-                                                    type="datetime-local"
-                                                    min={today.toISOString()}
-                                                    value={entry.start_date}
-                                                    onChange={e => updateDate(entry.id, { start_date: e.target.value })}
-                                                    aria-invalid={!!formErrors.date_start?.[entry.id]}
-                                                />
-                                                {formErrors.date_start?.[entry.id] && (
-                                                    <span className="form-error" role="alert">
-                                                        {formErrors.date_start[entry.id]}
-                                                    </span>
-                                                )}
-                                            </div>
-
-                                            {entry.has_end_date && (
-                                                <div className="form-field">
-                                                    <label className="small form-label-muted" htmlFor={`end_${entry.id}`}>
-                                                        End Date
-                                                    </label>
-                                                    <input
-                                                        id={`end_${entry.id}`}
-                                                        type="datetime-local"
-                                                        min={entry.start_date || today.toISOString()}
-                                                        value={entry.end_date}
-                                                        onChange={e => updateDate(entry.id, { end_date: e.target.value })}
-                                                        aria-invalid={!!formErrors.date_end?.[entry.id]}
-                                                    />
-                                                    {formErrors.date_end?.[entry.id] && (
-                                                        <span className="form-error" role="alert">
-                                                            {formErrors.date_end[entry.id]}
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        <div className="form-date-actions">
-                                            <label className="form-checkbox-label small">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={entry.has_end_date}
-                                                    onChange={e =>
-                                                        updateDate(entry.id, {
-                                                            has_end_date: e.target.checked,
-                                                            end_date: '',
-                                                        })
-                                                    }
-                                                />
-                                                Date range
-                                            </label>
-                                            {formData.dates.length > 1 && (
-                                                <button
-                                                    type="button"
-                                                    className="btn-remove-date"
-                                                    onClick={() => removeDate(entry.id)}
-                                                    aria-label={`Remove date ${idx + 1}`}
-                                                >
-                                                    Remove
-                                                </button>
-                                            )}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            <button type="button" className="btn-add-date" onClick={addDate}>
-                                + Add another date
-                            </button>
-                        </fieldset> */}
-
-                        {/* Location */}
-                        ?
-
-                        {/* Description */}
-                        {/* <div className="form-field">
-                            <label htmlFor="description">Event Description</label>
-                            <textarea
-                                id="description"
-                                rows={10}
-                                value={formData.description}
-                                onChange={e => updateField('description', e.target.value)}
-                                aria-invalid={!!formErrors.description}
-                            />
-                            {formErrors.description && (
-                                <span className="form-error" role="alert">{formErrors.description}</span>
-                            )}
-                        </div> */}
-
-                        {/* Category */}
-                        {/* <div className="form-field">
-                            <label htmlFor="category">Category</label>
-                            <select
-                                id="category"
-                                value={formData.category}
-                                onChange={e => updateField('category', e.target.value)}
-                                aria-invalid={!!formErrors.category}
-                            >
-                                <option value="" disabled>Select a category</option>
-                                {CATEGORY_OPTIONS.map(cat => (
-                                    <option key={cat} value={cat}>{cat}</option>
-                                ))}
-                            </select>
-                            {formErrors.category && (
-                                <span className="form-error" role="alert">{formErrors.category}</span>
-                            )}
-                        </div>
-
-                        {formData.category === 'Other' && (
-                            <div className="form-field">
-                                <label htmlFor="custom_category">Specify Category</label>
-                                <input
-                                    id="custom_category"
-                                    type="text"
-                                    value={formData.custom_category}
-                                    onChange={e => updateField('custom_category', e.target.value)}
-                                    aria-invalid={!!formErrors.custom_category}
-                                />
-                                {formErrors.custom_category && (
-                                    <span className="form-error" role="alert">{formErrors.custom_category}</span>
-                                )}
-                            </div>
-                        )}
-                    </section> */}
-
-                    <hr className="form-divider" />
-
                     {/* ── Contact Information ────────────────────── */}
-                    <section className="form-section">
-                        <h4>Contact Information</h4>
+                    <Form.Section
+                        title='Contact Information'
+                    >
                         <p>Public-facing contact details for this event.</p>
-
-                        <div className="form-field">
-                            <label className="label" htmlFor="contact_email">Contact Email</label>
-                            <input
-                                id="contact_email"
-                                type="email"
-                                value={formData.contact_email}
-                                onChange={e => updateField('contact_email', e.target.value)}
-                                aria-invalid={!!formErrors.contact_email}
-                            />
+                        <Form.Input
+                            label='Contact Email'
+                            inputName='contact_email'
+                            inputValue={formData.contact_email}
+                            onChange={e => updateField('contact_email', e.target.value)}
+                            inputType='email'
+                            inputInvalid={!!formErrors.contact_email}
+                        >
                             {formErrors.contact_email && (
-                                <span className="form-error" role="alert">{formErrors.contact_email}</span>
+                                <Form.Error>{formErrors.contact_email}</Form.Error>
                             )}
-                        </div>
-
-                        <div className="form-field">
-                            <label className="label" htmlFor="contact_phone">
-                                Contact Phone <span className="form-optional subtle">(Optional)</span>
-                            </label>
-                            <input
-                                id="contact_phone"
-                                type="tel"
-                                value={formData.contact_phone}
-                                onChange={e => updateField('contact_phone', e.target.value)}
-                            />
-                        </div>
-
-                        <div className="form-field">
-                            <label className="label" htmlFor="contact_name">
-                                Contact Name <span className="form-optional subtle">(Optional)</span>
-                            </label>
-                            <input
-                                id="contact_name"
-                                type="text"
-                                value={formData.contact_name}
-                                onChange={e => updateField('contact_name', e.target.value)}
-                            />
-                        </div>
-                    </section>
-
-                    <div className="form-submit-row">
-                        {submitStatus === 'error' && (
-                            <p className="form-error" role="alert">
-                                Something went wrong. Please try again.
-                            </p>
-                        )}
-                        <button type="submit" disabled={submitStatus === 'loading'}>
-                            {submitStatus === 'loading' ? 'Submitting...' : 'Submit Event'}
-                        </button>
-                    </div>
-
-                </form>
+                        </Form.Input>
+                        <Form.Input
+                            label='Contact Phone'
+                            inputName='contact_phone'
+                            inputValue={formData.contact_phone}
+                            onChange={e => updateField('contact_phone', e.target.value)}
+                            inputType='tel'
+                            required={false}
+                            maxLength="10"
+                        >
+                        </Form.Input>
+                        <Form.Input
+                            label='Contact Name'
+                            inputName='contact_name'
+                            inputValue={formData.contact_name}
+                            onChange={e => updateField('contact_name', e.target.value)}
+                            required={false}
+                        >
+                        </Form.Input>
+                    </Form.Section>
+                    <Form.SubmitButton
+                            buttonText='Submit Event'
+                            inProgress='Submitting...'
+                            disabled={submitStatus === 'loading'}
+                        />
+                </Form>
             </div>
         </div>
     );
