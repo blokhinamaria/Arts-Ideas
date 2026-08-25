@@ -280,6 +280,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-transform: none;
 }
 
 .img-card.is-selected .img-card-name {

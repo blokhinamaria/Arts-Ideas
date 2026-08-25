@@ -33,7 +33,7 @@ export type PendingEvent = {
     contact_phone: string | null;
     contact_name: string | null;
     status: string;
-    img_id: string | null;
+    img_id: string;
     created_at: string;
     updated_at: string;
     submitter_name: string;
@@ -55,6 +55,7 @@ type EditForm = {
     contact_email: string;
     contact_phone: string;
     status: string;
+    img_id: string
 };
 
 type FormErrors = {
@@ -66,6 +67,7 @@ type FormErrors = {
     description?: string;
     category?: string;
     custom_category?: string;
+    img_id?: string
 };
 
 function toDatetimeLocal(iso: string): string {
@@ -96,6 +98,7 @@ function initForm(event: PendingEvent): EditForm {
         contact_email: event.contact_email ?? '',
         contact_phone: event.contact_phone ?? '',
         status: event.status ?? 'pending',
+        img_id: event.img_id ?? 'default_fzyquk'
     };
 }
 
@@ -167,6 +170,7 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
         const errs: FormErrors = {};
         let valid = true;
         if (!form.title.trim()) { errs.title = 'Title is required'; valid = false; }
+        if (!form.img_id.trim()) { errs.img_id = 'Default Image will be assigned'; }
         if (form.dates.length === 0) { errs.dates = 'At least one date is required'; valid = false; }
         else {
             const startErrors: Record<string, string> = {};
@@ -202,6 +206,7 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
             contact_name: form.contact_name, contact_email: form.contact_email, contact_phone: form.contact_phone,
             status: form.status,
             dates: form.dates.map((d) => ({ start_date: d.start_date, end_date: d.has_end_date ? d.end_date : null })),
+            img_id: form.img_id ?? 'default_fzyquk'
         };
         try {
             const res = await fetch(`${API_BASE}/api/events/pending/${event.id}`, {
@@ -234,9 +239,22 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
 
     async function handlePublish() {
         setActionStatus('loading');
+        if (!validate()) return;
+        const payload = {
+            title: form.title, location_key: form.location_key, description: form.description,
+            category: form.category === 'Other' ? form.custom_category : form.category,
+            tags: form.tags,
+            contact_name: form.contact_name, contact_email: form.contact_email, contact_phone: form.contact_phone,
+            status: form.status,
+            dates: form.dates.map((d) => ({ start_date: d.start_date, end_date: d.has_end_date ? d.end_date : null })),
+            img_id: form.img_id
+        };
         try {
             const res = await fetch(`${API_BASE}/api/events/pending/${event.id}/publish`, {
-                method: 'POST', credentials: 'include',
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
             });
             if (res.ok) { onPublished(event.id); }
             else { setActionStatus('error'); setConfirmState(null); }
@@ -273,6 +291,13 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
                         <input id="pe-title" type="text" value={form.title}
                             onChange={(e) => updateField('title', e.target.value)} aria-invalid={!!errors.title} />
                         {errors.title && <span className="edit-error" role="alert">{errors.title}</span>}
+                    </div>
+
+                    <div className="edit-form-field">
+                        <label className="edit-label" htmlFor="pe-title">Img ID</label>
+                        <input id="pe-title" type="text" value={form.img_id}
+                            onChange={(e) => updateField('img_id', e.target.value)} aria-invalid={!!errors.img_id} />
+                        {errors.img_id && <span className="edit-error" role="alert">{errors.img_id}</span>}
                     </div>
 
                     {/* Dates */}

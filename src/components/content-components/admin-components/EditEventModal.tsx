@@ -62,6 +62,7 @@ type EditForm = {
     contactName: string;
     contactEmail: string;
     status: string;
+    img_id: string;
 };
 
 type FormErrors = {
@@ -73,6 +74,7 @@ type FormErrors = {
     description?: string;
     category?: string;
     custom_category?: string;
+    img_id?: string;
 };
 
 const API_BASE = import.meta.env.DEV ? 'http://localhost:3000' : '';
@@ -107,6 +109,7 @@ function initForm(event: AdminEvent): EditForm {
         contactName: event.contact?.contactName ?? '',
         contactEmail: event.contact?.contactEmail ?? '',
         status: event.status ?? 'published',
+        img_id: event.img_id ?? 'default_fzyquk'
     };
 }
 
@@ -145,6 +148,10 @@ export default function EditEventModal({ event, locationKey, onClose, onSaved }:
     function updateField<K extends keyof EditForm>(field: K, value: EditForm[K]) {
         setForm((prev) => ({ ...prev, [field]: value }));
         setErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
+
+    function useDefaultImage() {
+        setForm((prev) => ({ ...prev, ['img_id']: 'default_fzyquk' }));
     }
 
     function updateDate(id: string, changes: Partial<DateEntry>) {
@@ -213,6 +220,7 @@ export default function EditEventModal({ event, locationKey, onClose, onSaved }:
         }
 
         if (!form.location_key) { errs.location_key = 'Location is required'; valid = false; }
+        if (!form.img_id.trim()) { errs.img_id = 'Img Id is required'; valid = true; }
         if (!form.description.trim()) { errs.description = 'Description is required'; valid = false; }
         if (!form.category) { errs.category = 'Category is required'; valid = false; }
         if (form.category === 'Other' && !form.custom_category.trim()) {
@@ -241,6 +249,7 @@ export default function EditEventModal({ event, locationKey, onClose, onSaved }:
                 start_date: d.start_date,
                 end_date: d.has_end_date ? d.end_date : null,
             })),
+            img_id: form.img_id
         };
 
         try {
@@ -298,6 +307,21 @@ export default function EditEventModal({ event, locationKey, onClose, onSaved }:
                             aria-invalid={!!errors.title}
                         />
                         {errors.title && <span className="edit-error" role="alert">{errors.title}</span>}
+                    </div>
+
+                    <div className="edit-form-field">
+                        <label className="edit-label" htmlFor="edit-title">Img ID</label>
+                        <input
+                            id="edit-img_id"
+                            type="text"
+                            value={form.img_id}
+                            onChange={(e) => updateField('img_id', e.target.value)}
+                            aria-invalid={!!errors.img_id}
+                        />
+                        {errors.img_id && <span className="edit-error" role="alert">{errors.img_id}</span>}
+                        <button type="button" className="edit-btn-cancel" onClick={useDefaultImage}>
+                            Use Default Image
+                        </button>
                     </div>
 
                     {/* Dates */}

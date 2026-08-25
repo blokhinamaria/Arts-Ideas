@@ -73,7 +73,7 @@ export async function getMonthEvents (req:Request, res:Response<Event[] | {messa
 
         const query:string = buildEventsQuery(`
             WHERE EXTRACT(MONTH FROM ed.start_date) = $1 
-                AND EXTRACT(YEAR FROM ed.start_date) = $2
+                AND EXTRACT(YEAR FROM ed.start_date) = $2 AND status='published'
             `);
         const pool = getPool();
         const result = await pool.query(query, [monthNum, yearNum])
@@ -188,7 +188,7 @@ export async function updateAdminEvent(req: Request, res: Response) {
             return;
         }
 
-        const { title, location_key, description, category, tags, contact, status, dates } = req.body;
+        const { title, location_key, description, category, tags, contact, status, dates, img_id } = req.body;
 
         if (!title || !location_key || !description || !category || !status || !Array.isArray(dates) || dates.length === 0) {
             res.status(400).json({ message: 'Missing required fields' });
@@ -204,9 +204,9 @@ export async function updateAdminEvent(req: Request, res: Response) {
             await client.query(
                 `UPDATE events
                  SET title=$1, location_key=$2, description=$3, category=$4,
-                     tags=$5, contact=$6, status=$7, updated_at=NOW()
-                 WHERE id=$8`,
-                [title, location_key, description, category, tags ?? [], contact, status, id]
+                     tags=$5, contact=$6, status=$7, updated_at=NOW(), img_id=$8
+                 WHERE id=$9`,
+                [title, location_key, description, category, tags ?? [], contact, status, img_id, id]
             );
 
             await client.query('DELETE FROM event_dates WHERE event_id=$1', [id]);
@@ -326,7 +326,7 @@ export async function getUpcomingEvents (req:Request, res:Response<Event[] | {me
                     FROM events e
                     JOIN event_dates ed ON e.id = ed.event_id
                     JOIN locations l ON e.location_key = l.key
-                    WHERE ed.start_date > $1 AT TIME ZONE 'America/New_York'
+                    WHERE ed.start_date > $1 AT TIME ZONE 'America/New_York' AND status='published'
                     GROUP BY e.id
                     ORDER BY MIN(ed.start_date)
                     LIMIT 3

@@ -159,12 +159,12 @@ function UploadDialog({
                         />
                     </div>
                     <div className="img-dialog-field">
-                        <label className="img-dialog-label">Filename (no extension)</label>
+                        <label className="img-dialog-label">Filename (no file extension)</label>
                         <input
                             type="text"
                             value={filename}
                             onChange={(e) => setFilename(e.target.value)}
-                            placeholder="e.g. battell-chapel-exterior"
+                            placeholder="e.g. plant_hall"
                         />
                     </div>
                     <div className="img-dialog-field">

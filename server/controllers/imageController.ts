@@ -122,12 +122,11 @@ export async function uploadImage(req: Request, res: Response) {
 
         if (!filename) { res.status(400).json({ message: 'filename is required' }); return }
 
-        const publicId = folder ? `${folder}/${filename}` : filename
-
         const result = await cloudinary.uploader.upload(file.path, {
-            public_id: publicId,
-            use_filename: false,
-            overwrite: false,
+            asset_folder: folder,
+            use_filename: true,
+            unique_filename: true,
+            filename_override: filename,
             resource_type: 'image',
         })
 

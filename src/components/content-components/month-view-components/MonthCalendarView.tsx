@@ -226,8 +226,6 @@ export default function MonthCalendarView({events, selectedDate, showPast}:Month
             // })
         )
 
-        console.log(dayEvents)
-
         //display events
         if (dayEvents.length >= 1) {
             //show all events on mobile
