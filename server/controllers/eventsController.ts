@@ -346,3 +346,33 @@ export async function getUpcomingEvents (req:Request, res:Response<Event[] | {me
         res.status(500).json({message: `Failed to get upcoming events`})
     }
 }
+
+export async function getMonthYear(req: Request, res: Response) {
+        try {
+            const pool = getPool();
+            const result = await pool.query(
+                `SELECT EXTRACT(MONTH FROM start_date) AS month, EXTRACT(YEAR FROM start_date) AS year
+                    FROM event_dates
+                        LEFT JOIN events ON event_dates.event_id = events.id
+                            WHERE events.status = 'published'
+                                GROUP BY month, year
+                                ORDER BY year DESC, month`
+            );
+
+            if (!result.rows || result.rows.length === 0) {
+                res.status(400).json({ message: `No event dates found` });
+                return
+            }
+
+            const groupsByYear = result.rows.reduce((acc, date) => {
+                if (!acc[date.year]) acc[date.year] = []
+                acc[date.year].push(Number(date.month))
+                return acc
+            }, {})
+
+            res.json(groupsByYear)
+        } catch (err) {
+            console.error('Error fetching dates:', err);
+            res.status(500).json({message: `Failed to get event dates`})
+        }
+    }

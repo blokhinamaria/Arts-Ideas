@@ -178,7 +178,6 @@ export default function UpcomingEvents() {
     }, [error, firstEventImageUrl, isLoading, isLoaderVisible, secondEventImageUrl, thirdEventImageUrl])
 
     if (error) {
-        console.log(error)
         return null
     }
 

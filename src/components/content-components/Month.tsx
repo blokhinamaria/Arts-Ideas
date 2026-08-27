@@ -1,9 +1,13 @@
 import './Month.css'
 import MonthListView from './month-view-components/MonthListView'
 import MonthCalendarView from './month-view-components/MonthCalendarView'
-import { useEffect, useState, useLayoutEffect, useRef } from 'react'
+import { useEffect, useState, useLayoutEffect, useRef, useMemo } from 'react'
 import { hasEventPassed } from './utilities/HasEventPassed'
 import { type EventType } from './event-components/EventCard'
+
+const API_BASE_URL = import.meta.env.DEV ? 'http://localhost:3000' : ''
+
+type AvailableMonths = Record<string, number[]>
 
 export default function Month() {
     
@@ -11,69 +15,123 @@ export default function Month() {
     const [error, setError] = useState<string>('')
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
+
+    const [ availableMonths, setAvailableMonths ] = useState<AvailableMonths>({})
+    const [ monthsLoadingError, setMonthsLoadingError ] = useState('')
+
     const monthName:string = new Intl.DateTimeFormat("en-US", {
         month: "long",
     }).format(selectedDate); 
 
     const year:number = selectedDate.getFullYear();
-    const monthNumber:string = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
-
-    const availableMonths:string[] = ["2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-08"]
+    const month = selectedDate.getMonth() + 1
+    const monthDoubleDigitNumber:string = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
 
     // disable the buttons
-    const disableNext:boolean = availableMonths.indexOf(`${year}-${monthNumber}`) === availableMonths.length - 1;
-    const disablePrev:boolean = availableMonths.indexOf(`${year}-${monthNumber}`) === 0;
+    // const disableNext:boolean = availableMonthsLegacy.indexOf(`${year}-${monthDoubleDigitNumber}`) === availableMonthsLegacy.length - 1;
+    // const disablePrev:boolean = availableMonthsLegacy.indexOf(`${year}-${monthDoubleDigitNumber}`) === 0;
+    const disableNext:boolean = !hasNextMonth()
+    const disablePrev:boolean = !hasPreviousMonth()
+
+    function hasNextMonth() {
+        if (availableMonths[year]) {
+            const currentMonthIndex = availableMonths[year].indexOf(month)
+            if (currentMonthIndex === availableMonths[year].length - 1) { //last month in this year, check next year 
+                if (availableMonths[year + 1]) { //next year is available, grab the first month
+                    const nextAvailableMonth = availableMonths[year + 1][0]
+                    if (nextAvailableMonth) return true
+                } else { //next year is not avalable
+                    return false
+                }
+            } else { //not last month in the year
+                return true
+            }
+        }
+        return false
+    }
+
+    function hasPreviousMonth() {
+        if (availableMonths[year]) {
+            const currentMonthIndex = availableMonths[year].indexOf(month)
+            if (currentMonthIndex === 0) { //first month in this year, check prev year
+                if (availableMonths[year - 1]) { //next year is available, grab the first month
+                    const nextAvailableMonth = availableMonths[year - 1][0]
+                    if (nextAvailableMonth) return true
+                } else { //prev year is not avalable
+                    return false
+                }
+            } else { //not first month in the year
+                return true
+            }
+        }
+        return false
+    }
 
     const [ userSwitchedMonths, setUserSwitchedMonths ] = useState<boolean>(false)
     
     //select another month
-    function handleNextMonth(needScrollTo:boolean):void {
-        const index:number = availableMonths.indexOf(`${year}-${monthNumber}`);
-        if (index !== -1 && index < availableMonths.length - 1) {
-            setUserSwitchedMonths(needScrollTo)
-            const [ year, month ]:string[] = availableMonths[index + 1].split('-')
-            setSelectedDate(new Date(Number(year), Number(month) - 1))
-        } else {
-            showDefaultAvailableMonth()
+    function handleNextMonth(availableMonths: AvailableMonths, selectedYear:number, selectedMonth:number):Date | null {
+        // assumption that every year exists in the object!
+
+        // get current month index
+        const index:number = availableMonths[selectedYear].indexOf(selectedMonth);
+        
+        //current month doesn't exist in the array, check for next closest month
+        if (index === -1) {
+            for (const availableMonth of availableMonths[selectedYear]) {
+                if (availableMonth > selectedMonth) {
+                    return new Date(Number(selectedYear), Number(availableMonth) - 1)
+                }
+            }
+        // it's not the last month of the year array, get the next month
+        } else if (index < availableMonths[year].length - 1) {
+            const newMonth = availableMonths[selectedYear][index + 1]
+            if (newMonth) return new Date(Number(selectedYear), Number(newMonth) - 1)
+        // it's the last month of the year, check if next year is available
+        } else if (availableMonths[selectedYear + 1]) {
+            const newMonth = availableMonths[selectedYear + 1]?.[0]
+            if (newMonth) return new Date(Number(selectedYear + 1), Number(newMonth) - 1)
         }
+        return null
     }
 
-    function handlePreviousMonth():void {
-        const index:number = availableMonths.indexOf(`${year}-${monthNumber}`);
-        if (index > 0 && index <= availableMonths.length - 1) {
-            setUserSwitchedMonths(true)
-            const [ year, month ]:string[] = availableMonths[index - 1].split('-')
-            setSelectedDate(new Date(Number(year), Number(month) - 1));
-        } else {
-            showDefaultAvailableMonth();
-        }
-    }
+    function handlePreviousMonth(availableMonths: AvailableMonths, selectedYear:number, selectedMonth:number):Date | null  {
+        // get current month index
+        const index:number = availableMonths[selectedYear].indexOf(selectedMonth);
 
-    function showDefaultAvailableMonth() {
-        setError('')
-        if (availableMonths.length === 0) {
-            setError('No events available')
+       //current month doesn't exist in the array, check for previous closest month
+        if (index === -1) {
+            const reversedMonthArray = [...availableMonths[selectedYear]].reverse()
+            for (const availableMonth of reversedMonthArray) {
+                if (availableMonth < selectedMonth) {
+                    return new Date(Number(selectedYear), Number(availableMonth) - 1)
+                }
+            }
+        // it's not the first month of the year array, get previous month
+        } else if (index !== 0) {
+            const newMonth = availableMonths[selectedYear][index - 1]
+            if (newMonth) return new Date(Number(selectedYear), Number(newMonth) - 1)
+        // it's the first month of the year, check if prev year is available
+        } else if (availableMonths[selectedYear - 1]) {
+            const previousYearArray =  availableMonths[selectedYear - 1]
+            if (previousYearArray) {
+                const newMonth = previousYearArray[previousYearArray.length - 1]
+                if (newMonth) return new Date(Number(selectedYear - 1), Number(newMonth) - 1)
+            }
         }
-        const today:Date = new Date();
-        const currentYear:number = today.getFullYear();
-        const firstAvailableMonth:string|undefined = availableMonths.find((date:string):boolean => date.startsWith(currentYear.toString()))
-        if (firstAvailableMonth) {
-            const [ year, month ]:string[] =firstAvailableMonth.split('-')
-            setSelectedDate(new Date(Number(year), Number(month) - 1))
-        } else {
-            const [ year, month ]:string[] = availableMonths[0].split('-')
-            setSelectedDate(new Date(Number(year), Number(month) - 1))
-        }
+        return null
     }
 
     //switch views
+    
     const [isListView, setIsListView] = useState<boolean>(true);
 
     function switchViews():void {
         setIsListView(prev => !prev)
     }
 
-    //import data
+    //import events data
+
     const [ events, setEvents ] = useState<EventType[]>([]);
     const [ upcomingEventsOnly, setUpcomingEventsOnly ] = useState<EventType[]|null>([]);
     
@@ -84,11 +142,18 @@ export default function Month() {
     
     //fetch and set events data
     useEffect(() => {
-        async function fetchEvents():Promise<void> {
+        async function buildEvents():Promise<void> {
             try {
                 setIsLoading(true)
-                const data:EventType[] = await fetchData();
-                const allEvents:EventType[] = data.flatMap(e => {
+                let availableMonthsData = availableMonths
+                if (Object.keys(availableMonthsData).length === 0) {
+                    availableMonthsData = await fetchMonths()
+                    setAvailableMonths(availableMonthsData)
+                }
+
+                // should be restractured to cache and store the events without fetching all the time
+                const data:EventType[] = await fetchMonthEvents();
+                const allMonthlyEvents:EventType[] = data.flatMap(e => {
                     if (e.dates.length === 1) return [e]
                     let result = []
                     for (let i = 0; i < e.dates.length; i++) {
@@ -100,15 +165,16 @@ export default function Month() {
                     return result
                     }
                 )
-                setEvents(allEvents);
+                
+                setEvents(allMonthlyEvents);
                 
                 //Is it current month?
                 if (today.getMonth() === selectedDate.getMonth()) {
                     //Does the current month have events that passed?
-                    const hasPastEvents:boolean = allEvents.some((event:EventType):boolean => hasEventPassed(event.dates)) 
+                    const hasPastEvents:boolean = allMonthlyEvents.some((event:EventType):boolean => hasEventPassed(event.dates)) 
                     if (hasPastEvents) {
                         //filter upcoming events from passed events
-                        const filteredData:EventType[] = allEvents.filter((event:EventType):boolean => !hasEventPassed(event.dates))
+                        const filteredData:EventType[] = allMonthlyEvents.filter((event:EventType):boolean => !hasEventPassed(event.dates))
                         //Does the current month have upcoming events?
                         if (filteredData.length > 0) {
                             setUpcomingEventsOnly(filteredData)
@@ -124,9 +190,14 @@ export default function Month() {
                                 setShowPast(true)
                                 return
                             }
-                            //Navigate to the next month on the first render
-                            handleNextMonth(false)
-                            return
+                            //get next month on the first render
+                            const nextAvailableDate = handleNextMonth(availableMonthsData, year, month)
+
+                            if (nextAvailableDate) {
+                                setSelectedDate(nextAvailableDate)
+                                setUserSwitchedMonths(false)
+                                return
+                            }
                         }
                     }
                     //current months has only upcoming events === treat is as a regular month
@@ -134,20 +205,38 @@ export default function Month() {
                 setUpcomingEventsOnly(null)
                 setShowPastButton(false)
                 setShowPast(true)
-            } catch (err) {
-                console.log(`Failed to fetch events: ${err}`)
+            } catch {
                 setError('Something went wrong. Please try again later')
             } finally {
                 setIsLoading(false)
+            }}
+
+            buildEvents()
+        
+    }, [availableMonths, year, monthDoubleDigitNumber, selectedDate]);
+
+    async function fetchMonths() {
+            setIsLoading(true)
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/events/all-dates`)
+
+                if (!response.ok) {
+                    setMonthsLoadingError('Failed to load data. Please try again later')
+                    return
+                }
+
+                const data = await response.json()
+                return data
+            } catch {
+                setMonthsLoadingError('Failed to load data. Please try again later')
+                return []
             }
         }
-        fetchEvents();
-    }, [year, monthNumber, selectedDate]);
 
-    async function fetchData():Promise<EventType[]> {
+    async function fetchMonthEvents():Promise<EventType[]> {
         try {
-            const API_BASE_URL = import.meta.env.DEV ? 'http://localhost:3000' : ''
-            const response = await fetch(`${API_BASE_URL}/api/events?month=${monthNumber}&year=${year}`)
+            
+            const response = await fetch(`${API_BASE_URL}/api/events?month=${monthDoubleDigitNumber}&year=${year}`)
             if (!response.ok) {
                 setError('No events found')
                 return []
@@ -156,10 +245,20 @@ export default function Month() {
             const data:EventType[] = await response.json()
             return data
 
-        } catch (err) {
-            console.log(`Failed to fetch events: ${err}`)
+        } catch {
             return []
         }
+    }
+
+    function handleMonthSwitch(direction:string) {
+        const newDate = direction === 'next' 
+            ? handleNextMonth(availableMonths, year, month)
+            : handlePreviousMonth(availableMonths, year, month)
+        if (newDate) {
+            setSelectedDate(newDate)
+            if (!userSwitchedMonths) setUserSwitchedMonths(true)
+        }
+        return
     }
 
     //scrolling effect
@@ -189,7 +288,7 @@ export default function Month() {
             <section className="month-title-banner">
                 <div>
                     <button
-                        onClick={handlePreviousMonth}
+                        onClick={() => handleMonthSwitch('previous')}
                         disabled={disablePrev}
                         className='month-swipe'
                         aria-label='Previous month'
@@ -202,7 +301,7 @@ export default function Month() {
                         <span className="date">{year}</span>
                     </div>
                     <button
-                        onClick={() => handleNextMonth(true)}
+                        onClick={() => handleMonthSwitch('next')}
                         disabled={disableNext}
                         className='month-swipe'
                         aria-label='Next month'
@@ -214,7 +313,7 @@ export default function Month() {
             <div className='sticky-image'
                 style={
                     {
-                        backgroundImage: `url('/assets/img/${year}-${monthNumber}.jpg')`
+                        backgroundImage: `url('/assets/img/${year}-${monthDoubleDigitNumber}.jpg')`
                     }
                 }>
             </div>
