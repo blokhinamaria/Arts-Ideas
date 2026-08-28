@@ -154,19 +154,22 @@ section.upcoming-events {
 .following-event .event-image-container {
     overflow: hidden;
     flex: 1 1 auto;
-    display: flex;
+    /* display: flex; */
 }
 
-.following-event .event-image-container img {
+/* .following-event .event-image-container img {
     height: 100%;
     width: 100%;
     object-fit: cover;
     display: block;
-}
+} */
 
 .following-event .event-details-container {
     padding: var(--small-gap);
     flex: 0 0 auto;
+    min-height: 0;
+    overflow-y: auto;
+    margin: auto;
 }
 
 span.tag-shape {
@@ -245,4 +248,18 @@ span.tag-shape.absolute {
         flex-direction: column;
         justify-content: space-between;
     }
+}
+
+.event-description {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.event-description p {
+    margin: 0;
+}
+
+.event-description-divider {
+    margin: 0;
 }

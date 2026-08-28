@@ -3,6 +3,10 @@ article#month {
     padding: 0;
 }
 
+article#month.no-image {
+    background-color: var(--accent-color-2);
+}
+
 section.month-title-banner {
     background: var(--accent-color-1-semi-opaque);
     height: 190px;
@@ -59,6 +63,9 @@ section.events {
   padding-block-start: 20px;
   padding-block-end: 100px;
   background: var(--black-overlay);
+}
+
+section.events.with-image {
   background: linear-gradient(0deg,rgba(0, 0, 0, 0.5) 90%, rgba(255, 255, 255, 0) 100%);
 }
 

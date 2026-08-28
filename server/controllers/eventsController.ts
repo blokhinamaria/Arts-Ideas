@@ -1,8 +1,9 @@
 import { getPool } from "../config/database.js"
+import cloudinary from "../config/cloudinary.js";
 
 import type { Request, Response } from "express"
 
-type Event = {
+type Event = { //seems outdated
     id: number;
     title: string;
     date: string;
@@ -18,6 +19,16 @@ type Event = {
     price?: string;
     status: string;
     tags?: string[];
+}
+
+type Image = {
+    url: string,
+    public_id: string
+}
+
+type MonthRespone = {
+    events: Event[],
+    image: Image
 }
 
 function buildEventsQuery(whereClause: string = ''):string {
@@ -49,7 +60,7 @@ function buildEventsQuery(whereClause: string = ''):string {
     `;
 }
 
-export async function getMonthEvents (req:Request, res:Response<Event[] | {message:string}>) {
+export async function getMonthEvents (req:Request, res:Response<MonthRespone | {message:string}>) {
     try {
         const {month, year} = req.query as { month?: string; year?: string };
 
@@ -83,7 +94,30 @@ export async function getMonthEvents (req:Request, res:Response<Event[] | {messa
             return
         }
 
-        res.json(result.rows)
+        let image = {
+            public_id: '',
+            url: ''
+        }
+
+        let imageResponse = await cloudinary.search
+            .expression(`public_id:${year}-${month}*`)
+            .max_results(1)
+            .execute()
+
+        if (imageResponse.resources?.length === 0) {
+            imageResponse = await cloudinary.search
+                .expression('public_id:default_month*')
+                .max_results(1)
+                .execute()
+        }
+
+        const loadedResource = imageResponse?.resources?.[0]
+        image = {
+            public_id: loadedResource.public_id,
+            url: loadedResource.secure_url
+        }
+
+        res.json({events: result.rows, image: image})
 
     } catch (err) {
         console.error('Error fetching events:', err);
@@ -99,7 +133,7 @@ export async function getAcademicYears(req: Request, res: Response) {
             SELECT DISTINCT
                 CASE
                     WHEN EXTRACT(MONTH FROM ed.start_date) > 8
-                      OR (EXTRACT(MONTH FROM ed.start_date) = 8 AND EXTRACT(DAY FROM ed.start_date) >= 15)
+                        OR (EXTRACT(MONTH FROM ed.start_date) = 8 AND EXTRACT(DAY FROM ed.start_date) >= 15)
                     THEN EXTRACT(YEAR FROM ed.start_date)::int
                     ELSE (EXTRACT(YEAR FROM ed.start_date) - 1)::int
                 END AS year_start

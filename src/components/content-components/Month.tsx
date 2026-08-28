@@ -4,10 +4,24 @@ import MonthCalendarView from './month-view-components/MonthCalendarView'
 import { useEffect, useState, useLayoutEffect, useRef, useMemo } from 'react'
 import { hasEventPassed } from './utilities/HasEventPassed'
 import { type EventType } from './event-components/EventCard'
+import { Cloudinary, CloudinaryImage } from "@cloudinary/url-gen";
+import { scale } from '@cloudinary/url-gen/actions/resize';
+import { quality } from '@cloudinary/url-gen/actions/delivery';
+import { auto } from '@cloudinary/url-gen/qualifiers/quality';
 
 const API_BASE_URL = import.meta.env.DEV ? 'http://localhost:3000' : ''
 
 type AvailableMonths = Record<string, number[]>
+type Image = {
+    public_id?: string,
+    url?: string
+}
+
+// TODO
+// handle monthsLoadingError
+// load months images from cloudinary
+// create context
+// store loaded data to avoid refetching
 
 export default function Month() {
     
@@ -15,9 +29,14 @@ export default function Month() {
     const [error, setError] = useState<string>('')
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
-
     const [ availableMonths, setAvailableMonths ] = useState<AvailableMonths>({})
     const [ monthsLoadingError, setMonthsLoadingError ] = useState('')
+
+    const cloudinary = new Cloudinary({
+        cloud: {
+            cloudName: 'ded4glttn'
+        }
+    });
 
     const monthName:string = new Intl.DateTimeFormat("en-US", {
         month: "long",
@@ -28,8 +47,6 @@ export default function Month() {
     const monthDoubleDigitNumber:string = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
 
     // disable the buttons
-    // const disableNext:boolean = availableMonthsLegacy.indexOf(`${year}-${monthDoubleDigitNumber}`) === availableMonthsLegacy.length - 1;
-    // const disablePrev:boolean = availableMonthsLegacy.indexOf(`${year}-${monthDoubleDigitNumber}`) === 0;
     const disableNext:boolean = !hasNextMonth()
     const disablePrev:boolean = !hasPreviousMonth()
 
@@ -137,8 +154,10 @@ export default function Month() {
     
     const [ showPastButton, setShowPastButton ] = useState<boolean>(false); //showPastButton is only visible for the current month
     const [ showPast, setShowPast ] = useState<boolean>(false); //show or hide past events
+
+    const [ image, setImage ] = useState<CloudinaryImage | null>(null)
     
-    const today:Date = new Date();
+    const today:Date = useMemo(() => new Date(), []);
     
     //fetch and set events data
     useEffect(() => {
@@ -152,8 +171,8 @@ export default function Month() {
                 }
 
                 // should be restractured to cache and store the events without fetching all the time
-                const data:EventType[] = await fetchMonthEvents();
-                const allMonthlyEvents:EventType[] = data.flatMap(e => {
+                const { events, image } = await fetchMonthEvents();
+                const allMonthlyEvents:EventType[] = events.flatMap(e => {
                     if (e.dates.length === 1) return [e]
                     let result = []
                     for (let i = 0; i < e.dates.length; i++) {
@@ -167,6 +186,13 @@ export default function Month() {
                 )
                 
                 setEvents(allMonthlyEvents);
+                
+                const cloudImage: CloudinaryImage = cloudinary
+                    .image(image.public_id)
+                    .resize(scale().width(2880))
+                    .delivery(quality(auto()));
+                
+                setImage(cloudImage)
                 
                 //Is it current month?
                 if (today.getMonth() === selectedDate.getMonth()) {
@@ -233,20 +259,20 @@ export default function Month() {
             }
         }
 
-    async function fetchMonthEvents():Promise<EventType[]> {
+    async function fetchMonthEvents():Promise<{events: EventType[], image:Image}> {
         try {
             
             const response = await fetch(`${API_BASE_URL}/api/events?month=${monthDoubleDigitNumber}&year=${year}`)
             if (!response.ok) {
                 setError('No events found')
-                return []
+                return {events: [], image: {}}
             }
 
-            const data:EventType[] = await response.json()
+            const data = await response.json()
             return data
 
         } catch {
-            return []
+            return {events: [], image: {}}
         }
     }
 
@@ -282,9 +308,9 @@ export default function Month() {
         }
         }
     }, [isLoading, selectedDate])
-
+        
     return (
-        <article id='month' ref={imageRef}>
+        <article id='month' ref={imageRef} className={`${image ? '' : 'no-image'}`}>
             <section className="month-title-banner">
                 <div>
                     <button
@@ -310,13 +336,13 @@ export default function Month() {
                     </button> 
                 </div>
             </section>
-            <div className='sticky-image'
+            {image && <div className='sticky-image'
                 style={
                     {
-                        backgroundImage: `url('/assets/img/${year}-${monthDoubleDigitNumber}.jpg')`
+                        backgroundImage: `url(${image ? image.toURL() : ''})`,
                     }
                 }>
-            </div>
+            </div>}
             {error || isLoading ? 
                 <section className='events'>
                     <section className='month-buttons'>
@@ -324,7 +350,7 @@ export default function Month() {
                     </section>
                 </section>
                 : 
-                <section className='events'>
+                <section className={`${image ? 'events with-image' : 'events'}`}>
                     <section className='month-buttons' ref={sectionRef}>
                         <button onClick={switchViews}>Switch to {isListView ? "Calendar" : "List"} view</button>
                         {showPastButton && <button onClick={() => setShowPast(prev => !prev)}>{showPast ? 'Hide' : 'Show'} past events</button>}
