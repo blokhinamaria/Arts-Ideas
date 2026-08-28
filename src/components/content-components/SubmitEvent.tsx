@@ -281,7 +281,6 @@ export default function SubmitEvent() {
     }
 
     function handleSubmitAnother() {
-        console.log('clicked')
         setSubmitStatus('idle')
         setFormData(newData)
     }

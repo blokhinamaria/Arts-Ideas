@@ -178,7 +178,6 @@ export default function UpcomingEvents() {
     }, [error, firstEventImageUrl, isLoading, isLoaderVisible, secondEventImageUrl, thirdEventImageUrl])
 
     if (error) {
-        console.log(error)
         return null
     }
 
@@ -270,18 +269,17 @@ export default function UpcomingEvents() {
                         <span className={isNarrow ? 'tag tag-shape absolute' : 'tag tag-shape'}>{currentEvents[0]?.category}</span>
                         <div className='event-description'>
                             <h3 className="secondary-title">{currentEvents[0]?.title}</h3>
-                            <hr />
+                            <hr className='event-description-divider'/>
                             <EventDate event={currentEvents[0]} dates={currentEvents[0]?.dates}/>
                             <Location location={currentEvents[0]?.location}/>
                             <p>{currentEvents[0]?.description}</p>
                         </div>
                         <div></div>
                     {/* <EventCard event={currentEvents[0]} /> */}
-                        
                     </div>
                 </div>
 
-                <div 
+                {currentEvents[1] && <div 
                     className='following-event'
                     role={!isNarrow ? 'button' : undefined}
                     tabIndex={!isNarrow ? 0 : undefined}
@@ -307,7 +305,7 @@ export default function UpcomingEvents() {
                                 <span className='tag tag-shape absolute'>{currentEvents[1]?.category}</span>
                                 <div className='event-description'>
                                     <h3 className="secondary-title">{currentEvents[1]?.title}</h3>
-                                    <hr />
+                                    <hr className='event-description-divider'/>
                                     <EventDate event={currentEvents[1]} dates={currentEvents[1]?.dates}/>
                                     <Location location={currentEvents[1]?.location}/>
                                     {isNarrow ? <p>{currentEvents[1]?.description}</p> : null}
@@ -315,9 +313,9 @@ export default function UpcomingEvents() {
                                 
                                 
                         </div>
-                </div>
+                </div>}
 
-                <div 
+                {currentEvents[2] && <div 
                     className='following-event'
                     role={!isNarrow ? 'button' : undefined}
                     tabIndex={!isNarrow ? 0 : undefined}
@@ -343,7 +341,7 @@ export default function UpcomingEvents() {
                                 <span className='tag tag-shape absolute'>{currentEvents[2]?.category}</span>
                                 <div className='event-description'>
                                     <h3 className="secondary-title">{currentEvents[2]?.title}</h3>
-                                    <hr />
+                                    <hr className='event-description-divider'/>
                                     <EventDate event={currentEvents[2]} dates={currentEvents[2]?.dates}/>
                                     <Location location={currentEvents[2]?.location}/>
                                     {isNarrow ? <p>{currentEvents[2]?.description}</p> : null} 
@@ -351,7 +349,7 @@ export default function UpcomingEvents() {
                                 
                                 
                         </div>
-                </div>
+                </div>}
             </section>
             <section className='popover-wrapper'>
                 { openPopover && !isNarrow ? (

@@ -36,6 +36,7 @@
 .date-group {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .add-to-calendar-icon {

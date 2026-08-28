@@ -62,10 +62,7 @@ export async function listImages(req: Request, res: Response) {
                 })
                 resources = result.resources ?? []
                 next_cursor = result.next_cursor
-                console.log(`[images] resources_by_asset_folder("${folder}") → ${resources.length} results`)
             } catch (e: any) {
-                // Fall back to Dynamic Folder Mode (prefix-based)
-                console.log(`[images] resources_by_asset_folder failed (${e?.message}), trying prefix`)
                 const result = await cloudinary.api.resources({
                     type: 'upload',
                     prefix: folder + '/',
@@ -74,7 +71,6 @@ export async function listImages(req: Request, res: Response) {
                 })
                 resources = result.resources ?? []
                 next_cursor = result.next_cursor
-                console.log(`[images] prefix("${folder}/") → ${resources.length} results`)
             }
         } else {
             // No folder selected — list all resources

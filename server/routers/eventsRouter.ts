@@ -1,6 +1,6 @@
 import express from 'express'
 import type { Router } from 'express'
-import { getUpcomingEvents, getMonthEvents, getAdminEvents, updateAdminEvent, getAcademicYears, getAllEvents } from '../controllers/eventsController.js'
+import { getUpcomingEvents, getMonthEvents, getAdminEvents, updateAdminEvent, getAcademicYears, getAllEvents, getMonthYear } from '../controllers/eventsController.js'
 import { getPendingEvents, updatePendingEvent, deletePendingEvent, publishPendingEvent } from '../controllers/pendingEventsController.js'
 import { authMiddleware } from '../controllers/authController.js'
 
@@ -17,3 +17,4 @@ eventsRouter.delete('/pending/:id', authMiddleware, deletePendingEvent)
 eventsRouter.post('/pending/:id/publish', authMiddleware, publishPendingEvent)
 eventsRouter.get('/upcoming', getUpcomingEvents)
 eventsRouter.get('/', getMonthEvents)
+eventsRouter.get('/all-dates', getMonthYear)

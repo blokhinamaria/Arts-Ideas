@@ -28,31 +28,31 @@ function App() {
         const location = useLocation();
 
         useLayoutEffect(() => {
-          window.scrollTo( {top: 0, left: 0, behavior: 'instant'})
+            window.scrollTo( {top: 0, left: 0, behavior: 'instant'})
         }, [location.pathname]);
-      return children;
+        return children;
     }
 
-  return (
-    <>
-      <Router>
-        <Wrapper>
-          <Routes>
-            <Route path='/' element={<Layout />}>
-              <Route index element={<HomePage />} />
-              <Route path='/styles' element={<Styles />}/>
-              <Route path='/campus-map' element={<Suspense><CampusMap /></Suspense>}/>
-              <Route path='/submit-event' element={<Suspense><SubmitEvent /></Suspense>}/>
-              <Route element={<AuthLayout />}>
-                <Route path='/login' element={<Suspense><Login /></Suspense>} />
-                <Route path='/admin-dashboard' element={<Suspense><AdminDashboard /></Suspense>} />
-              </Route>
-            </Route>
-          </Routes>
-        </Wrapper>
-      </Router>
-    </>
-  )
+    return (
+        <>
+            <Router>
+                <Wrapper>
+                    <Routes>
+                        <Route path='/' element={<Layout />}>
+                            <Route index element={<HomePage />} />
+                            <Route path='/styles' element={<Styles />}/>
+                            <Route path='/campus-map' element={<Suspense><CampusMap /></Suspense>}/>
+                            <Route path='/submit-event' element={<Suspense><SubmitEvent /></Suspense>}/>
+                            <Route element={<AuthLayout />}>
+                                <Route path='/login' element={<Suspense><Login /></Suspense>} />
+                                <Route path='/admin-dashboard' element={<Suspense><AdminDashboard /></Suspense>} />
+                            </Route>
+                        </Route>
+                    </Routes>
+                </Wrapper>
+            </Router>
+        </>
+    )
 }
 
 export default App
