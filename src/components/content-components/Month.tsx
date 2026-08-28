@@ -19,7 +19,7 @@ type Image = {
 
 // TODO
 // handle monthsLoadingError
-// load months images from cloudinary
+// load months images from cloudinary (:check)
 // create context
 // store loaded data to avoid refetching
 
