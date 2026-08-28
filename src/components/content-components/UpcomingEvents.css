@@ -140,7 +140,7 @@ section.upcoming-events {
     color: var(--black);
     display: flex;
     flex-direction: column;
-    height: 440px;
+    min-height: 440px;
     position: relative;
 }
 
