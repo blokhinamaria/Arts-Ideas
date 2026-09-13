@@ -12,7 +12,9 @@ type SubmitEventBody = {
     title: string
     description: string
     location_key: string
-    custom_location?: string | null
+    custom_location_venue?: string | null,
+    custom_location_building?: string | null,
+    custom_location_address?: string | null,
     category: string
     custom_category?: string | null
     contact_email: string
@@ -31,7 +33,9 @@ export async function submitNewEvent(
             title,
             description,
             location_key,
-            custom_location,
+            custom_location_venue,
+            custom_location_building,
+            custom_location_address,
             category,
             custom_category,
             contact_email,
@@ -75,13 +79,55 @@ export async function submitNewEvent(
             }
         }
 
+        if (location_key === 'other' &&
+            ((!custom_location_venue?.trim() && !custom_location_building?.trim()) || !custom_location_address?.trim())
+        ) {
+            res.status(400).json({ message: 'Event Location is missing required information' })
+            return
+        }
+
         await pool.query('BEGIN');
 
+        let location = null
+
+        if (location_key === 'other') {
+            const venue = (custom_location_venue?.trim() || custom_location_building?.trim()) as string
+            const building = custom_location_venue?.trim() && custom_location_building?.trim()
+                ? custom_location_building.trim()
+                : null
+            const newLocation = await pool.query(`
+                    INSERT INTO locations (
+                        key,
+                        venue,
+                        building,
+                        address
+                    ) VALUES ($1, $2, $3, $4)
+                    RETURNING *
+                `, ['other', venue, building, custom_location_address])
+            location = newLocation.rows[0]
+        } else {
+            const locationResult = await pool.query(`
+                    SELECT * FROM locations
+                        WHERE key = $1
+                `, [location_key])
+            location = locationResult.rows[0]
+        }
+
         const eventResult = await pool.query(
-            `INSERT INTO new_events
-                (submitter_name, submitter_email, title, description,
-                    location_key, custom_location, category, custom_category,
-                    contact_email, contact_phone, contact_name, status)
+            `INSERT INTO new_events (
+                submitter_name,
+                submitter_email,
+                title,
+                description,
+                location_key,
+                location_id,
+                category,
+                custom_category,
+                contact_email,
+                contact_phone,
+                contact_name,
+                status
+                )
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, 'pending')
                 RETURNING id`,
             [
@@ -90,7 +136,7 @@ export async function submitNewEvent(
                 title,
                 description,
                 location_key,
-                custom_location ?? null,
+                location.id,
                 category,
                 custom_category ?? null,
                 contact_email,

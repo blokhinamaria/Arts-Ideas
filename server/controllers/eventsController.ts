@@ -42,6 +42,7 @@ function buildEventsQuery(whereClause: string = ''):string {
             ) AS dates,
         (
             SELECT json_build_object(
+                'location_id', l.id,
                 'location_key', l.key,
                 'venue', l.venue,
                 'building', l.building,
@@ -49,7 +50,7 @@ function buildEventsQuery(whereClause: string = ''):string {
                 'map_url', l.map_url
                 )
                 FROM locations l
-                WHERE l.key = e.location_key
+                WHERE l.id = e.location_id
         ) AS location
         FROM events e
         JOIN event_dates ed ON e.id = ed.event_id

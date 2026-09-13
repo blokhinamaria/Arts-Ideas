@@ -3,25 +3,6 @@ import './SubmitEvent.css';
 import Form from '../elements/Form/Form';
 
 // IMPORT FROM DB
-const LOCATION_OPTIONS = [
-    { value: 'gordon_theater',      label: 'Gordon Theater' },
-    { value: 'performance_gallery', label: 'Performance Gallery' },
-    { value: 'saunders_gallery',    label: 'Saunders Gallery' },
-    { value: 'black_box_theater',   label: 'Black Box Theater' },
-    { value: 'design_studios',      label: 'Design Studios' },
-    { value: 'scarfone_gallery',    label: 'Scarfone Gallery' },
-    { value: 'sykes_plaza',         label: 'Sykes Plaza' },
-    { value: 'sykes_chapel',        label: 'Sykes Chapel' },
-    { value: 'reeves_theater',      label: 'Reeves Theater' },
-    { value: 'crescent_club',       label: 'Crescent Club' },
-    { value: 'falk_theatre',        label: 'Falk Theatre' },
-    { value: 'plant_hall',          label: 'Plant Hall' },
-    { value: 'fletcher_lounge',     label: 'Fletcher Lounge' },
-    { value: 'music_room',          label: 'Music Room' },
-    { value: 'grand_salon',         label: 'Grand Salon' },
-    { value: 'other',               label: 'Other' },
-];
-
 const CATEGORY_OPTIONS = [
     { value: 'Music Performance', label: 'Music Performance' },
     { value: 'Theatre / Drama', label: 'Theatre / Drama' },
@@ -49,7 +30,9 @@ type FormState = {
     title: string;
     dates: DateEntry[];
     location_key: string;
-    custom_location: string;
+    custom_location_venue?: string;
+    custom_location_building?: string;
+    custom_location_address?: string;
     description: string;
     category: string;
     custom_category: string;
@@ -66,7 +49,9 @@ type FormErrors = {
     date_start?: Record<string, string | undefined>;
     date_end?: Record<string, string | undefined>;
     location_key?: string;
-    custom_location?: string;
+    custom_location_venue?: string;
+    custom_location_building?: string;
+    custom_location_address?: string;
     description?: string;
     category?: string;
     custom_category?: string;
@@ -81,6 +66,13 @@ function newDateEntry(): DateEntry {
 
 const API_BASE = import.meta.env.DEV ? 'http://localhost:3000' : '';
 
+export type LocationOption = {
+    id: number,
+    value: string,
+    label: string,
+    key: string
+}
+
 export default function SubmitEvent() {
     const successRef = useRef<HTMLDivElement>(null);
     const newData:FormState = {
@@ -89,7 +81,6 @@ export default function SubmitEvent() {
         title: '',
         dates: [newDateEntry()],
         location_key: '',
-        custom_location: '',
         description: '',
         category: '',
         custom_category: '',
@@ -101,11 +92,7 @@ export default function SubmitEvent() {
 
     const [formErrors, setFormErrors] = useState<FormErrors>({});
 
-    const [ locationOptions, setLocationOptions ] = useState<
-        {
-            value: string,
-            label: string,
-        }[]>([])
+    const [ locationOptions, setLocationOptions ] = useState<LocationOption[]>([])
     
     useEffect(() => {
         getLocations()
@@ -113,17 +100,21 @@ export default function SubmitEvent() {
 
     async function getLocations() {
         const other = {
+            id: 0,
+            key: 'other',
             value: 'other',
-            label: 'Other'
+            label: 'Other',
         }
         try {
             const response = await fetch(`${API_BASE}/api/locations`)
             if (!response.ok) {
                 throw Error
             }
-            const data: { key:string, venue: string, building: string, address:string }[] = await response.json()
+            const data: { id: number, key:string, venue: string, building: string, address:string }[] = await response.json()
             const locations = data.map(location => ({
+                    id: location.id,
                     value: location.key,
+                    key: location.key,
                     label: location.building !== null ? `${location.venue}, ${location.building}` : `${location.venue}`
                 }
             ))
@@ -213,8 +204,15 @@ export default function SubmitEvent() {
         if (!formData.location_key) {
             errs.location_key = 'Location is required'; valid = false;
         }
-        if (formData.location_key === 'other' && !formData.custom_location.trim()) {
-            errs.custom_location = 'Please specify the location'; valid = false;
+        if (formData.location_key === 'other') {
+            if (!formData.custom_location_venue?.trim() && !formData.custom_location_building?.trim()) {
+                errs.custom_location_venue = 'Building or venue must be specified'; 
+                errs.custom_location_building = 'Building or venue must be specified';
+                valid = false;
+            }
+        }
+        if (formData.location_key === 'other' && !formData.custom_location_address?.trim()) {
+            errs.custom_location_address = 'Please specify the address'; valid = false;
         }
         if (!formData.description.trim()) {
             errs.description = 'Description is required'; valid = false;
@@ -254,7 +252,9 @@ export default function SubmitEvent() {
                 end_date: d.has_end_date ? d.end_date : null,
             })),
             location_key: formData.location_key,
-            custom_location: formData.location_key === 'other' ? formData.custom_location : null,
+            custom_location_venue: formData.location_key === 'other' ? formData.custom_location_venue : null,
+            custom_location_building: formData.location_key === 'other' ? formData.custom_location_building : null,
+            custom_location_address: formData.location_key === 'other' ? formData.custom_location_address : null,
             description: formData.description,
             category: formData.category === 'Other' ? formData.custom_category : formData.category,
             custom_category: formData.category === 'Other' ? formData.custom_category : null,
@@ -423,17 +423,47 @@ export default function SubmitEvent() {
                             {formErrors.location_key && <Form.Error>{formErrors.location_key}</Form.Error>}
                         </Form.Select>
                         {formData.location_key === 'other' && (
-                            <Form.Input
-                                label='Specify Location'
-                                inputName='custom_location'
-                                inputValue={formData.custom_location}
-                                onChange={e => updateField('custom_location', e.target.value)}
-                                inputInvalid = {!!formErrors.custom_location}
-                            >
-                                {formErrors.custom_location && (
-                                    <Form.Error>{formErrors.custom_location}</Form.Error>
-                                )}
-                            </Form.Input>
+                            <>
+                                <Form.Input
+                                    label='Venue Name'
+                                    inputName='custom_location_venue'
+                                    inputValue={formData.custom_location_venue ?? ''}
+                                    onChange={e => updateField('custom_location_venue', e.target.value)}
+                                    inputInvalid = {!!formErrors.custom_location_venue}
+                                    placeholder='Grand Salon'
+                                >
+                                    <Form.Hint>If the venue is not named after the building it's in, please specify the building name below</Form.Hint>
+                                    {formErrors.custom_location_venue && (
+                                        <Form.Error>{formErrors.custom_location_venue}</Form.Error>
+                                    )}
+                                </Form.Input>
+                                <Form.Input
+                                    label='Building Name'
+                                    inputName='custom_location_building'
+                                    inputValue={formData.custom_location_building ?? ''}
+                                    onChange={e => updateField('custom_location_building', e.target.value)}
+                                    inputInvalid = {!!formErrors.custom_location_building}
+                                    placeholder='Plant Hall'
+                                    required={false}
+                                >
+                                    
+                                    {formErrors.custom_location_building && (
+                                        <Form.Error>{formErrors.custom_location_building}</Form.Error>
+                                    )}
+                                </Form.Input>
+                                <Form.Input
+                                    label='Address'
+                                    inputName='custom_location_address'
+                                    inputValue={formData.custom_location_address ?? ''}
+                                    onChange={e => updateField('custom_location_address', e.target.value)}
+                                    inputInvalid = {!!formErrors.custom_location_address}
+                                    placeholder='401 W Kennedy Blvd, Tampa, FL 33606'
+                                >
+                                    {formErrors.custom_location_address && (
+                                        <Form.Error>{formErrors.custom_location_address}</Form.Error>
+                                    )}
+                                </Form.Input>
+                            </>
                         )}
 
                         {/* Description */}

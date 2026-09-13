@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef, KeyboardEvent } from 'react';
 import './EditEventModal.css';
 import './PendingEventModal.css';
+import { LocationOption } from '../SubmitEvent';
+import Form from '../../elements/Form/Form';
 
 const CATEGORY_OPTIONS = [
     'Music Performance', 'Theatre / Drama', 'Dance', 'Visual Arts',
@@ -10,7 +12,13 @@ const CATEGORY_OPTIONS = [
 
 const API_BASE = import.meta.env.DEV ? 'http://localhost:3000' : '';
 
-type Location = { key: string; venue: string; building: string | null; address: string };
+type Location = { 
+    key: string;
+    venue: string;
+    building: string | null;
+    address: string;
+    map_url: string;
+};
 
 type DateEntry = { id: string; start_date: string; has_end_date: boolean; end_date: string };
 
@@ -19,13 +27,8 @@ export type PendingEvent = {
     title: string;
     description: string;
     location_key: string;
-    location?: {
-        venue: string,
-        building: string,
-        map_url: string,
-        location_key: string,
-        address: string
-    }
+    location_id: number;
+    location: Location;
     category: string;
     custom_category: string | null;
     tags: string[] | null;
@@ -47,6 +50,8 @@ type EditForm = {
     title: string;
     dates: DateEntry[];
     location_key: string;
+    location_id: number | string;
+    location: Location;
     description: string;
     category: string;
     custom_category: string;
@@ -63,7 +68,11 @@ type FormErrors = {
     dates?: string;
     date_start?: Record<string, string | undefined>;
     date_end?: Record<string, string | undefined>;
-    location_key?: string;
+    location_id?: string;
+    venue?: string;
+    building?: string;
+    address?: string;
+    map_url?: string;
     description?: string;
     category?: string;
     custom_category?: string;
@@ -79,7 +88,15 @@ function newDateEntry(): DateEntry {
     return { id: crypto.randomUUID(), start_date: '', has_end_date: false, end_date: '' };
 }
 
-function initForm(event: PendingEvent): EditForm {
+const newLocation = {
+    key: 'other',
+    venue: '',
+    building: '',
+    address: '',
+    map_url: ''
+}
+
+function initForm(event: PendingEvent, isCustomLocation: boolean): EditForm {
     const isCustomCategory = event.category && !CATEGORY_OPTIONS.slice(0, -1).includes(event.category);
     return {
         title: event.title,
@@ -90,6 +107,14 @@ function initForm(event: PendingEvent): EditForm {
             end_date: d.end_date ? toDatetimeLocal(d.end_date) : '',
         })),
         location_key: event.location_key ?? '',
+        location_id: event.location_id,
+        location: isCustomLocation ? {
+            key: event.location_key,
+            venue: event.location.venue,
+            building: event.location.building,
+            address: event.location.address,
+            map_url: event.location.map_url
+        } : {...newLocation},
         description: event.description,
         category: isCustomCategory ? 'Other' : event.category,
         custom_category: isCustomCategory ? event.category : (event.custom_category ?? ''),
@@ -111,8 +136,9 @@ type Props = {
 };
 
 export default function PendingEventModal({ event, onClose, onSaved, onDeleted, onPublished }: Props) {
-    const [form, setForm] = useState<EditForm>(() => initForm(event));
-    const [locations, setLocations] = useState<Location[]>([]);
+    const isCustomLocation = event.location_key === 'other'
+    const [form, setForm] = useState<EditForm>(() => initForm(event, isCustomLocation));
+    const [locationOptions, setLocationOptions] = useState<LocationOption[]>([])
     const [tagInput, setTagInput] = useState('');
     const [errors, setErrors] = useState<FormErrors>({});
     const [saveStatus, setSaveStatus] = useState<'idle' | 'loading' | 'error'>('idle');
@@ -121,8 +147,33 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
     const backdropRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        fetch(`${API_BASE}/api/locations`, { credentials: 'include' })
-            .then((r) => r.json()).then(setLocations).catch(() => {});
+        async function getLocations() {
+            const other = {
+                id: isCustomLocation ? event.location_id : 0,
+                key: 'other',
+                value: 'other',
+                label: 'Other'
+            }
+            try {
+                const response = await fetch(`${API_BASE}/api/locations`)
+                if (!response.ok) {
+                    throw Error
+                }
+                const data: { id: number, key:string, venue: string, building: string, address:string }[] = await response.json()
+                const locations = data.map(location => ({
+                        id: location.id,
+                        value: location.key,
+                        key: location.key,
+                        label: location.building !== null ? `${location.venue}, ${location.building}` : `${location.venue}`
+                    }
+                ))
+                locations.push(other)
+                setLocationOptions(locations)
+            } catch (err) {
+                setLocationOptions([other])
+            }
+        }   
+        getLocations()
     }, []);
 
     useEffect(() => {
@@ -134,8 +185,31 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
     }, [onClose, confirmState]);
 
     function updateField<K extends keyof EditForm>(field: K, value: EditForm[K]) {
+        if (field === 'location_id') {
+            const location = locationOptions.find(loc => loc.id === Number(value))
+            if (location) {
+                setForm((prev) => ({ 
+                    ...prev,
+                    location_id: location.id,
+                    location_key: location.key
+                }));
+            }
+            setErrors((prev) => ({ ...prev, [field]: undefined }));
+            return
+        }
         setForm((prev) => ({ ...prev, [field]: value }));
         setErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
+
+    function updateLocation<K extends keyof Location>(locationField: K, value: Location[K]) {
+        const newLocation = form.location ? {...form.location, [locationField]: value} : null
+        if (newLocation) {
+            setForm((prev) => ({ ...prev, location: {...newLocation} }));
+            if (locationField === 'venue' || locationField === 'building') {
+                setErrors((prev) => ({ ...prev, venue: undefined, building: undefined }));
+            }
+            setErrors((prev) => ({ ...prev, [locationField]: undefined }));
+        }
     }
 
     function updateDate(id: string, changes: Partial<DateEntry>) {
@@ -185,7 +259,10 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
             if (Object.keys(startErrors).length) errs.date_start = startErrors;
             if (Object.keys(endErrors).length) errs.date_end = endErrors;
         }
-        if (!form.location_key) { errs.location_key = 'Location is required'; valid = false; }
+        if (!form.location_id && form.location_id !== 0) { errs.location_id = 'Location is required'; valid = false; }
+        if (form.location_key === 'other' && !form.location?.venue) { errs.venue = 'Venue is required'; valid = false; }
+        if (form.location_key === 'other' && !form.location?.venue && !form.location?.building) { errs.building = 'Building or venue is required'; valid = false; }
+        if (form.location_key === 'other' && !form.location?.address) { errs.address = 'Address is required'; valid = false; }
         if (!form.description.trim()) { errs.description = 'Description is required'; valid = false; }
         if (!form.category) { errs.category = 'Category is required'; valid = false; }
         if (form.category === 'Other' && !form.custom_category.trim()) {
@@ -200,7 +277,11 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
         if (!validate()) return;
         setSaveStatus('loading');
         const payload = {
-            title: form.title, location_key: form.location_key, description: form.description,
+            title: form.title, 
+            location_key: form.location_key,
+            location_id: Number(form.location_id),
+            location: form.location ?? event.location,
+            description: form.description,
             category: form.category === 'Other' ? form.custom_category : form.category,
             tags: form.tags,
             contact_name: form.contact_name, contact_email: form.contact_email, contact_phone: form.contact_phone,
@@ -210,8 +291,10 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
         };
         try {
             const res = await fetch(`${API_BASE}/api/events/pending/${event.id}`, {
-                method: 'PUT', headers: { 'Content-Type': 'application/json' },
-                credentials: 'include', body: JSON.stringify(payload),
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify(payload),
             });
             if (res.ok) {
                 const updatedEvent: PendingEvent = {
@@ -241,7 +324,11 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
         setActionStatus('loading');
         if (!validate()) return;
         const payload = {
-            title: form.title, location_key: form.location_key, description: form.description,
+            title: form.title,
+            location_key: form.location_key,
+            location_id: Number(form.location_id),
+            location: form.location ?? event.location,
+            description: form.description,
             category: form.category === 'Other' ? form.custom_category : form.category,
             tags: form.tags,
             contact_name: form.contact_name, contact_email: form.contact_email, contact_phone: form.contact_phone,
@@ -264,8 +351,6 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
     function handleBackdropClick(e: React.MouseEvent<HTMLDivElement>) {
         if (e.target === backdropRef.current) onClose();
     }
-
-    const locationLabel = (loc: Location) => loc.building ? `${loc.venue} — ${loc.building}` : loc.venue;
 
     return (
         <div className="edit-modal-backdrop" ref={backdropRef} onClick={handleBackdropClick} role="dialog" aria-modal="true" aria-label="Review Pending Event">
@@ -346,13 +431,68 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
                     {/* Location */}
                     <div className="edit-form-field">
                         <label className="edit-label" htmlFor="pe-location">Location</label>
-                        <select id="pe-location" value={form.location_key}
-                            onChange={(e) => updateField('location_key', e.target.value)} aria-invalid={!!errors.location_key}>
+                        <select id="pe-location" value={form.location_id}
+                            onChange={(e) => updateField('location_id', e.target.value)} aria-invalid={!!errors.location_id}>
                             <option value="" disabled>Select a location</option>
-                            {locations.map((loc) => <option key={loc.key} value={loc.key}>{locationLabel(loc)}</option>)}
+                            {locationOptions.map((loc) => <option key={loc.id} value={loc.id}>{loc.label}</option>)}
                         </select>
-                        {errors.location_key && <span className="edit-error" role="alert">{errors.location_key}</span>}
+                        {errors.location_id && <span className="edit-error" role="alert">{errors.location_id}</span>}
                     </div>
+                    {form.location_key === 'other' && (
+                            <>
+                                <Form.Input
+                                    label='Venue Name'
+                                    inputName='venue'
+                                    inputValue={form.location.venue ?? ''}
+                                    onChange={e => updateLocation('venue', e.target.value)}
+                                    inputInvalid = {!!errors.venue}
+                                    placeholder='Grand Salon'
+                                >
+                                    <Form.Hint>If the venue is not named after the building it's in, please specify the building name below</Form.Hint>
+                                    {errors.venue && (
+                                        <Form.Error>{errors.venue}</Form.Error>
+                                    )}
+                                </Form.Input>
+                                <Form.Input
+                                    label='Building Name'
+                                    inputName='building'
+                                    inputValue={form.location.building ?? ''}
+                                    onChange={e => updateLocation('building', e.target.value)}
+                                    inputInvalid = {!!errors.building}
+                                    placeholder='Plant Hall'
+                                    required={false}
+                                >
+                                    
+                                    {errors.building && (
+                                        <Form.Error>{errors.building}</Form.Error>
+                                    )}
+                                </Form.Input>
+                                <Form.Input
+                                    label='Address'
+                                    inputName='address'
+                                    inputValue={form.location.address ?? ''}
+                                    onChange={e => updateLocation('address', e.target.value)}
+                                    inputInvalid = {!!errors.address}
+                                    placeholder='401 W Kennedy Blvd, Tampa, FL 33606'
+                                >
+                                    {errors.address && (
+                                        <Form.Error>{errors.address}</Form.Error>
+                                    )}
+                                </Form.Input>
+                                <Form.Input
+                                    label='Map URL'
+                                    inputName='map_url'
+                                    inputValue={form.location.map_url ?? ''}
+                                    onChange={e => updateLocation('map_url', e.target.value)}
+                                    inputInvalid = {!!errors.map_url}
+                                    placeholder='https://maps.app.goo.gl/z3b2qd8YsfeBwbAq7'
+                                >
+                                    {errors.map_url && (
+                                        <Form.Error>{errors.map_url}</Form.Error>
+                                    )}
+                                </Form.Input>
+                            </>
+                        )}
 
                     {/* Description */}
                     <div className="edit-form-field">
