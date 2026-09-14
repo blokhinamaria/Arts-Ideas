@@ -88,30 +88,12 @@ export async function submitNewEvent(
 
         await pool.query('BEGIN');
 
-        let location = null
-
-        if (location_key === 'other') {
-            const venue = (custom_location_venue?.trim() || custom_location_building?.trim()) as string
-            const building = custom_location_venue?.trim() && custom_location_building?.trim()
-                ? custom_location_building.trim()
-                : null
-            const newLocation = await pool.query(`
-                    INSERT INTO locations (
-                        key,
-                        venue,
-                        building,
-                        address
-                    ) VALUES ($1, $2, $3, $4)
-                    RETURNING *
-                `, ['other', venue, building, custom_location_address])
-            location = newLocation.rows[0]
-        } else {
-            const locationResult = await pool.query(`
+        const locationResult = await pool.query(`
                     SELECT * FROM locations
                         WHERE key = $1
                 `, [location_key])
-            location = locationResult.rows[0]
-        }
+        
+        const location = locationResult.rows[0]
 
         const eventResult = await pool.query(
             `INSERT INTO new_events (
@@ -135,7 +117,7 @@ export async function submitNewEvent(
                 submitter_email,
                 title,
                 description,
-                location_key,
+                location.key,
                 location.id,
                 category,
                 custom_category ?? null,
@@ -146,6 +128,21 @@ export async function submitNewEvent(
         )
 
         const eventId = eventResult.rows[0].id;
+
+        if (location_key === 'other') {
+            const venue = (custom_location_venue?.trim() || custom_location_building?.trim()) as string
+            const building = custom_location_venue?.trim() && custom_location_building?.trim()
+                ? custom_location_building.trim()
+                : null
+            await pool.query(`
+                    INSERT INTO new_custom_locations (
+                        event_id,
+                        venue,
+                        building,
+                        address
+                    ) VALUES ($1, $2, $3, $4)
+                `, [eventId, venue, building, custom_location_address])
+        }
 
         for (const date of dates) {
             await pool.query(
