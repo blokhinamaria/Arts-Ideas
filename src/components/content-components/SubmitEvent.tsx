@@ -58,6 +58,12 @@ type FormErrors = {
     contact_email?: string;
 };
 
+export type LocationOption = {
+    id: number,
+    value: string,
+    label: string,
+}
+
 const today = new Date();
 
 function newDateEntry(): DateEntry {
@@ -65,13 +71,6 @@ function newDateEntry(): DateEntry {
 }
 
 const API_BASE = import.meta.env.DEV ? 'http://localhost:3000' : '';
-
-export type LocationOption = {
-    id: number,
-    value: string,
-    label: string,
-    key: string
-}
 
 export default function SubmitEvent() {
     const successRef = useRef<HTMLDivElement>(null);
@@ -99,12 +98,6 @@ export default function SubmitEvent() {
     }, [])
 
     async function getLocations() {
-        const other = {
-            id: 0,
-            key: 'other',
-            value: 'other',
-            label: 'Other',
-        }
         try {
             const response = await fetch(`${API_BASE}/api/locations`)
             if (!response.ok) {
@@ -114,11 +107,9 @@ export default function SubmitEvent() {
             const locations = data.map(location => ({
                     id: location.id,
                     value: location.key,
-                    key: location.key,
                     label: location.building !== null ? `${location.venue}, ${location.building}` : `${location.venue}`
                 }
             ))
-            locations.push(other)
             setLocationOptions(locations)
         } catch (err) {
             console.log(err)
