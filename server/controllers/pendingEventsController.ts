@@ -22,30 +22,42 @@ export async function getPendingEvents(req: Request, res: Response) {
 
         const dataQuery = `
             SELECT ne.*, 
-                json_agg(
-                    json_build_object(
-                        'start_date', ned.start_date,
-                        'end_date', ned.end_date
-                        ) ORDER BY ned.start_date
-                    ) AS dates,
-                (
-                    SELECT json_build_object(
-                        'location_key', l.key,
-                        'venue', l.venue,
-                        'building', l.building,
-                        'address', l.address,
-                        'map_url', l.map_url
+              json_agg(
+                  json_build_object(
+                      'start_date', ned.start_date,
+                      'end_date', ned.end_date
+                      ) ORDER BY ned.start_date
+                  ) AS dates,
+                CASE
+                    WHEN ne.location_id=0 THEN (
+                        SELECT json_build_object(
+                            'location_key', 'other',
+                            'venue', l.venue,
+                            'building', l.building,
+                            'address', l.address,
+                            'map_url', l.map_url
+                            )
+                            FROM new_custom_locations l
+                                WHERE l.event_id = ne.id
                         )
-                        FROM locations l
-                        WHERE l.key = ne.location_key
-                ) AS location
-                FROM new_events ne
-                JOIN new_event_dates ned ON ne.id = ned.event_id
-                JOIN locations l ON ne.location_key = l.key
-                WHERE status = 'pending'
-                GROUP BY ne.id
-                ORDER BY MIN(ned.start_date)
-                LIMIT $1 OFFSET $2
+                    ELSE (
+                        SELECT json_build_object(
+                            'location_key', l.key,
+                            'venue', l.venue,
+                            'building', l.building,
+                            'address', l.address,
+                            'map_url', l.map_url
+                            )
+                            FROM locations l
+                                WHERE l.id = ne.location_id
+                        )
+                    END AS location
+              FROM new_events ne
+              JOIN new_event_dates ned ON ne.id = ned.event_id
+              WHERE status = 'pending'
+              GROUP BY ne.id
+              ORDER BY MIN(ned.start_date);
+            LIMIT $1 OFFSET $2
         `
 
         const [countResult, dataResult] = await Promise.all([
