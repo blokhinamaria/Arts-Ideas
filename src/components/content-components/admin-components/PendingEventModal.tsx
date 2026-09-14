@@ -183,7 +183,7 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
                 setForm((prev) => ({ 
                     ...prev,
                     location_id: location.id,
-                    location_key: location.key
+                    location_key: location.value
                 }));
             }
             setErrors((prev) => ({ ...prev, [field]: undefined }));
