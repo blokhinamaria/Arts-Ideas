@@ -19,7 +19,6 @@ export async function getLocations(req: Request, res: Response<Location[] | { me
                 building,
                 address
                 FROM locations 
-                    WHERE key != 'other'
                 ORDER BY venue`
         )
         res.json(result.rows)
