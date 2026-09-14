@@ -28,32 +28,32 @@ export async function getPendingEvents(req: Request, res: Response) {
                       'end_date', ned.end_date
                       ) ORDER BY ned.start_date
                   ) AS dates,
-                CASE
-                    WHEN ne.location_id=0 THEN (
-                        SELECT json_build_object(
-                            'location_key', 'other',
-                            'venue', l.venue,
-                            'building', l.building,
-                            'address', l.address,
-                            'map_url', l.map_url
-                            )
-                            FROM new_custom_locations l
-                                WHERE l.event_id = ne.id
+                (
+                    SELECT json_build_object(
+                        'location_key', 'other',
+                        'venue', l.venue,
+                        'building', l.building,
+                        'address', l.address,
+                        'map_url', l.map_url
                         )
-                    ELSE (
-                        SELECT json_build_object(
-                            'location_key', l.key,
-                            'venue', l.venue,
-                            'building', l.building,
-                            'address', l.address,
-                            'map_url', l.map_url
-                            )
-                            FROM locations l
-                                WHERE l.id = ne.location_id
+                        FROM new_custom_locations l
+                            WHERE l.event_id = ne.id
+                    ) as custom_location,
+                (
+                    SELECT json_build_object(
+                        'location_key', l.key,
+                        'venue', l.venue,
+                        'building', l.building,
+                        'address', l.address,
+                        'map_url', l.map_url
                         )
-                    END AS location
+                        FROM locations l
+                            WHERE l.id = ne.location_id
+                    ) AS location
               FROM new_events ne
               JOIN new_event_dates ned ON ne.id = ned.event_id
+              JOIN locations l ON ne.location_id = l.id
+              LEFT JOIN new_custom_locations ncl ON ne.id = ncl.event_id
               WHERE status = 'pending'
               GROUP BY ne.id
               ORDER BY MIN(ned.start_date)
