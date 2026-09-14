@@ -148,12 +148,6 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
 
     useEffect(() => {
         async function getLocations() {
-            const other = {
-                id: isCustomLocation ? event.location_id : 0,
-                key: 'other',
-                value: 'other',
-                label: 'Other'
-            }
             try {
                 const response = await fetch(`${API_BASE}/api/locations`)
                 if (!response.ok) {
@@ -163,11 +157,9 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
                 const locations = data.map(location => ({
                         id: location.id,
                         value: location.key,
-                        key: location.key,
                         label: location.building !== null ? `${location.venue}, ${location.building}` : `${location.venue}`
                     }
                 ))
-                locations.push(other)
                 setLocationOptions(locations)
             } catch (err) {
                 setLocationOptions([other])
