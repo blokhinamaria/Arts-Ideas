@@ -56,8 +56,8 @@ export async function getPendingEvents(req: Request, res: Response) {
               JOIN new_event_dates ned ON ne.id = ned.event_id
               WHERE status = 'pending'
               GROUP BY ne.id
-              ORDER BY MIN(ned.start_date);
-            LIMIT $1 OFFSET $2
+              ORDER BY MIN(ned.start_date)
+            LIMIT $1 OFFSET $2;
         `
 
         const [countResult, dataResult] = await Promise.all([
@@ -144,38 +144,31 @@ async function savePendingEventData(
             ? location.building.trim()
             : null
 
-        if (location_id === 0) {
-            await client.query(`
-                INSERT INTO locations (
-                        key, 
-                        venue,
-                        building,
-                        address,
-                        map_url
-                    )
-                    VALUES ('other', $1, $2, $3, $4)
-                `, [
-                    venue,
-                    building,
-                    location.address,
-                    location.map_url ?? null
-                ])
-        } else {
-            await client.query(`
-            UPDATE locations
-                SET venue=$1,
-                    building=$2,
-                    address=$3,
-                    map_url=$4
-                WHERE id = $5 AND key = 'other'
+        
+        await client.query(`
+            INSERT INTO new_custom_locations (
+              event_id,
+              venue,
+              building,
+              address,
+              map_url
+            )
+            VALUES ($1, $2, $3, $4, $5)
+            ON CONFLICT (event_id)
+            DO UPDATE SET
+                venue = $2,
+                building = $3,
+                address = $4,
+                map_url = $5
+                WHERE new_custom_locations.event_id = $1;
+                ;
             `, [
+                id,
                 venue,
                 building,
                 location.address,
-                location.map_url ?? null,
-                location_id
+                location.map_url ?? null
             ])
-        }
     }
 
     await client.query(
