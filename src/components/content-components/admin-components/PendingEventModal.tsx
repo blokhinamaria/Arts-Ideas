@@ -13,7 +13,7 @@ const CATEGORY_OPTIONS = [
 const API_BASE = import.meta.env.DEV ? 'http://localhost:3000' : '';
 
 type Location = { 
-    key: string;
+    location_key: string;
     venue: string;
     building: string | null;
     address: string;
@@ -29,6 +29,7 @@ export type PendingEvent = {
     location_key: string;
     location_id: number;
     location: Location;
+    custom_location: Location | null;
     category: string;
     custom_category: string | null;
     tags: string[] | null;
@@ -89,14 +90,14 @@ function newDateEntry(): DateEntry {
 }
 
 const newLocation = {
-    key: 'other',
+    location_key: 'other',
     venue: '',
     building: '',
     address: '',
     map_url: ''
 }
 
-function initForm(event: PendingEvent, isCustomLocation: boolean): EditForm {
+function initForm(event: PendingEvent): EditForm {
     const isCustomCategory = event.category && !CATEGORY_OPTIONS.slice(0, -1).includes(event.category);
     return {
         title: event.title,
@@ -108,12 +109,12 @@ function initForm(event: PendingEvent, isCustomLocation: boolean): EditForm {
         })),
         location_key: event.location_key ?? '',
         location_id: event.location_id,
-        location: isCustomLocation ? {
-            key: event.location_key,
-            venue: event.location.venue,
-            building: event.location.building,
-            address: event.location.address,
-            map_url: event.location.map_url
+        location: event.custom_location ? {
+            location_key: event.custom_location.location_key,
+            venue: event.custom_location.venue,
+            building: event.custom_location.building,
+            address:event.custom_location.address,
+            map_url:event.custom_location.map_url
         } : {...newLocation},
         description: event.description,
         category: isCustomCategory ? 'Other' : event.category,
@@ -136,8 +137,7 @@ type Props = {
 };
 
 export default function PendingEventModal({ event, onClose, onSaved, onDeleted, onPublished }: Props) {
-    const isCustomLocation = event.location_key === 'other'
-    const [form, setForm] = useState<EditForm>(() => initForm(event, isCustomLocation));
+    const [form, setForm] = useState<EditForm>(() => initForm(event));
     const [locationOptions, setLocationOptions] = useState<LocationOption[]>([])
     const [tagInput, setTagInput] = useState('');
     const [errors, setErrors] = useState<FormErrors>({});
@@ -162,7 +162,7 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
                 ))
                 setLocationOptions(locations)
             } catch (err) {
-                setLocationOptions([other])
+                setLocationOptions([])
             }
         }   
         getLocations()

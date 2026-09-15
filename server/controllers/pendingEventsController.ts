@@ -22,41 +22,54 @@ export async function getPendingEvents(req: Request, res: Response) {
 
         const dataQuery = `
             SELECT ne.*, 
-              json_agg(
-                  json_build_object(
-                      'start_date', ned.start_date,
-                      'end_date', ned.end_date
-                      ) ORDER BY ned.start_date
-                  ) AS dates,
-                (
-                    SELECT json_build_object(
-                        'location_key', 'other',
-                        'venue', l.venue,
-                        'building', l.building,
-                        'address', l.address,
-                        'map_url', l.map_url
-                        )
-                        FROM new_custom_locations l
-                            WHERE l.event_id = ne.id
-                    ) as custom_location,
-                (
-                    SELECT json_build_object(
-                        'location_key', l.key,
-                        'venue', l.venue,
-                        'building', l.building,
-                        'address', l.address,
-                        'map_url', l.map_url
-                        )
-                        FROM locations l
-                            WHERE l.id = ne.location_id
-                    ) AS location
-              FROM new_events ne
-              JOIN new_event_dates ned ON ne.id = ned.event_id
-              JOIN locations l ON ne.location_id = l.id
-              LEFT JOIN new_custom_locations ncl ON ne.id = ncl.event_id
-              WHERE status = 'pending'
-              GROUP BY ne.id
-              ORDER BY MIN(ned.start_date)
+                json_agg(
+                    json_build_object(
+                        'start_date', ned.start_date,
+                        'end_date', ned.end_date
+                        ) ORDER BY ned.start_date
+                    ) AS dates,
+                    (
+                        SELECT json_build_object(
+                            'location_key', 'other',
+                            'venue', l.venue,
+                            'building', l.building,
+                            'address', l.address,
+                            'map_url', l.map_url
+                            )
+                            FROM new_custom_locations l
+                                WHERE l.event_id = ne.id
+                        ) as custom_location,
+                    CASE
+                        WHEN ne.location_id=0 THEN (
+                            SELECT json_build_object(
+                                'location_key', 'other',
+                                'venue', l.venue,
+                                'building', l.building,
+                                'address', l.address,
+                                'map_url', l.map_url
+                                )
+                                FROM new_custom_locations l
+                                    WHERE l.event_id = ne.id
+                            )
+                        ELSE (
+                            SELECT json_build_object(
+                                'location_key', l.key,
+                                'venue', l.venue,
+                                'building', l.building,
+                                'address', l.address,
+                                'map_url', l.map_url
+                                )
+                                FROM locations l
+                                    WHERE l.id = ne.location_id
+                            )
+                        END AS location
+                FROM new_events ne
+                JOIN new_event_dates ned ON ne.id = ned.event_id
+                JOIN locations l ON ne.location_id = l.id
+                LEFT JOIN new_custom_locations ncl ON ne.id = ncl.event_id
+                WHERE status = 'pending'
+                GROUP BY ne.id
+                ORDER BY MIN(ned.start_date)
             LIMIT $1 OFFSET $2;
         `
 
@@ -147,11 +160,11 @@ async function savePendingEventData(
         
         await client.query(`
             INSERT INTO new_custom_locations (
-              event_id,
-              venue,
-              building,
-              address,
-              map_url
+                event_id,
+                venue,
+                building,
+                address,
+                map_url
             )
             VALUES ($1, $2, $3, $4, $5)
             ON CONFLICT (event_id)
