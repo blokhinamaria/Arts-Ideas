@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, KeyboardEvent } from 'react';
 import './EditEventModal.css';
 import './PendingEventModal.css';
-import { LocationOption } from '../SubmitEvent';
-import Form from '../../elements/Form/Form';
+import LocationFields from '../event-form-components/LocationsFields';
+import { type Location } from '../event-form-components/LocationsFields';
 
 const CATEGORY_OPTIONS = [
     'Music Performance', 'Theatre / Drama', 'Dance', 'Visual Arts',
@@ -11,14 +11,6 @@ const CATEGORY_OPTIONS = [
 ];
 
 const API_BASE = import.meta.env.DEV ? 'http://localhost:3000' : '';
-
-type Location = { 
-    location_key: string;
-    venue: string;
-    building: string | null;
-    address: string;
-    map_url: string;
-};
 
 type DateEntry = { id: string; start_date: string; has_end_date: boolean; end_date: string };
 
@@ -47,7 +39,7 @@ export type PendingEvent = {
     building: string | null;
 };
 
-type EditForm = {
+export type EditForm = {
     title: string;
     dates: DateEntry[];
     location_key: string;
@@ -64,7 +56,7 @@ type EditForm = {
     img_id: string
 };
 
-type FormErrors = {
+export type FormErrors = {
     title?: string;
     dates?: string;
     date_start?: Record<string, string | undefined>;
@@ -138,35 +130,12 @@ type Props = {
 
 export default function PendingEventModal({ event, onClose, onSaved, onDeleted, onPublished }: Props) {
     const [form, setForm] = useState<EditForm>(() => initForm(event));
-    const [locationOptions, setLocationOptions] = useState<LocationOption[]>([])
     const [tagInput, setTagInput] = useState('');
     const [errors, setErrors] = useState<FormErrors>({});
     const [saveStatus, setSaveStatus] = useState<'idle' | 'loading' | 'error'>('idle');
     const [confirmState, setConfirmState] = useState<'delete' | 'publish' | null>(null);
     const [actionStatus, setActionStatus] = useState<'idle' | 'loading' | 'error'>('idle');
     const backdropRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        async function getLocations() {
-            try {
-                const response = await fetch(`${API_BASE}/api/locations`)
-                if (!response.ok) {
-                    throw Error
-                }
-                const data: { id: number, key:string, venue: string, building: string, address:string }[] = await response.json()
-                const locations = data.map(location => ({
-                        id: location.id,
-                        value: location.key,
-                        label: location.building !== null ? `${location.venue}, ${location.building}` : `${location.venue}`
-                    }
-                ))
-                setLocationOptions(locations)
-            } catch (err) {
-                setLocationOptions([])
-            }
-        }   
-        getLocations()
-    }, []);
 
     useEffect(() => {
         function onKey(e: globalThis.KeyboardEvent) {
@@ -177,31 +146,8 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
     }, [onClose, confirmState]);
 
     function updateField<K extends keyof EditForm>(field: K, value: EditForm[K]) {
-        if (field === 'location_id') {
-            const location = locationOptions.find(loc => loc.id === Number(value))
-            if (location) {
-                setForm((prev) => ({ 
-                    ...prev,
-                    location_id: location.id,
-                    location_key: location.value
-                }));
-            }
-            setErrors((prev) => ({ ...prev, [field]: undefined }));
-            return
-        }
         setForm((prev) => ({ ...prev, [field]: value }));
         setErrors((prev) => ({ ...prev, [field]: undefined }));
-    }
-
-    function updateLocation<K extends keyof Location>(locationField: K, value: Location[K]) {
-        const newLocation = form.location ? {...form.location, [locationField]: value} : null
-        if (newLocation) {
-            setForm((prev) => ({ ...prev, location: {...newLocation} }));
-            if (locationField === 'venue' || locationField === 'building') {
-                setErrors((prev) => ({ ...prev, venue: undefined, building: undefined }));
-            }
-            setErrors((prev) => ({ ...prev, [locationField]: undefined }));
-        }
     }
 
     function updateDate(id: string, changes: Partial<DateEntry>) {
@@ -421,70 +367,12 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
                     </fieldset>
 
                     {/* Location */}
-                    <div className="edit-form-field">
-                        <label className="edit-label" htmlFor="pe-location">Location</label>
-                        <select id="pe-location" value={form.location_id}
-                            onChange={(e) => updateField('location_id', e.target.value)} aria-invalid={!!errors.location_id}>
-                            <option value="" disabled>Select a location</option>
-                            {locationOptions.map((loc) => <option key={loc.id} value={loc.id}>{loc.label}</option>)}
-                        </select>
-                        {errors.location_id && <span className="edit-error" role="alert">{errors.location_id}</span>}
-                    </div>
-                    {form.location_key === 'other' && (
-                            <>
-                                <Form.Input
-                                    label='Venue Name'
-                                    inputName='venue'
-                                    inputValue={form.location.venue ?? ''}
-                                    onChange={e => updateLocation('venue', e.target.value)}
-                                    inputInvalid = {!!errors.venue}
-                                    placeholder='Grand Salon'
-                                >
-                                    <Form.Hint>If the venue is not named after the building it's in, please specify the building name below</Form.Hint>
-                                    {errors.venue && (
-                                        <Form.Error>{errors.venue}</Form.Error>
-                                    )}
-                                </Form.Input>
-                                <Form.Input
-                                    label='Building Name'
-                                    inputName='building'
-                                    inputValue={form.location.building ?? ''}
-                                    onChange={e => updateLocation('building', e.target.value)}
-                                    inputInvalid = {!!errors.building}
-                                    placeholder='Plant Hall'
-                                    required={false}
-                                >
-                                    
-                                    {errors.building && (
-                                        <Form.Error>{errors.building}</Form.Error>
-                                    )}
-                                </Form.Input>
-                                <Form.Input
-                                    label='Address'
-                                    inputName='address'
-                                    inputValue={form.location.address ?? ''}
-                                    onChange={e => updateLocation('address', e.target.value)}
-                                    inputInvalid = {!!errors.address}
-                                    placeholder='401 W Kennedy Blvd, Tampa, FL 33606'
-                                >
-                                    {errors.address && (
-                                        <Form.Error>{errors.address}</Form.Error>
-                                    )}
-                                </Form.Input>
-                                <Form.Input
-                                    label='Map URL'
-                                    inputName='map_url'
-                                    inputValue={form.location.map_url ?? ''}
-                                    onChange={e => updateLocation('map_url', e.target.value)}
-                                    inputInvalid = {!!errors.map_url}
-                                    placeholder='https://maps.app.goo.gl/z3b2qd8YsfeBwbAq7'
-                                >
-                                    {errors.map_url && (
-                                        <Form.Error>{errors.map_url}</Form.Error>
-                                    )}
-                                </Form.Input>
-                            </>
-                        )}
+                    <LocationFields
+                        form={form}
+                        setForm={setForm}
+                        errors={errors}
+                        setErrors={setErrors}
+                    />
 
                     {/* Description */}
                     <div className="edit-form-field">

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, KeyboardEvent } from 'react';
+import LocationFields, { type Location } from '../event-form-components/LocationsFields';
 import './EditEventModal.css';
 
 const CATEGORY_OPTIONS = [
@@ -14,13 +15,6 @@ const CATEGORY_OPTIONS = [
     'Interdisciplinary',
     'Other',
 ];
-
-type Location = {
-    key: string;
-    venue: string;
-    building: string | null;
-    address: string;
-};
 
 type AdminEventDate = {
     start_date: string;
@@ -41,7 +35,13 @@ export type AdminEvent = {
     dates: AdminEventDate[];
     venue: string;
     building: string | null;
-    location_key?: string;
+    location_key: string;
+    location_id: number;
+    location: Location;
+    custom_location: Location | null;
+    contact_email: string | null;
+    contact_phone: string | null;
+    contact_name: string | null;
 };
 
 type DateEntry = {
@@ -55,12 +55,15 @@ type EditForm = {
     title: string;
     dates: DateEntry[];
     location_key: string;
+    location_id: number | string;
+    location: Location;
     description: string;
     category: string;
     custom_category: string;
     tags: string[];
-    contactName: string;
-    contactEmail: string;
+    contact_name: string;
+    contact_email: string;
+    contact_phone: string;
     status: string;
     img_id: string;
 };
@@ -70,7 +73,11 @@ type FormErrors = {
     dates?: string;
     date_start?: Record<string, string | undefined>;
     date_end?: Record<string, string | undefined>;
-    location_key?: string;
+    location_id?: string;
+    venue?: string;
+    building?: string;
+    address?: string;
+    map_url?: string;
     description?: string;
     category?: string;
     custom_category?: string;
@@ -90,6 +97,14 @@ function newDateEntry(): DateEntry {
     return { id: crypto.randomUUID(), start_date: '', has_end_date: false, end_date: '' };
 }
 
+const newLocation = {
+    location_key: 'other',
+    venue: '',
+    building: '',
+    address: '',
+    map_url: ''
+}
+
 function initForm(event: AdminEvent): EditForm {
     const isCustomCategory = event.category && !CATEGORY_OPTIONS.slice(0, -1).includes(event.category);
 
@@ -102,12 +117,21 @@ function initForm(event: AdminEvent): EditForm {
             end_date: d.end_date ? toDatetimeLocal(d.end_date) : '',
         })),
         location_key: event.location_key ?? '',
+        location_id: event.location_id,
+        location: event.custom_location ? {
+            location_key: event.custom_location.location_key,
+            venue: event.custom_location.venue,
+            building: event.custom_location.building,
+            address:event.custom_location.address,
+            map_url:event.custom_location.map_url
+        } : {...newLocation},
         description: event.description,
         category: isCustomCategory ? 'Other' : event.category,
         custom_category: isCustomCategory ? event.category : '',
         tags: event.tags ?? [],
-        contactName: event.contact?.contactName ?? '',
-        contactEmail: event.contact?.contactEmail ?? '',
+        contact_name: event.contact?.contactName ?? '',
+        contact_email: event.contact?.contactEmail ?? '',
+        contact_phone: event.contact_phone ?? '',
         status: event.status ?? 'published',
         img_id: event.img_id ?? 'default_fzyquk'
     };
@@ -122,19 +146,10 @@ type Props = {
 
 export default function EditEventModal({ event, locationKey, onClose, onSaved }: Props) {
     const [form, setForm] = useState<EditForm>(() => initForm({ ...event, location_key: locationKey }));
-    const [locations, setLocations] = useState<Location[]>([]);
     const [tagInput, setTagInput] = useState('');
     const [errors, setErrors] = useState<FormErrors>({});
     const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
     const backdropRef = useRef<HTMLDivElement>(null);
-
-    // Fetch locations
-    useEffect(() => {
-        fetch(`${API_BASE}/api/locations`, { credentials: 'include' })
-            .then((r) => r.json())
-            .then(setLocations)
-            .catch(() => {});
-    }, []);
 
     // Close on Escape
     useEffect(() => {
@@ -219,7 +234,10 @@ export default function EditEventModal({ event, locationKey, onClose, onSaved }:
             if (Object.keys(endErrors).length) errs.date_end = endErrors;
         }
 
-        if (!form.location_key) { errs.location_key = 'Location is required'; valid = false; }
+        if (!form.location_id && form.location_id !== 0) { errs.location_id = 'Location is required'; valid = false; }
+        if (form.location_key === 'other' && !form.location?.venue) { errs.venue = 'Venue is required'; valid = false; }
+        if (form.location_key === 'other' && !form.location?.venue && !form.location?.building) { errs.building = 'Building or venue is required'; valid = false; }
+        if (form.location_key === 'other' && !form.location?.address) { errs.address = 'Address is required'; valid = false; }
         if (!form.img_id.trim()) { errs.img_id = 'Img Id is required'; valid = true; }
         if (!form.description.trim()) { errs.description = 'Description is required'; valid = false; }
         if (!form.category) { errs.category = 'Category is required'; valid = false; }
@@ -240,10 +258,12 @@ export default function EditEventModal({ event, locationKey, onClose, onSaved }:
         const payload = {
             title: form.title,
             location_key: form.location_key,
+            location_id: Number(form.location_id),
+            location: form.location ?? event.location,
             description: form.description,
             category: form.category === 'Other' ? form.custom_category : form.category,
             tags: form.tags,
-            contact: { contactName: form.contactName, contactEmail: form.contactEmail },
+            contact: { contactName: form.contact_name, contactEmail: form.contact_email },
             status: form.status,
             dates: form.dates.map((d) => ({
                 start_date: d.start_date,
@@ -397,21 +417,12 @@ export default function EditEventModal({ event, locationKey, onClose, onSaved }:
                     </fieldset>
 
                     {/* Location */}
-                    <div className="edit-form-field">
-                        <label className="edit-label" htmlFor="edit-location">Location</label>
-                        <select
-                            id="edit-location"
-                            value={form.location_key}
-                            onChange={(e) => updateField('location_key', e.target.value)}
-                            aria-invalid={!!errors.location_key}
-                        >
-                            <option value="" disabled>Select a location</option>
-                            {locations.map((loc) => (
-                                <option key={loc.key} value={loc.key}>{locationLabel(loc)}</option>
-                            ))}
-                        </select>
-                        {errors.location_key && <span className="edit-error" role="alert">{errors.location_key}</span>}
-                    </div>
+                    <LocationFields
+                        form={form}
+                        setForm={setForm}
+                        errors={errors}
+                        setErrors={setErrors}
+                    />
 
                     {/* Description */}
                     <div className="edit-form-field">
@@ -493,8 +504,8 @@ export default function EditEventModal({ event, locationKey, onClose, onSaved }:
                         <input
                             id="edit-contact-name"
                             type="text"
-                            value={form.contactName}
-                            onChange={(e) => updateField('contactName', e.target.value)}
+                            value={form.contact_name}
+                            onChange={(e) => updateField('contact_name', e.target.value)}
                         />
                     </div>
 
@@ -503,8 +514,8 @@ export default function EditEventModal({ event, locationKey, onClose, onSaved }:
                         <input
                             id="edit-contact-email"
                             type="email"
-                            value={form.contactEmail}
-                            onChange={(e) => updateField('contactEmail', e.target.value)}
+                            value={form.contact_email}
+                            onChange={(e) => updateField('contact_email', e.target.value)}
                         />
                     </div>
 

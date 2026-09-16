@@ -2,6 +2,7 @@ import { getPool } from "../config/database.js"
 import cloudinary from "../config/cloudinary.js";
 
 import type { Request, Response } from "express"
+import { getEventsDataQuery } from "../utils/getEventsDataQuery.js";
 
 type Event = { //seems outdated
     id: number;
@@ -40,18 +41,30 @@ function buildEventsQuery(whereClause: string = ''):string {
                 'end_date', ed.end_date
                 ) ORDER BY ed.start_date
             ) AS dates,
-        (
-            SELECT json_build_object(
-                'location_id', l.id,
-                'location_key', l.key,
-                'venue', l.venue,
-                'building', l.building,
-                'address', l.address,
-                'map_url', l.map_url
+        CASE
+            WHEN e.location_id=0 THEN (
+                SELECT json_build_object(
+                    'location_key', 'other',
+                    'venue', l.venue,
+                    'building', l.building,
+                    'address', l.address,
+                    'map_url', l.map_url
+                    )
+                    FROM custom_locations l
+                        WHERE l.event_id = e.id
                 )
-                FROM locations l
-                WHERE l.id = e.location_id
-        ) AS location
+            ELSE (
+                SELECT json_build_object(
+                    'location_key', l.key,
+                    'venue', l.venue,
+                    'building', l.building,
+                    'address', l.address,
+                    'map_url', l.map_url
+                    )
+                    FROM locations l
+                        WHERE l.id = e.location_id
+                )
+            END AS location
         FROM events e
         JOIN event_dates ed ON e.id = ed.event_id
         JOIN locations l ON e.location_key = l.key
@@ -175,26 +188,12 @@ export async function getAllEvents(req: Request, res: Response) {
             )
         `;
 
-        const dataQuery = `
-            SELECT e.id, e.title, e.description, e.category, e.tags,
-                   e.contact, e.status, e.img_id, e.created_at, e.updated_at,
-                   e.location_key,
-                   json_agg(
-                       json_build_object('start_date', ed.start_date, 'end_date', ed.end_date)
-                       ORDER BY ed.start_date
-                   ) AS dates,
-                   l.venue, l.building
-            FROM events e
-            JOIN event_dates ed ON e.id = ed.event_id
-            JOIN locations l ON e.location_key = l.key
-            WHERE e.id IN (
+        const whereClause = `WHERE e.id IN (
                 SELECT event_id FROM event_dates
                 WHERE start_date >= $1 AND start_date < $2
-            )
-            GROUP BY e.id, l.venue, l.building
-            ORDER BY MIN(ed.start_date)
-            LIMIT $3 OFFSET $4
-        `;
+            )`
+        
+        const dataQuery = getEventsDataQuery('published', true, whereClause, 'LIMIT $3 OFFSET $4')
 
         const [countResult, dataResult] = await Promise.all([
             pool.query(countQuery, [rangeStart, rangeEnd]),
@@ -223,7 +222,7 @@ export async function updateAdminEvent(req: Request, res: Response) {
             return;
         }
 
-        const { title, location_key, description, category, tags, contact, status, dates, img_id } = req.body;
+        const { title, location_key, location_id, location, description, category, tags, contact, status, dates, img_id } = req.body;
 
         if (!title || !location_key || !description || !category || !status || !Array.isArray(dates) || dates.length === 0) {
             res.status(400).json({ message: 'Missing required fields' });
@@ -236,12 +235,50 @@ export async function updateAdminEvent(req: Request, res: Response) {
         try {
             await client.query('BEGIN');
 
+            if (location_key === 'other') {
+                if (!location ||
+                    ((!location.venue?.trim() && !location.building?.trim()) || !location.address?.trim())) {
+                    throw new Error('Event Location is missing required information')
+                }
+
+                const venue = (location.venue?.trim() || location.building?.trim()) as string
+                const building = location.venue?.trim() && location.building?.trim()
+                    ? location.building.trim()
+                    : null
+
+                
+                await client.query(`
+                    INSERT INTO custom_locations (
+                        event_id,
+                        venue,
+                        building,
+                        address,
+                        map_url
+                    )
+                    VALUES ($1, $2, $3, $4, $5)
+                    ON CONFLICT (event_id)
+                    DO UPDATE SET
+                        venue = $2,
+                        building = $3,
+                        address = $4,
+                        map_url = $5
+                        WHERE custom_locations.event_id = $1;
+                        ;
+                    `, [
+                        id,
+                        venue,
+                        building,
+                        location.address,
+                        location.map_url ?? null
+                    ])
+            }
+
             await client.query(
                 `UPDATE events
-                 SET title=$1, location_key=$2, description=$3, category=$4,
-                     tags=$5, contact=$6, status=$7, updated_at=NOW(), img_id=$8
-                 WHERE id=$9`,
-                [title, location_key, description, category, tags ?? [], contact, status, img_id, id]
+                    SET title=$1, location_key=$2, description=$3, category=$4,
+                        tags=$5, contact=$6, status=$7, updated_at=NOW(), img_id=$8, location_id=$9
+                    WHERE id=$10`,
+                [title, location_key, description, category, tags ?? [], contact, status, img_id, location_id ?? null, id]
             );
 
             await client.query('DELETE FROM event_dates WHERE event_id=$1', [id]);
@@ -284,32 +321,17 @@ export async function getAdminEvents(req: Request, res: Response) {
             WHERE e.id IN (
                 SELECT event_id FROM event_dates
                 WHERE start_date >= NOW()
-                   OR (end_date IS NOT NULL AND end_date >= NOW())
+                    OR (end_date IS NOT NULL AND end_date >= NOW())
             )
         `;
 
-        const dataQuery = `
-            SELECT e.id, e.title, e.description, e.category, e.tags,
-                   e.contact, e.status, e.img_id, e.created_at, e.updated_at,
-                   e.location_key,
-                   json_agg(
-                       json_build_object('start_date', ed.start_date, 'end_date', ed.end_date)
-                       ORDER BY ed.start_date
-                   ) AS dates,
-                   l.venue,
-                   l.building
-            FROM events e
-            JOIN event_dates ed ON e.id = ed.event_id
-            JOIN locations l ON e.location_key = l.key
-            WHERE e.id IN (
+        const whereClause = `WHERE e.id IN (
                 SELECT event_id FROM event_dates
-                WHERE start_date >= NOW()
-                   OR (end_date IS NOT NULL AND end_date >= NOW())
-            )
-            GROUP BY e.id, l.venue, l.building
-            ORDER BY MIN(ed.start_date)
-            LIMIT $1 OFFSET $2
-        `;
+                    WHERE start_date >= NOW()
+                        OR (end_date IS NOT NULL AND end_date >= NOW())
+            )`
+
+        const dataQuery = getEventsDataQuery('published', true, whereClause)
 
         const [countResult, dataResult] = await Promise.all([
             pool.query(countQuery),
@@ -347,17 +369,30 @@ export async function getUpcomingEvents (req:Request, res:Response<Event[] | {me
                         'end_date', ed.end_date
                         ) ORDER BY ed.start_date
                     ) AS dates,
-                    (
-                    SELECT json_build_object(
-                    'location_key', l.key,
-                    'venue', l.venue,
-                    'building', l.building,
-                    'address', l.address,
-                    'map_url', l.map_url
-                    )
-                    FROM locations l
-                    WHERE l.key = e.location_key
-                ) AS location
+                    CASE
+                        WHEN e.location_id=0 THEN (
+                            SELECT json_build_object(
+                                'location_key', 'other',
+                                'venue', l.venue,
+                                'building', l.building,
+                                'address', l.address,
+                                'map_url', l.map_url
+                                )
+                                FROM custom_locations l
+                                    WHERE l.event_id = e.id
+                            )
+                        ELSE (
+                            SELECT json_build_object(
+                                'location_key', l.key,
+                                'venue', l.venue,
+                                'building', l.building,
+                                'address', l.address,
+                                'map_url', l.map_url
+                                )
+                                FROM locations l
+                                    WHERE l.id = e.location_id
+                            )
+                        END AS location
                     FROM events e
                     JOIN event_dates ed ON e.id = ed.event_id
                     JOIN locations l ON e.location_key = l.key

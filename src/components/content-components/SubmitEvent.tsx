@@ -60,7 +60,8 @@ type FormErrors = {
 
 export type LocationOption = {
     id: number,
-    value: string,
+    key: string,
+    value: string | number,
     label: string,
 }
 
@@ -106,6 +107,7 @@ export default function SubmitEvent() {
             const data: { id: number, key:string, venue: string, building: string, address:string }[] = await response.json()
             const locations = data.map(location => ({
                     id: location.id,
+                    key: location.key,
                     value: location.key,
                     label: location.building !== null ? `${location.venue}, ${location.building}` : `${location.venue}`
                 }
