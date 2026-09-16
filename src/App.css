@@ -86,7 +86,7 @@ Bold = 700 */
   --padding-inline: 40px;
   --large-gap: 40px;
   --small-gap: 20px;
-  --header-height: 110px;
+  --header-height: 80px;
 
   /* Type scale */
   --type-display: clamp(3.5rem, 7vw + 1rem, 8rem);

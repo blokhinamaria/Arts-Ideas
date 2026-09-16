@@ -15,8 +15,9 @@ header {
 }
 
 .logo-header {
+    margin-top: 7px;
     fill: var(--white);
-    height: 50px;
+    height: 40px;
     width: auto;
     object-fit: contain;
 }
@@ -77,12 +78,6 @@ nav li.mobile-only {
     text-transform: uppercase;
 }
 
-@media (max-width: 1200px) {
-    .logo-header {
-        height: 40px;
-    }
-}
-
 @media (max-width: 1024px) {
     .presented-by {
         display: none;
@@ -91,7 +86,7 @@ nav li.mobile-only {
 
 @media (max-width: 768px) {
     .logo-header {
-        height: 30px;
+        height: 25px;
     }
     .hamburger-react  {
         display: flex;
