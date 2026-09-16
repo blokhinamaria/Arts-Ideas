@@ -12,7 +12,14 @@ export async function getLocations(req: Request, res: Response<Location[] | { me
     try {
         const pool = getPool()
         const result = await pool.query(
-            'SELECT key, venue, building, address FROM locations ORDER BY venue'
+            `SELECT
+                id,
+                key,
+                venue,
+                building,
+                address
+                FROM locations 
+                ORDER BY venue`
         )
         res.json(result.rows)
     } catch (err) {

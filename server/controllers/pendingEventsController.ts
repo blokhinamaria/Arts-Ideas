@@ -1,5 +1,6 @@
 import { getPool } from '../config/database.js'
 import type { Request, Response } from 'express'
+import { getEventsDataQuery } from '../utils/getEventsDataQuery.js'
 
 type DatePayload = {
     start_date: string
@@ -20,33 +21,7 @@ export async function getPendingEvents(req: Request, res: Response) {
             SELECT COUNT(*) FROM new_events WHERE status = 'pending'
         `
 
-        const dataQuery = `
-            SELECT ne.*, 
-                json_agg(
-                    json_build_object(
-                        'start_date', ned.start_date,
-                        'end_date', ned.end_date
-                        ) ORDER BY ned.start_date
-                    ) AS dates,
-                (
-                    SELECT json_build_object(
-                        'location_key', l.key,
-                        'venue', l.venue,
-                        'building', l.building,
-                        'address', l.address,
-                        'map_url', l.map_url
-                        )
-                        FROM locations l
-                        WHERE l.key = ne.location_key
-                ) AS location
-                FROM new_events ne
-                JOIN new_event_dates ned ON ne.id = ned.event_id
-                JOIN locations l ON ne.location_key = l.key
-                WHERE status = 'pending'
-                GROUP BY ne.id
-                ORDER BY MIN(ned.start_date)
-                LIMIT $1 OFFSET $2
-        `
+        const dataQuery = getEventsDataQuery('pending', true)
 
         const [countResult, dataResult] = await Promise.all([
             pool.query(countQuery),
@@ -62,6 +37,144 @@ export async function getPendingEvents(req: Request, res: Response) {
     }
 }
 
+function getPendingEventPayload(base: Record<string, any>) {
+    const {
+        title,
+        location_key,
+        location_id,
+        location,
+        description,
+        category,
+        tags,
+        contact_name,
+        contact_email,
+        contact_phone,
+        status,
+        dates,
+        img_id
+    } = base
+
+    return {
+        title,
+        location_key,
+        location_id,
+        location,
+        description,
+        category,
+        tags,
+        contact_name,
+        contact_email,
+        contact_phone,
+        status,
+        dates,
+        img_id
+    }
+}
+
+async function savePendingEventData(
+    client: any,
+    id: number,
+    payload: ReturnType<typeof getPendingEventPayload>
+) {
+    const {
+        title,
+        location_key,
+        location_id,
+        location,
+        description,
+        category,
+        tags,
+        contact_name,
+        contact_email,
+        contact_phone,
+        status,
+        dates,
+        img_id
+    } = payload
+
+    if (!title || !location_key || !description || !category || !Array.isArray(dates) || dates.length === 0) {
+        throw new Error('Missing required fields')
+    }
+
+    if (location_key === 'other') {
+        if (!location ||
+            ((!location.venue?.trim() && !location.building?.trim()) || !location.address?.trim())) {
+            throw new Error('Event Location is missing required information')
+        }
+
+        const venue = (location.venue?.trim() || location.building?.trim()) as string
+        const building = location.venue?.trim() && location.building?.trim()
+            ? location.building.trim()
+            : null
+
+        
+        await client.query(`
+            INSERT INTO new_custom_locations (
+                event_id,
+                venue,
+                building,
+                address,
+                map_url
+            )
+            VALUES ($1, $2, $3, $4, $5)
+            ON CONFLICT (event_id)
+            DO UPDATE SET
+                venue = $2,
+                building = $3,
+                address = $4,
+                map_url = $5
+                WHERE new_custom_locations.event_id = $1;
+                ;
+            `, [
+                id,
+                venue,
+                building,
+                location.address,
+                location.map_url ?? null
+            ])
+    }
+
+    await client.query(
+        `UPDATE new_events
+            SET title=$1,
+                location_key=$2,
+                location_id=$3,
+                description=$4,
+                category=$5,
+                tags=$6,
+                contact_name=$7,
+                contact_email=$8,
+                contact_phone=$9,
+                status=$10,
+                updated_at=NOW(),
+                img_id=$11
+            WHERE id=$12`,
+        [
+            title,
+            location_key,
+            location_id ?? null,
+            description,
+            category,
+            tags ?? [],
+            contact_name ?? null,
+            contact_email ?? null,
+            contact_phone ?? null,
+            status ?? 'pending',
+            img_id ?? null,
+            id
+        ]
+    )
+
+    await client.query('DELETE FROM new_event_dates WHERE event_id=$1', [id])
+
+    for (const date of dates) {
+        await client.query(
+            'INSERT INTO new_event_dates (event_id, start_date, end_date) VALUES ($1, $2, $3)',
+            [id, date.start_date, date.end_date ?? null]
+        )
+    }
+}
+
 // ── PUT /api/events/pending/:id ──────────────────────────────────────────────
 
 export async function updatePendingEvent(req: Request, res: Response) {
@@ -69,38 +182,13 @@ export async function updatePendingEvent(req: Request, res: Response) {
         const id = parseInt(req.params.id)
         if (isNaN(id)) { res.status(400).json({ message: 'Invalid id' }); return }
 
-        const { title, location_key, description, category, tags,
-                contact_name, contact_email, contact_phone, status, dates, img_id } = req.body
-
-        if (!title || !location_key || !description || !category || !Array.isArray(dates) || dates.length === 0) {
-            res.status(400).json({ message: 'Missing required fields' }); return
-        }
+        const payload = getPendingEventPayload(req.body)
 
         const pool = getPool()
         const client = await pool.connect()
         try {
             await client.query('BEGIN')
-
-            await client.query(
-                `UPDATE new_events
-                 SET title=$1, location_key=$2, description=$3, category=$4,
-                     tags=$5, contact_name=$6, contact_email=$7, contact_phone=$8,
-                     status=$9, updated_at=NOW(), img_id=$10
-                 WHERE id=$11`,
-                [title, location_key, description, category,
-                 tags ?? [], contact_name ?? null, contact_email ?? null,
-                 contact_phone ?? null, status ?? 'pending', img_id, id]
-            )
-
-            await client.query('DELETE FROM new_event_dates WHERE event_id=$1', [id])
-
-            for (const date of dates) {
-                await client.query(
-                    'INSERT INTO new_event_dates (event_id, start_date, end_date) VALUES ($1, $2, $3)',
-                    [id, date.start_date, date.end_date ?? null]
-                )
-            }
-
+            await savePendingEventData(client, id, payload)
             await client.query('COMMIT')
             res.json({ message: 'Pending event updated' })
         } catch (err) {
@@ -111,6 +199,17 @@ export async function updatePendingEvent(req: Request, res: Response) {
         }
     } catch (err) {
         console.error('Error updating pending event:', err)
+
+        if (err instanceof Error && err.message === 'Missing required fields') {
+            res.status(400).json({ message: 'Missing required fields' })
+            return
+        }
+
+        if (err instanceof Error && err.message === 'Event Location is missing required information') {
+            res.status(400).json({ message: 'Event Location is missing required information' })
+            return
+        }
+
         res.status(500).json({ message: 'Failed to update pending event' })
     }
 }
@@ -141,51 +240,19 @@ export async function publishPendingEvent(req: Request, res: Response) {
         const id = parseInt(req.params.id)
         if (isNaN(id)) { res.status(400).json({ message: 'Invalid id' }); return }
 
-        const { title, location_key, description, category, tags,
-                contact_name, contact_email, contact_phone, status, dates, img_id } = req.body
-
-        if (!title || !location_key || !description || !category || !Array.isArray(dates) || dates.length === 0) {
-            res.status(400).json({ message: 'Missing required fields' }); return
-        }
+        const payload = getPendingEventPayload(req.body)
 
         const pool = getPool()
         const client = await pool.connect()
 
         try {
             await client.query('BEGIN')
+            await savePendingEventData(client, id, payload)
 
-            // update pending event
-            await client.query(
-                `UPDATE new_events
-                 SET title=$1, location_key=$2, description=$3, category=$4,
-                     tags=$5, contact_name=$6, contact_email=$7, contact_phone=$8,
-                     status=$9, updated_at=NOW(), img_id=$10
-                 WHERE id=$11`,
-                [title, location_key, description, category,
-                 tags ?? [], contact_name ?? null, contact_email ?? null,
-                 contact_phone ?? null, status ?? 'pending', img_id, id]
-            )
-
-            await client.query('DELETE FROM new_event_dates WHERE event_id=$1', [id])
-
-            for (const date of dates) {
-                await client.query(
-                    'INSERT INTO new_event_dates (event_id, start_date, end_date) VALUES ($1, $2, $3)',
-                    [id, date.start_date, date.end_date ?? null]
-                )
-            }
-
-            // Fetch the pending event
             const eventResult = await client.query(
-                `SELECT ne.*,
-                        json_agg(
-                            json_build_object('start_date', ned.start_date, 'end_date', ned.end_date)
-                            ORDER BY ned.start_date
-                        ) FILTER (WHERE ned.id IS NOT NULL) AS dates_normalized
-                 FROM new_events ne
-                 LEFT JOIN new_event_dates ned ON ne.id = ned.event_id
-                 WHERE ne.id = $1
-                 GROUP BY ne.id`,
+                `SELECT ne.*
+                    FROM new_events ne
+                    WHERE ne.id = $1`,
                 [id]
             )
 
@@ -197,36 +264,61 @@ export async function publishPendingEvent(req: Request, res: Response) {
 
             const ne = eventResult.rows[0]
 
-            // Resolve dates: prefer new_event_dates, fall back to JSON column
-            let event_dates: DatePayload[]
-            if (ne.dates_normalized) {
-                event_dates = ne.dates_normalized
-            } else {
-                try { event_dates = JSON.parse(ne.dates ?? '[]') } catch { event_dates = [] }
-            }
+            const dateResult = await client.query(
+                `SELECT start_date, end_date
+                    FROM new_event_dates
+                    WHERE event_id = $1
+                    ORDER BY start_date`,
+                [id]
+            )
 
-            if (event_dates.length === 0) {
+            const eventDates: DatePayload[] = dateResult.rows
+
+            if (eventDates.length === 0) {
                 await client.query('ROLLBACK')
                 res.status(400).json({ message: 'Event has no dates' })
                 return
             }
 
-            // Resolve category
+            const customLocationResult = await client.query(
+                `SELECT * FROM new_custom_locations WHERE event_id = $1`,
+                [id]
+            )
+
             const finalCategory = (ne.category === 'Other' && ne.custom_category)
                 ? ne.custom_category
                 : ne.category
 
-            // Insert into events
             const insertEvent = await client.query(
-                `INSERT INTO events
-                    (title, description, location_key, category, tags, contact,
-                     status, img_id, created_at, updated_at)
-                 VALUES ($1, $2, $3, $4, $5, $6, 'published', $7, NOW(), NOW())
-                 RETURNING id`,
+                `INSERT INTO events (
+                        id,
+                        title,
+                        description,
+                        location_key,
+                        location_id,
+                        category,
+                        tags,
+                        contact,
+                        status,
+                        img_id,
+                        created_at,
+                        updated_at,
+                        contact_email,
+                        contact_phone,
+                        contact_name,
+                        submitter_name,
+                        submitter_email
+                    )
+                    VALUES (
+                        $1, $2, $3, $4, $5, $6, $7, $8, 'published', $9, NOW(), NOW(), $10, $11, $12, $13, $14
+                    )
+                    RETURNING id`,
                 [
+                    ne.id,
                     ne.title,
                     ne.description,
                     ne.location_key,
+                    ne.location_id ?? null,
                     finalCategory,
                     ne.tags ?? [],
                     JSON.stringify({
@@ -234,24 +326,53 @@ export async function publishPendingEvent(req: Request, res: Response) {
                         contactEmail: ne.contact_email ?? '',
                     }),
                     ne.img_id ?? null,
+                    ne.contact_email,
+                    ne.contact_phone,
+                    ne.contact_name,
+                    ne.submitter_name,
+                    ne.submitter_email,
                 ]
             )
 
             const publishedId: number = insertEvent.rows[0].id
 
-            // Insert event_dates
-            for (const date of event_dates) {
+            for (const date of eventDates) {
                 await client.query(
-                    'INSERT INTO event_dates (event_id, start_date, end_date) VALUES ($1, $2, $3)',
+                    `INSERT INTO event_dates (event_id, start_date, end_date)
+                        VALUES ($1, $2, $3)`,
                     [publishedId, date.start_date, date.end_date ?? null]
                 )
             }
 
-            // Mark pending event as published
-            await client.query(
-                `UPDATE new_events SET status='published', updated_at=NOW() WHERE id=$1`,
-                [id]
-            )
+            if (customLocationResult.rows[0]) {
+                const customLocation = customLocationResult.rows[0]
+                await client.query(
+                    `INSERT INTO custom_locations (
+                            event_id,
+                            venue,
+                            building,
+                            address,
+                            map_url
+                        )
+                        VALUES ($1, $2, $3, $4, $5)
+                        ON CONFLICT (event_id) DO UPDATE SET
+                            venue = EXCLUDED.venue,
+                            building = EXCLUDED.building,
+                            address = EXCLUDED.address,
+                            map_url = EXCLUDED.map_url`,
+                    [
+                        publishedId,
+                        customLocation.venue,
+                        customLocation.building ?? null,
+                        customLocation.address,
+                        customLocation.map_url ?? null,
+                    ]
+                )
+            }
+
+            await client.query('DELETE FROM new_event_dates WHERE event_id = $1', [id])
+            await client.query('DELETE FROM new_custom_locations WHERE event_id = $1', [id])
+            await client.query('DELETE FROM new_events WHERE id = $1', [id])
 
             await client.query('COMMIT')
             res.json({ message: 'Event published', publishedId })

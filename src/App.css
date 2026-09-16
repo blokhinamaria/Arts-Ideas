@@ -253,7 +253,7 @@ a {
   font-size: var(--type-label);
 }
 
-a.address {
+.address {
   font-family: 'Univers', sans-serif;
   font-weight: 400;
   font-size: var(--type-body-large);

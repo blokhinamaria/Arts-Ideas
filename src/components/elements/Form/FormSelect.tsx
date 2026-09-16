@@ -5,13 +5,13 @@ type FormSelectProps = {
     label: string,
     id?: string,
     inputName: string,
-    inputValue: string,
+    inputValue: string | number,
     placeholder?: string,
     onChange: (e: ChangeEvent<HTMLSelectElement>) => void,
     inputInvalid?: boolean,
     required?: boolean,
     options: {
-        value: string,
+        value: string | number,
         label: string
     }[]
 }

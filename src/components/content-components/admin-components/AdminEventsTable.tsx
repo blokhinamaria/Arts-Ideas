@@ -75,11 +75,11 @@ export default function AdminEventsTable({ events, onRowClick, isEditable }: Pro
                                 onKeyDown={
                                     editable
                                         ? (e) => {
-                                              if (e.key === 'Enter' || e.key === ' ') {
-                                                  e.preventDefault();
-                                                  onRowClick(event);
-                                              }
-                                          }
+                                                if (e.key === 'Enter' || e.key === ' ') {
+                                                    e.preventDefault();
+                                                    onRowClick(event);
+                                                }
+                                            }
                                         : undefined
                                 }
                             >
@@ -98,8 +98,8 @@ export default function AdminEventsTable({ events, onRowClick, isEditable }: Pro
                                     ))}
                                 </td>
                                 <td className="admin-td-location">
-                                    {event.venue}
-                                    {event.building ? <><br />{event.building}</> : null}
+                                    {event.location.venue}
+                                    {event.location.building ? <><br />{event.location.building}</> : null}
                                 </td>
                                 <td className="admin-td-description">{event.description}</td>
                                 <td>{event.category}</td>

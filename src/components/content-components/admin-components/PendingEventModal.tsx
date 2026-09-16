@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef, KeyboardEvent } from 'react';
 import './EditEventModal.css';
 import './PendingEventModal.css';
+import LocationFields from '../event-form-components/LocationsFields';
+import { type Location } from '../event-form-components/LocationsFields';
 
 const CATEGORY_OPTIONS = [
     'Music Performance', 'Theatre / Drama', 'Dance', 'Visual Arts',
@@ -10,8 +12,6 @@ const CATEGORY_OPTIONS = [
 
 const API_BASE = import.meta.env.DEV ? 'http://localhost:3000' : '';
 
-type Location = { key: string; venue: string; building: string | null; address: string };
-
 type DateEntry = { id: string; start_date: string; has_end_date: boolean; end_date: string };
 
 export type PendingEvent = {
@@ -19,13 +19,9 @@ export type PendingEvent = {
     title: string;
     description: string;
     location_key: string;
-    location?: {
-        venue: string,
-        building: string,
-        map_url: string,
-        location_key: string,
-        address: string
-    }
+    location_id: number;
+    location: Location;
+    custom_location: Location | null;
     category: string;
     custom_category: string | null;
     tags: string[] | null;
@@ -43,10 +39,12 @@ export type PendingEvent = {
     building: string | null;
 };
 
-type EditForm = {
+export type EditForm = {
     title: string;
     dates: DateEntry[];
     location_key: string;
+    location_id: number | string;
+    location: Location;
     description: string;
     category: string;
     custom_category: string;
@@ -58,12 +56,16 @@ type EditForm = {
     img_id: string
 };
 
-type FormErrors = {
+export type FormErrors = {
     title?: string;
     dates?: string;
     date_start?: Record<string, string | undefined>;
     date_end?: Record<string, string | undefined>;
-    location_key?: string;
+    location_id?: string;
+    venue?: string;
+    building?: string;
+    address?: string;
+    map_url?: string;
     description?: string;
     category?: string;
     custom_category?: string;
@@ -79,6 +81,14 @@ function newDateEntry(): DateEntry {
     return { id: crypto.randomUUID(), start_date: '', has_end_date: false, end_date: '' };
 }
 
+const newLocation = {
+    location_key: 'other',
+    venue: '',
+    building: '',
+    address: '',
+    map_url: ''
+}
+
 function initForm(event: PendingEvent): EditForm {
     const isCustomCategory = event.category && !CATEGORY_OPTIONS.slice(0, -1).includes(event.category);
     return {
@@ -90,6 +100,14 @@ function initForm(event: PendingEvent): EditForm {
             end_date: d.end_date ? toDatetimeLocal(d.end_date) : '',
         })),
         location_key: event.location_key ?? '',
+        location_id: event.location_id,
+        location: event.custom_location ? {
+            location_key: event.custom_location.location_key,
+            venue: event.custom_location.venue,
+            building: event.custom_location.building,
+            address:event.custom_location.address,
+            map_url:event.custom_location.map_url
+        } : {...newLocation},
         description: event.description,
         category: isCustomCategory ? 'Other' : event.category,
         custom_category: isCustomCategory ? event.category : (event.custom_category ?? ''),
@@ -112,18 +130,12 @@ type Props = {
 
 export default function PendingEventModal({ event, onClose, onSaved, onDeleted, onPublished }: Props) {
     const [form, setForm] = useState<EditForm>(() => initForm(event));
-    const [locations, setLocations] = useState<Location[]>([]);
     const [tagInput, setTagInput] = useState('');
     const [errors, setErrors] = useState<FormErrors>({});
     const [saveStatus, setSaveStatus] = useState<'idle' | 'loading' | 'error'>('idle');
     const [confirmState, setConfirmState] = useState<'delete' | 'publish' | null>(null);
     const [actionStatus, setActionStatus] = useState<'idle' | 'loading' | 'error'>('idle');
     const backdropRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        fetch(`${API_BASE}/api/locations`, { credentials: 'include' })
-            .then((r) => r.json()).then(setLocations).catch(() => {});
-    }, []);
 
     useEffect(() => {
         function onKey(e: globalThis.KeyboardEvent) {
@@ -185,7 +197,10 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
             if (Object.keys(startErrors).length) errs.date_start = startErrors;
             if (Object.keys(endErrors).length) errs.date_end = endErrors;
         }
-        if (!form.location_key) { errs.location_key = 'Location is required'; valid = false; }
+        if (!form.location_id && form.location_id !== 0) { errs.location_id = 'Location is required'; valid = false; }
+        if (form.location_key === 'other' && !form.location?.venue) { errs.venue = 'Venue is required'; valid = false; }
+        if (form.location_key === 'other' && !form.location?.venue && !form.location?.building) { errs.building = 'Building or venue is required'; valid = false; }
+        if (form.location_key === 'other' && !form.location?.address) { errs.address = 'Address is required'; valid = false; }
         if (!form.description.trim()) { errs.description = 'Description is required'; valid = false; }
         if (!form.category) { errs.category = 'Category is required'; valid = false; }
         if (form.category === 'Other' && !form.custom_category.trim()) {
@@ -200,7 +215,11 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
         if (!validate()) return;
         setSaveStatus('loading');
         const payload = {
-            title: form.title, location_key: form.location_key, description: form.description,
+            title: form.title, 
+            location_key: form.location_key,
+            location_id: Number(form.location_id),
+            location: form.location ?? event.location,
+            description: form.description,
             category: form.category === 'Other' ? form.custom_category : form.category,
             tags: form.tags,
             contact_name: form.contact_name, contact_email: form.contact_email, contact_phone: form.contact_phone,
@@ -210,8 +229,10 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
         };
         try {
             const res = await fetch(`${API_BASE}/api/events/pending/${event.id}`, {
-                method: 'PUT', headers: { 'Content-Type': 'application/json' },
-                credentials: 'include', body: JSON.stringify(payload),
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify(payload),
             });
             if (res.ok) {
                 const updatedEvent: PendingEvent = {
@@ -241,7 +262,11 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
         setActionStatus('loading');
         if (!validate()) return;
         const payload = {
-            title: form.title, location_key: form.location_key, description: form.description,
+            title: form.title,
+            location_key: form.location_key,
+            location_id: Number(form.location_id),
+            location: form.location ?? event.location,
+            description: form.description,
             category: form.category === 'Other' ? form.custom_category : form.category,
             tags: form.tags,
             contact_name: form.contact_name, contact_email: form.contact_email, contact_phone: form.contact_phone,
@@ -264,8 +289,6 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
     function handleBackdropClick(e: React.MouseEvent<HTMLDivElement>) {
         if (e.target === backdropRef.current) onClose();
     }
-
-    const locationLabel = (loc: Location) => loc.building ? `${loc.venue} — ${loc.building}` : loc.venue;
 
     return (
         <div className="edit-modal-backdrop" ref={backdropRef} onClick={handleBackdropClick} role="dialog" aria-modal="true" aria-label="Review Pending Event">
@@ -344,15 +367,12 @@ export default function PendingEventModal({ event, onClose, onSaved, onDeleted, 
                     </fieldset>
 
                     {/* Location */}
-                    <div className="edit-form-field">
-                        <label className="edit-label" htmlFor="pe-location">Location</label>
-                        <select id="pe-location" value={form.location_key}
-                            onChange={(e) => updateField('location_key', e.target.value)} aria-invalid={!!errors.location_key}>
-                            <option value="" disabled>Select a location</option>
-                            {locations.map((loc) => <option key={loc.key} value={loc.key}>{locationLabel(loc)}</option>)}
-                        </select>
-                        {errors.location_key && <span className="edit-error" role="alert">{errors.location_key}</span>}
-                    </div>
+                    <LocationFields
+                        form={form}
+                        setForm={setForm}
+                        errors={errors}
+                        setErrors={setErrors}
+                    />
 
                     {/* Description */}
                     <div className="edit-form-field">
