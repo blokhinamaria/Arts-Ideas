@@ -32,6 +32,67 @@ type MonthRespone = {
     image: Image
 }
 
+const MONTH_IMAGE_CACHE_TTL_MS = 24 * 60 * 60 * 1000
+
+type CachedMonthImage = {
+    image: Image
+    expiresAt: number
+}
+
+const monthImageCache = new Map<string, CachedMonthImage>()
+let defaultMonthImageCache: CachedMonthImage | null = null
+
+async function findDefaultMonthImage(): Promise<Image> {
+    if (defaultMonthImageCache && defaultMonthImageCache.expiresAt > Date.now()) {
+        return defaultMonthImageCache.image
+    }
+
+    const imageResponse = await cloudinary.search
+        .expression('public_id:default_month*')
+        .max_results(1)
+        .execute()
+    const loadedResource = imageResponse?.resources?.[0]
+    const image: Image = loadedResource
+        ? {
+            public_id: loadedResource.public_id,
+            url: loadedResource.secure_url,
+        }
+        : { public_id: '', url: '' }
+
+    defaultMonthImageCache = {
+        image,
+        expiresAt: Date.now() + MONTH_IMAGE_CACHE_TTL_MS,
+    }
+
+    return image
+}
+
+async function findMonthImage(year: string, month: string): Promise<Image> {
+    const cacheKey = `${year}-${month}`
+    const cached = monthImageCache.get(cacheKey)
+    if (cached && cached.expiresAt > Date.now()) {
+        return cached.image
+    }
+    let imageResponse = await cloudinary.search
+        .expression(`public_id:${year}-${month}*`)
+        .max_results(1)
+        .execute()
+
+    const image = imageResponse.resources?.length === 0
+        ? await findDefaultMonthImage()
+        : {
+            public_id: imageResponse.resources[0].public_id,
+            url: imageResponse.resources[0].secure_url,
+        }
+
+    monthImageCache.set(cacheKey, {
+        image,
+        expiresAt: Date.now() + MONTH_IMAGE_CACHE_TTL_MS,
+    })
+
+    return image
+}
+
 function buildEventsQuery(whereClause: string = ''):string {
     return `
         SELECT e.*, 
@@ -108,29 +169,7 @@ export async function getMonthEvents (req:Request, res:Response<MonthRespone | {
             return
         }
 
-        let image = {
-            public_id: '',
-            url: ''
-        }
-
-        let imageResponse = await cloudinary.search
-            .expression(`public_id:${year}-${month}*`)
-            .max_results(1)
-            .execute()
-
-        if (imageResponse.resources?.length === 0) {
-            imageResponse = await cloudinary.search
-                .expression('public_id:default_month*')
-                .max_results(1)
-                .execute()
-        }
-
-        const loadedResource = imageResponse?.resources?.[0]
-        image = {
-            public_id: loadedResource.public_id,
-            url: loadedResource.secure_url
-        }
-
+        const image = await findMonthImage(year, month)
         res.json({events: result.rows, image: image})
 
     } catch (err) {

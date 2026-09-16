@@ -1,14 +1,16 @@
 import type { EventDateType, EventType}  from "./EventCard"
 import { formatEventDate, type DateFormat} from "../utilities/FormatEventDate"
 import AddToCalendar from "./AddToCalendar"
+import EventLocation from "./EventLocation"
 
 type EventDateProps = {
     dates:EventDateType[],
-    format?:DateFormat,
+    dateFormat?:DateFormat,
     event?:EventType,
+    format?: string
 }
 
-export default function EventDate({dates , format='full', event}:EventDateProps) {
+export default function EventDate({dates , dateFormat='full', event, format='full'}:EventDateProps) {
     if (!dates) {
         return null
     }
@@ -34,37 +36,40 @@ export default function EventDate({dates , format='full', event}:EventDateProps)
     }
 
     const end_date_format:DateFormat = 
-        format === 'full' ? format : (
-            firstDate.end_date && new Date(firstDate.start_date).setHours(0) === new Date(firstDate.end_date).setHours(0) ? format : 'full'
+        dateFormat === 'full' ? dateFormat : (
+            firstDate.end_date && new Date(firstDate.start_date).setHours(0) === new Date(firstDate.end_date).setHours(0) ? dateFormat : 'full'
         )
 
     return (
         <>
             <div className="date-group">
-                <p className='body-large'>
-                    {
-                        firstDate.end_date ? (
-                            <>
-                                <span>
-                                    {formatEventDate(firstDate.start_date, format)} –
-                                </span>
-                                <br></br>
-                                <span className='body-large'>
-                                    {formatEventDate(firstDate.end_date, end_date_format)}
-                                </span>
-                            </>
-                        ) : (
-                                formatEventDate(firstDate.start_date, format)
+                <div>
+                    <p className='body-large'>
+                        {
+                            firstDate.end_date ? (
+                                <>
+                                    <span>
+                                        {formatEventDate(firstDate.start_date, dateFormat)} –
+                                    </span>
+                                    <br></br>
+                                    <span className='body-large'>
+                                        {formatEventDate(firstDate.end_date, end_date_format)}
+                                    </span>
+                                </>
+                            ) : (
+                                    formatEventDate(firstDate.start_date, dateFormat)
 
-                        )
-                    }
-                    <br></br>
-                    {otherDates && 
-                        <span className="subtle">
-                            Also on {otherDates}
-                        </span>
-                    }
-                </p>
+                            )
+                        }
+                        <br></br>
+                        {otherDates && 
+                            <span className="subtle">
+                                Also on {otherDates}
+                            </span>
+                        }
+                    </p>
+                    {format=== 'full' && event?.location && <EventLocation location={event.location} />}
+                </div>
                 
                 {(new Date(firstDate.start_date) > today) && event &&
                     <AddToCalendar event={event} date={firstDate} />

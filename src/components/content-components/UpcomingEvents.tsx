@@ -271,7 +271,7 @@ export default function UpcomingEvents() {
                             <h3 className="secondary-title">{currentEvents[0]?.title}</h3>
                             <hr className='event-description-divider'/>
                             <EventDate event={currentEvents[0]} dates={currentEvents[0]?.dates}/>
-                            <Location location={currentEvents[0]?.location}/>
+                            {/* <Location location={currentEvents[0]?.location}/> */}
                             <p>{currentEvents[0]?.description}</p>
                         </div>
                         <div></div>
@@ -307,7 +307,7 @@ export default function UpcomingEvents() {
                                     <h3 className="secondary-title">{currentEvents[1]?.title}</h3>
                                     <hr className='event-description-divider'/>
                                     <EventDate event={currentEvents[1]} dates={currentEvents[1]?.dates}/>
-                                    <Location location={currentEvents[1]?.location}/>
+                                    {/* <Location location={currentEvents[1]?.location}/> */}
                                     {isNarrow ? <p>{currentEvents[1]?.description}</p> : null}
                                 </div>
                                 
@@ -343,7 +343,7 @@ export default function UpcomingEvents() {
                                     <h3 className="secondary-title">{currentEvents[2]?.title}</h3>
                                     <hr className='event-description-divider'/>
                                     <EventDate event={currentEvents[2]} dates={currentEvents[2]?.dates}/>
-                                    <Location location={currentEvents[2]?.location}/>
+                                    {/* <Location location={currentEvents[2]?.location}/> */}
                                     {isNarrow ? <p>{currentEvents[2]?.description}</p> : null} 
                                 </div>
                                 

@@ -58,12 +58,14 @@ export default function EventCard({event, format='full'}:EventCardProps) {
             <hr />
             <EventDate
                 dates={event.dates}
-                event={event}/>
+                event={event}
+                format={format}
+            />
             {format==='full' && 
-                <>
-                    <EventLocation location={event.location} />
+                // <>
+                //     <EventLocation location={event.location} />
                     <p>{event.description}</p>
-                </>
+                // </>
             }
         </div>
     )
