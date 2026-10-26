@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import type { Request, Response, NextFunction } from "express";
 import { getPool } from "../config/database.js"
 
-const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
+const JWT_SECRET = process.env.JWT_SECRET;
 const COOKIE_NAME = "auth_token";
 const isProd = process.env.NODE_ENV === 'production';
 
