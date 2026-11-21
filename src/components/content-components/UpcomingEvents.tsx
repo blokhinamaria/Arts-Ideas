@@ -9,7 +9,6 @@ import EventCard, { type EventType } from './event-components/EventCard';
 import Location from './event-components/EventLocation.js';
 
 //utils
-import { formatEventDate } from './utilities/FormatEventDate'
 import './UpcomingEvents.css';
 import EventDate from './event-components/EventDate.js';
 
@@ -241,7 +240,7 @@ export default function UpcomingEvents() {
     
     return (
         <>
-        {isLoaderVisible ? (
+        {isLoaderVisible && (
             <section
                 className={`upcoming-loader ${isLoaderFading ? 'is-fading' : ''}`}
                 aria-live="polite"
@@ -257,7 +256,7 @@ export default function UpcomingEvents() {
                     <p className="label">Loading Arts & Ideas Events</p>
                 </div>
             </section>
-        ) : null}
+        )}
         <article id='upcoming-events' className={`upcoming-content ${isLoaderVisible ? 'is-pending' : 'is-ready'}`}>
             <h2 className="article-title">Upcoming<br/>Events</h2>
             <section className='upcoming-events'>
